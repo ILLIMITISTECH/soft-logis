@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-12 col-lg-4">
                                 <label for="inputTypeFacture" class="form-label">Type de facture</label>
-                                <select class="form-select" name="typeFacture" id="inputTypeFacture" onchange="toggleBlockVisibility()">
+                                <select class="form-select" name="typeFacture" id="inputTypeFacture">
                                     <option selected>Selectionnez un type de facture</option>
                                     <option value="transporteur" id="idTransporteur">Transporteur</option>
                                     <option value="transitaire" id="idTransitaire">Transitaire</option>
@@ -202,26 +202,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.getElementById('idTransporteur').addEventListener('click', function () {
-        var blockElement = document.getElementById('idTransporteurBlock');
-        var blockTransit = document.getElementById('idTransitaireBlock');
-        blockElement.classList.remove('d-none');
-        blockTransit.classList.add('d-none');
-    });
-    document.getElementById('idTransitaire').addEventListener('click', function () {
-        var blockTransporteur = document.getElementById('idTransporteurBlock');
-        var blockTransitaire = document.getElementById('idTransitaireBlock');
-        blockTransitaire.classList.remove('d-none');
-        blockTransporteur.classList.add('d-none');
-    });
-    document.getElementById('idAutre').addEventListener('click', function () {
-        var blockTransporteur = document.getElementById('idTransporteurBlock');
-        var blockTransitaire = document.getElementById('idTransitaireBlock');
-        blockTransitaire.classList.add('d-none');
-        blockTransporteur.classList.add('d-none');
-    });
-
-</script>
 

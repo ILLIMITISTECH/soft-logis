@@ -277,21 +277,21 @@ class SourcingController extends Controller
                 'note' => $request->note,
             ]);
 
-            $productIds = $request->input('product_uuid');
+            // $productIds = $request->input('product_uuid');
 
-            foreach ($productIds as $productId) {
-                $product = Article::where('uuid', $productId)->first();
-                if ($product) {
+            // foreach ($productIds as $productId) {
+            //     $product = Article::where('uuid', $productId)->first();
+            //     if ($product) {
 
-                    $sourcing->products()->create([
-                        'famille_uuid' => $product->famille_uuid,
-                        'uuid' => Str::uuid(),
-                        'etat' => 'actif',
-                        'product_uuid' => $product->uuid,
-                        'product_id' => $product->id,
-                    ]);
-                }
-            }
+            //         $sourcing->products()->create([
+            //             'famille_uuid' => $product->famille_uuid,
+            //             'uuid' => Str::uuid(),
+            //             'etat' => 'actif',
+            //             'product_uuid' => $product->uuid,
+            //             'product_id' => $product->id,
+            //         ]);
+            //     }
+            // }
 
             if ($sourcing) {
 

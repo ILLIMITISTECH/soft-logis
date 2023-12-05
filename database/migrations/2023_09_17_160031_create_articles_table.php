@@ -35,7 +35,7 @@ return new class extends Migration
             $table->integer('volume')->nullable();
             $table->integer('longueur')->nullable();
             $table->string('price_unitaire')->nullable();
-            $table->string('is_AddSourcing')->nullable();
+            $table->string('is_AddSourcing')->default('false');
 
             $table->string('etat')->default('actif');
             $table->timestamps();

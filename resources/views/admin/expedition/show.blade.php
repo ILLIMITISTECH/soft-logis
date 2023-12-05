@@ -35,7 +35,7 @@
                     @if ($expedition->statut == 'odTransit')
                         <button class="btn btn-outline-primary text-primary-light" data-bs-toggle="modal" data-bs-target="#addOrdreTransport{{ $expedition->uuid }}">Ordre de transport</button>
                     @endif
-                    @if (in_array($expedition->statut, ['odTransit', 'outStock']))
+                    @if (in_array($expedition->statut, ['odTransit', 'outStock', 'odTransport']))
                     <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#destockageModal">Destockage</button>
                     @endif
                     @if ($expedition->statut == 'outStock')

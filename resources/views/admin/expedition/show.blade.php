@@ -307,7 +307,7 @@
                                                     <th>N* Serie <i class='bx bx-up-arrow-alt ms-2'></th>
                                                     <th>Famille</th>
                                                     <th>Image</th>
-                                                    <th>Conformité de sortir</th>
+                                                    <th>Conformité de sortie</th>
                                                     <th>Statut</th>
                                                     <th></th>
                                                 </tr>

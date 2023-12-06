@@ -21,14 +21,6 @@
         </li>
 
         <li class="menu-label tex-uppercase">partenaire</li>
-
-        {{-- <li class="menu-label text-capitalize pt-0 my-0">
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-user-plus"></i>
-                </div>
-                <div class="menu-title">Comptes</div>
-            </a>
-            <ul > --}}
                 <li>
                     <a href="{{ route('admin.company') }}">
                         <div class="parent-icon"><i class="fadeIn animated bx bx-buildings"></i>
@@ -61,7 +53,7 @@
 
             {{-- </ul>
         </li> --}}
-        
+
 
 
         <li class="menu-label">Articles</li>
@@ -73,24 +65,19 @@
             </a>
         </li>
         <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="fadeIn animated bx bx-equalizer fs-6"></i>
-                </div>
+            <a class="has-arrow" href="javascript:;" id="variationDropdown">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-equalizer fs-6" id="arrowIcon"></i></div>
                 <div class="menu-title">Variation</div>
             </a>
-            <ul>
-                <li> <a href="{{ route('admin.category') }}"><i class='bx bx-radio-circle'></i>Categories</a>
-                </li>
-                <li> <a href="{{ route('admin.marque') }}"><i class='bx bx-radio-circle'></i>Marque</a>
-                </li>
-                <li> <a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Ship Source</a>
-                </li>
-                <li> <a href="{{ route('admin.article_model') }}"><i class='bx bx-radio-circle'></i>Model d'article</a>
-                </li>
-                <li> <a href="{{ route('admin.article_family') }}"><i class='bx bx-radio-circle'></i>Famille de produit</a>
-                </li>
+            <ul id="variationSubMenu" style="display: none;">
+                <li><a href="{{ route('admin.category') }}"><i class='bx bx-radio-circle'></i>Categories</a></li>
+                <li><a href="{{ route('admin.marque') }}"><i class='bx bx-radio-circle'></i>Marque</a></li>
+                <li><a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Ship Source</a></li>
+                <li><a href="{{ route('admin.article_model') }}"><i class='bx bx-radio-circle'></i>Model d'article</a></li>
+                <li><a href="{{ route('admin.article_family') }}"><i class='bx bx-radio-circle'></i>Famille de produit</a></li>
             </ul>
         </li>
+
         <li class="menu-label">IMPORT</li>
         <li>
             <a href="{{ route('admin.sourcing.index') }}">
@@ -192,6 +179,7 @@
 
             </ul> --}}
         </li>
+        
     </ul>
     <!--end navigation-->
 </div>

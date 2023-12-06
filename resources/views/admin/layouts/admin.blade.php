@@ -9,6 +9,8 @@
 	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png"/>
 	<!--plugins-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
 
 
 	<link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
@@ -19,7 +21,7 @@
 	<!-- loader-->
 	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet"/>
 	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
-    <script src="{{ asset('js/scripts.js') }} " defer></script>
+    <script src="{{ asset('js/scripts.js') }} "></script>
 
 	<!-- Bootstrap CSS -->
 	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -86,7 +88,8 @@
     {{-- <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
 	<!--plugins-->
 
-	<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.min.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
@@ -100,6 +103,7 @@
 	<script src="{{ asset('assets/js/index3.js') }}"></script>
     <script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
 	<!--Morris JavaScript -->
+
 	<script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/morris/js/morris.js') }}"></script>
 	<script src="{{ asset('assets/js/index2.js') }}"></script>
@@ -123,6 +127,12 @@
 	<script src="{{ asset('assets/js/app.js') }}"></script>
 
 	<script>
+       $(document).ready(function () {
+            $("#variationDropdown").click(function () {
+                $("#variationSubMenu").slideToggle();
+                $("#arrowIcon").toggleClass('rotate180');
+            });
+        });
         new PerfectScrollbar(".app-container")
         new PerfectScrollbar('.email-navigation');
 		new PerfectScrollbar('.email-read-box');
@@ -131,4 +141,4 @@
 
 </html>
 
-</body>
+

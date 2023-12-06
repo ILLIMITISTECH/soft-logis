@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase size_16">Creer l'ordre de transite</h5>
+                <h5 class="modal-title text-uppercase size_16">Creer l'ordre de transit</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body size_13" id="stronger">
@@ -29,7 +29,7 @@
                         <hr class="my-2">
                         <div class="col-12">
                             <div class="my-3">
-                                <strong class="text-uppercase text-primary my-auto">Documents de transite (PDF, Word, Excel)</strong>
+                                <strong class="text-uppercase text-primary my-auto">Documents de transit (PDF, Word, Excel)</strong>
                                 <div class=" card-headerd-flex align-items-center justify-content-between">
                                     <button id="add_document" type="button" class="btn btn-outline-primary py-1 my-auto mb-3" onclick="addNewDoctransite()"><i class="bx bxs-plus-square"></i>Ajouter un document</button>
                                 </div>

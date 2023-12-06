@@ -67,7 +67,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showWaitExpModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Route d'expedition</p>
+                                                <p class="mb-0 text-secondary text-uppercase">Cours de route d'expedition</p>
                                                 <h4 class="my-1">{{ $inWaitExpediteImport->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteImport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -112,7 +112,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showExportModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Route d'exportation</p>
+                                                <p class="mb-0 text-secondary text-uppercase">Cours de Route  exportation</p>
                                                 <h4 class="my-1">{{ $inWaitExpediteExport->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteExport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>

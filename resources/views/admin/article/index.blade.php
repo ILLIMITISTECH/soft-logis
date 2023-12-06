@@ -365,21 +365,8 @@
 <script>
     const searchInput = document.getElementById('Articlesearch');
     const articleListContainer = document.getElementById('articleList');
-    const addedArticles = []; // Tableau pour stocker les UUID des articles ajoutés
+    const addedArticles = []; 
 
-    // searchInput.addEventListener('input', function () {
-    //     const searchQuery = searchInput.value.trim();
-
-    //     // Effectuez une requête AJAX pour rechercher les articles en fonction de la saisie de l'utilisateur
-    //     fetch(`/articles/search?searchQuery=${searchQuery}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             // Mettez à jour la liste des articles dans votre vue
-    //             const articles = data.articles;
-    //             updateArticleList(articles);
-    //         })
-    //         .catch(error => console.error('Erreur lors de la recherche :', error));
-    // });
 
     searchInput.addEventListener('input', function () {
     const searchQuery = searchInput.value.trim();

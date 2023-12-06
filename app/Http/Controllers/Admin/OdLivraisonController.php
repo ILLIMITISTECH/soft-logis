@@ -136,15 +136,6 @@ class OdLivraisonController extends Controller
 
             $sourcingProducts = $sourcing->products;
 
-            // foreach ($sourcingProducts as $sourcingProduct) {
-            //     $product = $sourcingProduct->product;
-            //     if ($product) {
-            //         $product->update([
-            //             'status' => 'waitLivraison',
-            //         ]);
-            //     }
-            // }
-
             if($request->has('files')){
                 foreach($request->file('files') as $key => $file){
                     $imageName = Str::uuid().'.'.$file->getClientOriginalExtension();

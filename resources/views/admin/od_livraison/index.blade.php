@@ -15,16 +15,7 @@
             </nav>
         </div>
         <div class="ms-auto">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary">Settings</button>
-                <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -76,7 +67,7 @@
                                 <td>{{ $oDLivraison->date_livraison }}</td>
                                 <td>{{ $oDLivraison->lieu_livraison }}</td>
                                 <td class="h-100">
-                                    <span>{{ $oDLivraison->user_uuid }}</span>
+                                    <span>{{ $oDLivraison->created_by }}</span>
                                 </td>
                                 <td style="max-width: 100px">
                                     <div class="d-flex order-actions text-end justify-content-between">

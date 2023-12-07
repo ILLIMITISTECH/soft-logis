@@ -782,7 +782,7 @@ function searchProductsByBonCommand(uniqueId) {
                 resultsContainer.appendChild(option);
             });
         })
-    .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error:', error));
 }
 
 function searchProductsByNumeroSerie(uniqueId) {
@@ -895,63 +895,60 @@ function addnewBlockProduct() {
     `;
     documentExportContainer.appendChild(documentTemplate);
 }
+
 function editBlockProduct() {
-    // Clone un modèle de document
     const documentExportContainer = document.getElementById('editproductBlock');
     const documentTemplate = document.createElement('div');
-    const uniqueId = Date.now(); // Utilisez un timestamp unique comme identifiant
+    const uniqueId = Date.now();
     documentTemplate.className = 'row col-12';
     documentTemplate.innerHTML = `
-            <div class="col-5" style="position: relative;">
-                <label for="bon_commande_input_${uniqueId}" class="form-label">Bon de commande</label>
-                <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="bon_commande_input_${uniqueId}" oninput="searchProductsByBonCommand(${uniqueId})">
-                <div id="search_resultsByBon_${uniqueId}"
-                    style="
-                    width: 280px;
-                    position: absolute;
-                    z-index: 1000;
-                    max-height: 200px;
-                    overflow-y: auto;
-                    border: 1px solid #ccc;
-                    background-color: #fff;">
-                </div>
-                <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_bon_${uniqueId}">
-            </div>
+    <div class="col-5" style="position: relative;">
+        <label for="bon_commande_input_${uniqueId}" class="form-label">Bon de commande</label>
+        <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="bon_commande_input_${uniqueId}" oninput="searchProductsByBonCommand(${uniqueId})">
+        <div id="search_resultsByBon_${uniqueId}"
+            style="
+            width: 280px;
+            position: absolute;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            background-color: #fff;">
+        </div>
+        <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_bon_${uniqueId}">
+    </div>
 
-            <div class="col-6" style="position: relative;">
-                <label for="numero_serie_input_${uniqueId}" class="form-label">N° serie</label>
-                <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="numero_serie_input_${uniqueId}" oninput="searchProductsByNumeroSerie(${uniqueId})">
-                <div id="search_results_${uniqueId}"
-                    style="
-                        width: 280px;
-                        position: absolute;
-                        z-index: 1000;
-                        max-height: 200px;
-                        overflow-y: auto;
-                        border: 1px solid #ccc;
-                        background-color: #fff;">
-                </div>
-                <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_serie_${uniqueId}">
-            </div>
+    <div class="col-6" style="position: relative;">
+        <label for="numero_serie_input_${uniqueId}" class="form-label">N° serie</label>
+        <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="numero_serie_input_${uniqueId}" oninput="searchProductsByNumeroSerie(${uniqueId})">
+        <div id="search_results_${uniqueId}"
+            style="
+                width: 280px;
+                position: absolute;
+                z-index: 1000;
+                max-height: 200px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                background-color: #fff;">
+        </div>
+        <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_serie_${uniqueId}">
+    </div>
 
-            <div class="col-1 d-flex text-center py-2 justify-content-center text-align-center align-items-center align-self-center">
-                <button class="delete-button btn-outline-danger w-50 my-2" type="button" onclick="deleteRow(this)"><i class="fadeIn animated bx bx-x"></i></button>
-            </div>
-    `;
+    <div class="col-1 d-flex text-center py-2 justify-content-center text-align-center align-items-center align-self-center">
+        <button class="delete-button btn-outline-danger w-50 my-2" type="button" onclick="deleteRow(this)"><i class="fadeIn animated bx bx-x"></i></button>
+    </div>
+`;
     documentExportContainer.appendChild(documentTemplate);
 }
-
 
 function deleteproductBlock(button) {
     const documentContainer = document.getElementById('productBlock');
     const rowToDelete = button.parentNode.parentNode;
     documentContainer.removeChild(rowToDelete);
 }
+
 function deleteproductBlockEdit(button) {
     const documentContainer = document.getElementById('editproductBlock');
     const rowToDelete = button.parentNode.parentNode;
     documentContainer.removeChild(rowToDelete);
 }
-
-
-

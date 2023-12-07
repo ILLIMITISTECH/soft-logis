@@ -57,6 +57,14 @@ class SourcingController extends Controller
     public function store(Request $request)
     {
 
+        if ($request->date_arriver < $request->date_depart) {
+            return response()->json([
+                'type' => 'error',
+                'urlback' => '',
+                'message' => 'La date d\'arriver doit être inferieur ou egale a la date de depart.',
+                'code' => 400,
+            ]);
+        }
         // dd($request->all());
         DB::beginTransaction();
         try {
@@ -278,6 +286,7 @@ class SourcingController extends Controller
                 'date_depart' => $request->date_depart,
                 'note' => $request->note,
             ]);
+            $productIds = $request->input('product_uuid');
 
             if (!empty($productIds)) {
                 foreach ($productIds as $productId) {
@@ -336,6 +345,8 @@ class SourcingController extends Controller
         }
         return response()->json($dataResponse);
     }
+
+
 
     public function updateProductSourcing(Request $request, string $id)
     {

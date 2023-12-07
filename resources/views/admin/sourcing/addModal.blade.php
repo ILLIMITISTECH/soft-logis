@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <div class="content">
+                    {{-- <div class="content">
                         <div class="row col-12">
                             <div class="mb-3" style="font-size: 13px">
                                 <label for="id_navire" class="form-label text-uppercase">Identifiant du navire <span><span class="text-danger">*</span></span></label>
@@ -43,8 +43,40 @@
                                 <input type="date" class="form-control" id="date_arriver" name="date_arriver" autocomplete="off">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="content">
+                        <div class="row col-12">
+                            <div class="mb-3" style="font-size: 13px">
+                                <label for="id_navire" class="form-label text-uppercase">Identifiant du navire <span><span class="text-danger">*</span></span></label>
+                                <input type="text" class="form-control @error('id_navire') is-invalid @enderror" id="id_navire" name="id_navire" autocomplete="off">
+                                @error('id_navire')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
 
+                        <div class=" row text-uppercase" style="font-size: 13px">
+                            <div class="col-6">
+                                <label for="date_depart" class="form-label">Date de départ</label>
+                                <input type="date" class="form-control date-error @error('date_depart') is-invalid @enderror" id="date_depart" name="date_depart" autocomplete="off">
+                                @error('date_depart')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="date_arriver" class="form-label">Date estimative d'arrivée</label>
+                                <input type="date" class="form-control date-error @error('date_arriver') is-invalid @enderror" id="date_arriver" name="date_arriver" autocomplete="off">
+                                @error('date_arriver')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                    </div>
 
                     <hr class="mb-4 mt-2">
 

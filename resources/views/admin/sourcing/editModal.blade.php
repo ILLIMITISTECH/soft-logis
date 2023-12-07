@@ -39,7 +39,7 @@
 
                 <form action="{{ route('admin.sourcing.update', $sourcing->uuid) }}" method="POST" enctype="multipart/form-data" class="submitForm" id="updateForm">
                     @csrf
-                    <div>
+                    {{-- <div>
                         <div class=" card-headerd-flex align-items-center justify-content-between">
                             <button id="c_t" type="button" class="btn btn-outline-primary py-1 my-auto mb-3" onclick="editBlockProduct()"><i class="bx bxs-plus-square"></i>modifier une ligne produit</button>
                         </div>
@@ -47,8 +47,22 @@
 
                         </div>
 
+
+
+                        <input type="hidden" class="form-control" id="sourcing_id" value="{{ $sourcing->uuid }}" name="sourcing_id">
+                    </div> --}}
+
+                    <div>
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <button id="c_t" type="button" class="btn btn-outline-primary py-1 my-auto mb-3" onclick="editBlockProduct()"><i class="bx bxs-plus-square"></i>Modifier une ligne produit</button>
+                        </div>
+                        <div class="mb-2 card-body" id="editproductBlock">
+                            <!-- Bloc de produits pour la modification -->
+                        </div>
+
                         <input type="hidden" class="form-control" id="sourcing_id" value="{{ $sourcing->uuid }}" name="sourcing_id">
                     </div>
+
 
                     <hr class="mb-4">
                     <!-- Date de départ et Date d'arrivée -->

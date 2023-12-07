@@ -34,7 +34,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showInFabricModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">En Fabrications</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">En Fabrications</p>
                                                 <h4 class="my-1">{{ $inFabrication->count() }}</h4>
                                                 <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>{{ number_format($inFabrication->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -52,7 +52,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showOutUsineModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Sortie d'usine</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Sortie d'usine</p>
                                                 <h4 class="my-1">{{ $inUsineOut->count() }}</h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inUsineOut->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -67,7 +67,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showWaitExpModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Cours de route d'expedition</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Cours de route import</p>
                                                 <h4 class="my-1">{{ $inWaitExpediteImport->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteImport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -82,7 +82,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showArrivPodModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Arrivé au pod</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Arrivé au pod</p>
                                                 <h4 class="my-1">{{ $arrivagePod->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($arrivagePod->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -97,7 +97,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showStockedModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Reçu/Stocké</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Reçu/Stocké</p>
                                                 <h4 class="my-1">{{ $receivStock->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($receivStock->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -112,7 +112,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showExportModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Cours de Route  exportation</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Cours de Route export</p>
                                                 <h4 class="my-1">{{ $inWaitExpediteExport->count() }} </h4>
                                                 <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteExport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
@@ -127,7 +127,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showDeliveredModal">
                                             <div>
-                                                <p class="mb-0 text-secondary text-uppercase">Livré</p>
+                                                <p class="mb-0 text-secondary text-uppercase size_12">Livré</p>
                                                 <h4 class="my-1">{{ $liverExpedite->count() }} </h4>
                                                 <p class="mb-0 font-13 text-success"><i class="bx bxs-up-arrow align-middle"></i>{{ number_format($liverExpedite->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
 

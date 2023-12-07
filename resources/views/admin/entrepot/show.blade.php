@@ -139,15 +139,17 @@
                                     @php
                                         $productConformity =  App\Models\stockUpdate::where('product_id', $product->id)->first();
                                     @endphp
-                                    @if ($productConformity->conformity == 'on')
-                                    <span class="badge badge-success p-2 bg-success">
-                                        Conforme
-                                    </span>
-                                    @else
-                                    <span class="badge badge-danger p-2 bg-danger">
-                                        Non Conforme
-                                    </span>
-                                    @endif
+                                   @if (!empty($productConformity))
+                                        @if ($productConformity->conformity == 'on')
+                                        <span class="badge badge-success p-2 bg-success">
+                                            Conforme
+                                        </span>
+                                        @else
+                                        <span class="badge badge-danger p-2 bg-danger">
+                                            Non Conforme
+                                        </span>
+                                        @endif
+                                   @endif
                                 </td>
                             </tr>
                         @endforeach

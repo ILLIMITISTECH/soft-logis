@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class SourcingController extends Controller
 {
@@ -66,7 +68,7 @@ class SourcingController extends Controller
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
                 'note' => $request->note,
-                // 'created_by' => Auth::user()->id,
+                'created_by' => Auth::user()->name . ' ' . Auth::user()->lastname,
 
                 'etat' => 'actif',
                 'code' => Refgenerate(Sourcing::class, 'S', 'code'),
@@ -97,31 +99,31 @@ class SourcingController extends Controller
 
             $productIds = $request->input('product_uuid');
 
-            foreach ($productIds as $productId) {
-                $productAddSourcing = Article::where('uuid', $productId)->update([
-                    'is_AddSourcing' => 'true',
-                ]);
+            if (!empty($productIds)) {
+                foreach ($productIds as $productId) {
+                    $productAddSourcing = Article::where('uuid', $productId)->update([
+                        'is_AddSourcing' => 'true',
+                    ]);
 
-                $product = Article::where('uuid', $productId)->first();
+                    $product = Article::where('uuid', $productId)->first();
 
-                if ($product) {
+                    if ($product) {
 
-                    $existingSourcingProduct = $sourcing->products()
-                        ->where('product_uuid', $productId)
-                        ->first();
+                        $existingSourcingProduct = $sourcing->products()
+                            ->where('product_uuid', $productId)
+                            ->first();
 
-                    if ($existingSourcingProduct) {
-
-                    } else {
-
-                        $sourcing->products()->create([
-                            'famille_uuid' => $product->famille_uuid,
-                            // 'sourcing_id' => $sourcing->id,
-                            'uuid' => Str::uuid(),
-                            'etat' => 'actif',
-                            'product_uuid' => $product->uuid,
-                            'product_id' => $product->id,
-                        ]);
+                        if ($existingSourcingProduct) {
+                            // Vous pouvez ajouter des actions spécifiques si le produit existe déjà dans le sourcing
+                        } else {
+                            $sourcing->products()->create([
+                                'famille_uuid' => $product->famille_uuid,
+                                'uuid' => Str::uuid(),
+                                'etat' => 'actif',
+                                'product_uuid' => $product->uuid,
+                                'product_id' => $product->id,
+                            ]);
+                        }
                     }
                 }
             }
@@ -277,21 +279,31 @@ class SourcingController extends Controller
                 'note' => $request->note,
             ]);
 
-            // $productIds = $request->input('product_uuid');
+            if (!empty($productIds)) {
+                foreach ($productIds as $productId) {
 
-            // foreach ($productIds as $productId) {
-            //     $product = Article::where('uuid', $productId)->first();
-            //     if ($product) {
+                    $product = Article::where('uuid', $productId)->first();
 
-            //         $sourcing->products()->create([
-            //             'famille_uuid' => $product->famille_uuid,
-            //             'uuid' => Str::uuid(),
-            //             'etat' => 'actif',
-            //             'product_uuid' => $product->uuid,
-            //             'product_id' => $product->id,
-            //         ]);
-            //     }
-            // }
+                    if ($product) {
+
+                        $existingSourcingProduct = $sourcing->products()
+                            ->where('product_uuid', $productId)
+                            ->first();
+
+                        if ($existingSourcingProduct) {
+
+                        } else {
+                            $sourcing->products()->create([
+                                'famille_uuid' => $product->famille_uuid,
+                                'uuid' => Str::uuid(),
+                                'etat' => 'actif',
+                                'product_uuid' => $product->uuid,
+                                'product_id' => $product->id,
+                            ]);
+                        }
+                    }
+                }
+            }
 
             if ($sourcing) {
 
@@ -649,6 +661,3 @@ class SourcingController extends Controller
 
 
 }
-
-
-

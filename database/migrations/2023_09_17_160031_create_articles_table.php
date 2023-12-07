@@ -42,11 +42,10 @@ return new class extends Migration
         });
     }
 
-    // $table->string('status')->default('enUsine')->nullable(); // enUsine, sourcer, waitLivraison, received,awaitingShipment,waitExpedite,delivered
 
     /**
      *
-     *$table->string('local_machine')->default('enFabrication')->nullable(); // enFabrication, sortiUsine, enExpedition ,arriverAuPod,expedier
+
      * Reverse the migrations.
      */
     public function down(): void

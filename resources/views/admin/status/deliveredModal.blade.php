@@ -21,8 +21,8 @@
 								<tbody>
                                     @foreach ( $liverExpedite as $item )
 									<tr>
-                                        <td>{{ $item->familly->libelle }}</td>
-										<td>{{ $item->numero_serie }}</td>
+                                        <td>{{ $item->familly->libelle ?? '--' }}</td>
+										<td>{{ $item->numero_serie ?? '--' }}</td>
 										<td>
                                             <img src="{{ asset('files/' . $item->image) }}" alt="" class="img-fluid"
                                                 style="max-height: 60px; min-height: 60px; min-width: 80px">

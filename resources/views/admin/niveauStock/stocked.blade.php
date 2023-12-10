@@ -90,7 +90,7 @@
                                 <option value="">Toutes les catégories</option>
                                 @foreach ($categories as $uuid => $libelle)
                                     <option value="{{ $libelle }}" {{ $selectedCategory == $libelle ? 'selected' : '' }}>
-                                        {{ $libelle }}
+                                        {{ $libelle ?? '--' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -103,7 +103,7 @@
                                 <option value="">Toutes les marques</option>
                                 @foreach ($brands as $uuid => $libelle)
                                     <option value="{{ $libelle }}" {{ $selectedBrand == $libelle ? 'selected' : '' }}>
-                                        {{ $libelle }}
+                                        {{ $libelle ?? '--' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -117,7 +117,7 @@
                                 <option value="">Toutes les familles</option>
                                 @foreach ($families as $uuid => $libelle)
                                     <option value="{{ $libelle }}" {{ $selectedFamily == $libelle ? 'selected' : '' }}>
-                                        {{ $libelle }}
+                                        {{ $libelle ?? '--' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -140,10 +140,10 @@
                             <tbody>
                                 @foreach ($stocked as $item)
                                     <tr class="articleByCat" data-category_uuid="{{ strtolower($item->category_uuid) }}">
-                                        <td>{{ $item->familly->libelle }}</td>
-                                        <td>{{ $item->marque->libelle }}</td>
-                                        <td>{{ $item->category->libelle }}</td>
-                                        <td>{{ $item->numero_serie }}</td>
+                                        <td>{{ $item->familly->libelle ?? '--' }}</td>
+                                        <td>{{ $item->marque->libelle ?? '--' }}</td>
+                                        <td>{{ $item->category->libelle ?? '--' }}</td>
+                                        <td>{{ $item->numero_serie ?? '--' }}</td>
                                         <td><i class='bx bx-dots-horizontal-rounded font-24'></i></td>
                                     </tr>
                                 @endforeach

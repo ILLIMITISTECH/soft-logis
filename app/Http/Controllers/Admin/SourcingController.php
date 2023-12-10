@@ -259,7 +259,9 @@ class SourcingController extends Controller
 
         $entrepots = Entrepot::where('etat', 'actif')->get();
 
-        return view('admin.sourcing.show', compact('sourcing', 'sourcing_files', 'transporteurs', 'transitaires','transit', 'transport', 'entrepots'));
+        $products = Article::where('etat', 'actif')->get();
+
+        return view('admin.sourcing.show', compact('sourcing', 'sourcing_files', 'transporteurs', 'transitaires','transit', 'transport', 'entrepots', 'products'));
     }
 
     /**
@@ -275,8 +277,6 @@ class SourcingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $sourcing = Sourcing::where('uuid', $request->sourcing_id)->update([
@@ -286,33 +286,6 @@ class SourcingController extends Controller
                 'date_depart' => $request->date_depart,
                 'note' => $request->note,
             ]);
-            $productIds = $request->input('product_uuid');
-
-            if (!empty($productIds)) {
-                foreach ($productIds as $productId) {
-
-                    $product = Article::where('uuid', $productId)->first();
-
-                    if ($product) {
-
-                        $existingSourcingProduct = $sourcing->products()
-                            ->where('product_uuid', $productId)
-                            ->first();
-
-                        if ($existingSourcingProduct) {
-
-                        } else {
-                            $sourcing->products()->create([
-                                'famille_uuid' => $product->famille_uuid,
-                                'uuid' => Str::uuid(),
-                                'etat' => 'actif',
-                                'product_uuid' => $product->uuid,
-                                'product_id' => $product->id,
-                            ]);
-                        }
-                    }
-                }
-            }
 
             if ($sourcing) {
 
@@ -368,6 +341,34 @@ class SourcingController extends Controller
                 'message' => 'Produit supprimé avec succes',
             ]);
         }
+    }
+    public function editProductSourcing(Request $request, string $id)
+    {
+        $productIds = $request->input('product_uuid');
+        $sourcing = Sourcing::where('uuid', $request->sourcing_uuid)->first();
+
+        if (!empty($productIds)) {
+            foreach ($productIds as $productId) {
+                $product = Article::where('uuid', $productId)->first();
+                if ($product) {
+                    $sourcing->products()->create([
+                        'famille_uuid' => $product->famille_uuid,
+                        'uuid' => Str::uuid(),
+                        'etat' => 'actif',
+                        'product_uuid' => $product->uuid,
+                        'product_id' => $product->id,
+                    ])->save();
+
+                }
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'urlback' => 'back',
+            'message' => 'Produit aouter avec succes',
+        ]);
+
     }
 
     /**

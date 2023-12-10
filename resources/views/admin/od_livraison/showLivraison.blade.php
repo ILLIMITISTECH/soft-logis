@@ -54,7 +54,9 @@
                                         <div class="text-muted">{{ ($oDLivraison->transporteur->email ?? '') ? $oDLivraison->transporteur->email : '--' }}</div>
                                     </div>
                                     <div class="col-md-2">
-                                        <a href="{{ route('admin.company.show', $oDLivraison->transporteur->uuid ?? '') }}" class="btn btn-primary size_12">Plus d'info</a>
+                                        @if ($oDLivraison->transporteur !== null)
+                                        <a href="{{ route('admin.company.show', $oDLivraison->transporteur->uuid) }}" class="btn btn-primary">Plus d'info</a>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr class="my-2">
@@ -89,83 +91,83 @@
                                                         <th></th>
                                                     </tr>
                                                 </thead>
+
                                                 <tbody style="font-size: 12px !important">
-                                                    @forelse ($oDLivraison->sourcing->products as $product)
-                                                        @if ($oDLivraison->sourcing)
-                                                        <tr>
-                                                            <td>
-                                                                <h6 class="mb-0 font-14">#{{ $product->product->numero_serie }}</h6>
-                                                            </td>
-                                                            <td>{{ $product->product->familly->libelle }}</td>
-                                                            <td>
-                                                                @if ($product->product->status == 'enFabrication')
-                                                                    <span class="badge bg-info text-light text-uppercase p-2">En Fabrication</span>
-                                                                @endif
-                                                                @if ($product->product->status == 'sortiUsine')
-                                                                    <span class="badge bg-warning text-uppercase text-light p-2">Sortie d'usine</span>
-                                                                @endif
-                                                                @if ($product->product->status == 'enExpedition')
-                                                                <span class="badge badge-info p-2 bg-info">
-                                                                    En cours d'expedition import
-                                                                </span>
-                                                                @endif
-                                                                @if ($product->product->status == 'arriverAuPod')
-                                                                <span class="badge badge-success p-2 bg-success">
-                                                                    Arrivé au POD
-                                                                </span>
-                                                                @endif
-                                                                @if ($product->product->status == 'stocked')
-                                                                <span class="badge bg-warning py-2 rounded">Reçu/Stocké</span>
-                                                                @endif
-                                                                @if ($product->product->status == 'expEnCours')
-                                                                <span class="badge bg-primary py-2 rounded">En cours d'expedition Export</span>
-                                                                @endif
-                                                                @if ($product->product->status == 'delivered')
-                                                                    <span class="badge bg-success py-2 rounded">Livrer</span>
-                                                                @endif
-
-                                                            </td>
-                                                            <td>
-                                                                @php
-                                                                    $productConformity = App\Models\stockUpdate::where('product_id', $product->product->id)->first();
-                                                                    if ($productConformity) {
-                                                                        $result = $productConformity->conformity;
-                                                                    }
-                                                                @endphp
-
-                                                                @if ($productConformity)
-                                                                    @if ($result === '')
-                                                                    <span class="badge badge-warning p-2 bg-warning">
-                                                                        Pas encore receptionné
+                                                    @if ($oDLivraison->sourcing)
+                                                        @forelse ($oDLivraison->sourcing->products as $product)
+                                                            <tr>
+                                                                <td>
+                                                                    <h6 class="mb-0 font-14">#{{ $product->product->numero_serie }}</h6>
+                                                                </td>
+                                                                <td>{{ $product->product->familly->libelle }}</td>
+                                                                <td>
+                                                                    @if ($product->product->status == 'enFabrication')
+                                                                        <span class="badge bg-info text-light text-uppercase p-2">En Fabrication</span>
+                                                                    @endif
+                                                                    @if ($product->product->status == 'sortiUsine')
+                                                                        <span class="badge bg-warning text-uppercase text-light p-2">Sortie d'usine</span>
+                                                                    @endif
+                                                                    @if ($product->product->status == 'enExpedition')
+                                                                    <span class="badge badge-info p-2 bg-info">
+                                                                        En cours d'expedition import
                                                                     </span>
                                                                     @endif
-
-                                                                    @if ($result === 'off')
-                                                                        <span class="badge badge-danger p-2 bg-danger">
-                                                                            Non conforme
-                                                                        </span>
-                                                                    @elseif ($result === 'on')
-                                                                        <span class="badge badge-success p-2 bg-success">
-                                                                            Conforme
-                                                                        </span>
+                                                                    @if ($product->product->status == 'arriverAuPod')
+                                                                    <span class="badge badge-success p-2 bg-success">
+                                                                        Arrivé au POD
+                                                                    </span>
+                                                                    @endif
+                                                                    @if ($product->product->status == 'stocked')
+                                                                    <span class="badge bg-warning py-2 rounded">Reçu/Stocké</span>
+                                                                    @endif
+                                                                    @if ($product->product->status == 'expEnCours')
+                                                                    <span class="badge bg-primary py-2 rounded">En cours d'expedition Export</span>
+                                                                    @endif
+                                                                    @if ($product->product->status == 'delivered')
+                                                                        <span class="badge bg-success py-2 rounded">Livrer</span>
                                                                     @endif
 
-                                                                @endif
-                                                            </td>
+                                                                </td>
+                                                                <td>
+                                                                    @php
+                                                                        $productConformity = App\Models\stockUpdate::where('product_id', $product->product->id)->first();
+                                                                        if ($productConformity) {
+                                                                            $result = $productConformity->conformity;
+                                                                        }
+                                                                    @endphp
+
+                                                                    @if ($productConformity)
+                                                                        @if ($result === '')
+                                                                        <span class="badge badge-warning p-2 bg-warning">
+                                                                            Pas encore receptionné
+                                                                        </span>
+                                                                        @endif
+
+                                                                        @if ($result === 'off')
+                                                                            <span class="badge badge-danger p-2 bg-danger">
+                                                                                Non conforme
+                                                                            </span>
+                                                                        @elseif ($result === 'on')
+                                                                            <span class="badge badge-success p-2 bg-success">
+                                                                                Conforme
+                                                                            </span>
+                                                                        @endif
+
+                                                                    @endif
+                                                                </td>
 
 
-                                                            <td class="d-flex justify-content-end text-end">
-                                                                <button type="button" class="btn btn-info btn-sm radius-30 px-3 size_12">
-                                                                    <a href="{{ route('admin.article.show', ['uuid' => $product->product->uuid]) }}" class="text-uppercase text-decoration-none text-light py-1">Detail</a>
-                                                                </button>
-                                                            </td>
+                                                                <td class="d-flex justify-content-end text-end">
+                                                                    <button type="button" class="btn btn-info btn-sm radius-30 px-3 size_12">
+                                                                        <a href="{{ route('admin.article.show', ['uuid' => $product->product->uuid]) }}" class="text-uppercase text-decoration-none text-light py-1">Detail</a>
+                                                                    </button>
+                                                                </td>
 
-                                                        </tr>
-                                                        @endif
-                                                    @empty
-                                                        <tr>Aucun produit pour ce sourcing</tr>
-                                                    @endforelse
-
+                                                            </tr>
+                                                        @empty
+                                                            <tr>Aucun produit pour ce sourcing</tr>
+                                                        @endforelse
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>

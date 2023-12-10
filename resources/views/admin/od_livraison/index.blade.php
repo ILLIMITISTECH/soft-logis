@@ -19,23 +19,13 @@
         </div>
     </div>
 
+    {{-- @include('admin.od_livraison.addLivraison') --}}
 
     <div class="card">
         <div class="card-body">
-            <div class="d-lg-flex align-items-center mb-4 gap-3">
-                <div class="position-relative ">
-                    <input type="text" class="form-control ps-5 radius-30" placeholder="Rechercher ...">
-                    <span class="position-absolute top-50 start-2 ps-2 translate-middle-y"><i class="bx bx-search"></i></span>
-                </div>
-                {{-- <div class="ms-auto">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#CreateOdrelivraison">
-                        <i class="bx bxs-plus-square"></i>Creer Nouveau
-                    </button>
-                </div> --}}
-            </div>
-            <div class="table-responsive text-center">
-                <table class="table table-bordered mb-0">
-                    <thead class="table-light text-uppercase">
+            <div class="table-responsive">
+                <table id="example2" class="table table-striped table-bordered">
+                    <thead>
                         <tr>
                             <th>Code#</th>
                             <th>Transporteur</th>
@@ -103,11 +93,20 @@
                             </tr>
                         @endforelse
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Code#</th>
+                            <th>Transporteur</th>
+                            <th>Date de livraison</th>
+                            <th>Lieu de livraison</th>
+                            <th>Creer par</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
-
-    {{-- @include('admin.od_livraison.addLivraison') --}}
 </div>
+
 @endsection()

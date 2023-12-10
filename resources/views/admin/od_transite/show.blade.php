@@ -85,6 +85,7 @@
                                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#CreateTransiteFile">
                                         <i class="bx bxs-plus-square"></i> Ajouter
                                     </button>
+                                    @include('admin.od_transite.files.addModal')
                                 </div>
                                 <hr class="my-2">
                                 <div class="content mx-0 px-0">
@@ -120,7 +121,6 @@
                                                     </div>
                                                 </li>
                                             @endif
-                                            @include('admin.od_transite.files.addModal')
 
                                         @endforeach
                                     </ul>

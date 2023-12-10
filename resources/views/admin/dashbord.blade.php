@@ -32,31 +32,14 @@
                             <div class="col">
                                 <div class="card radius-10">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showInFabricModal">
+                                        <div class="d-flex align-items-center cursor-pointer justify-content-between" onclick="redirectToInFabrication()">
                                             <div>
                                                 <p class="mb-0 text-secondary text-uppercase size_12">En Fabrications</p>
                                                 <h4 class="my-1">{{ $inFabrication->count() }}</h4>
                                                 <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>{{ number_format($inFabrication->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
                                             </div>
-                                            <div class="widgets-icons bg-light-info text-info ms-auto">
+                                            <div class="widgets-icons bg-light-info text-info text-end float-end">
                                                 <i class='bx bxs-group'></i>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-10">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showOutUsineModal">
-                                            <div>
-                                                <p class="mb-0 text-secondary text-uppercase size_12">Sortie d'usine</p>
-                                                <h4 class="my-1">{{ $inUsineOut->count() }}</h4>
-                                                <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inUsineOut->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
-                                            </div>
-                                            <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-binoculars'></i>
                                             </div>
                                         </div>
                                     </div>
@@ -64,38 +47,59 @@
                             </div>
                             <div class="col">
                                 <div class="card radius-10">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showWaitExpModal">
-                                            <div>
-                                                <p class="mb-0 text-secondary text-uppercase size_12">Cours de route import</p>
-                                                <h4 class="my-1">{{ $inWaitExpediteImport->count() }} </h4>
-                                                <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteImport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
-                                            </div>
-                                            <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
+                                    {{-- <a href="{{ route('admin.insortiUsine') }}"> --}}
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center cursor-pointer" onclick="redirectToInsortiUsine()">
+                                                <div>
+                                                    <p class="mb-0 text-secondary text-uppercase size_12">Sortie d'usine</p>
+                                                    <h4 class="my-1">{{ $inUsineOut->count() }}</h4>
+                                                    <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inUsineOut->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
+                                                </div>
+                                                <div class="widgets-icons bg-light-danger text-danger ms-auto"><i class='bx bxs-binoculars'></i>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {{-- </a> --}}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-10">
+                                    <a href="{{ route('admin.enExpedition') }}">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center cursor-pointer" onclick="redirectToEnExpedition()">
+                                                <div>
+                                                    <p class="mb-0 text-secondary text-uppercase size_12">Cours de route import</p>
+                                                    <h4 class="my-1">{{ $inWaitExpediteImport->count() }} </h4>
+                                                    <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($inWaitExpediteImport->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
+                                                </div>
+                                                <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card radius-10">
+                                    {{-- <a href="{{ route('admin.arriverAuPod') }}"> --}}
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center cursor-pointer" onclick="redirectToArriverAuPod()">
+                                                <div>
+                                                    <p class="mb-0 text-secondary text-uppercase size_12">Arrivé au pod</p>
+                                                    <h4 class="my-1">{{ $arrivagePod->count() }} </h4>
+                                                    <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($arrivagePod->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
+                                                </div>
+                                                <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{-- </a> --}}
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="card radius-10">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showArrivPodModal">
-                                            <div>
-                                                <p class="mb-0 text-secondary text-uppercase size_12">Arrivé au pod</p>
-                                                <h4 class="my-1">{{ $arrivagePod->count() }} </h4>
-                                                <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ number_format($arrivagePod->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
-                                            </div>
-                                            <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-10">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showStockedModal">
+                                        <div class="d-flex align-items-center cursor-pointer" onclick="redirectToStocked()">
                                             <div>
                                                 <p class="mb-0 text-secondary text-uppercase size_12">Reçu/Stocké</p>
                                                 <h4 class="my-1">{{ $receivStock->count() }} </h4>
@@ -110,7 +114,7 @@
                             <div class="col">
                                 <div class="card radius-10">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showExportModal">
+                                        <div class="d-flex align-items-center cursor-pointer" onclick="redirectToExpEnCours()">
                                             <div>
                                                 <p class="mb-0 text-secondary text-uppercase size_12">Cours de Route export</p>
                                                 <h4 class="my-1">{{ $inWaitExpediteExport->count() }} </h4>
@@ -125,7 +129,7 @@
                             <div class="col">
                                 <div class="card radius-10">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#showDeliveredModal">
+                                        <div class="d-flex align-items-center cursor-pointer" onclick="redirectTodelivered()">
                                             <div>
                                                 <p class="mb-0 text-secondary text-uppercase size_12">Livré</p>
                                                 <h4 class="my-1">{{ $liverExpedite->count() }} </h4>
@@ -1522,6 +1526,30 @@
             var nbrExpeditionLivraison = {{ $nbrExpeditionLivraison->count() }};
 
 
+        </script>
+
+        <script>
+            function redirectToInFabrication() {
+                window.location.href = "{{ route('admin.inFabrication') }}";
+            }
+            function redirectToInsortiUsine() {
+                window.location.href = "{{ route('admin.insortiUsine') }}";
+            }
+            function redirectToEnExpedition() {
+                window.location.href = "{{ route('admin.enExpedition') }}";
+            }
+            function redirectToArriverAuPod() {
+                window.location.href = "{{ route('admin.arriverAuPod') }}";
+            }
+            function redirectToStocked() {
+                window.location.href = "{{ route('admin.stocked') }}";
+            }
+            function redirectToExpEnCours() {
+                window.location.href = "{{ route('admin.expEnCours') }}";
+            }
+            function redirectTodelivered() {
+                window.location.href = "{{ route('admin.delivered') }}";
+            }
         </script>
     {{-- </div> --}}
 @endsection

@@ -154,7 +154,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @include('admin.sourcing.productListModal')
+                                {{-- @include('admin.sourcing.productListModal') --}}
                                 @include('admin.sourcing.fileListModal')
                                 @include('admin.sourcing.editModal')
                             @empty
@@ -197,99 +197,3 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 @endsection
 
-
-{{-- @forelse ($sourcings as $sourcing)
-
-                            <tr id="sourcin_tr">
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <input class="form-check-input me-3" type="checkbox" value=""
-                                                aria-label="...">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-0 font-14">{{ $sourcing->code }}</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="">
-                                    <span>{{ $sourcing->products->count() }}</span>
-                                </td>
-
-                                <td>{{ $sourcing->date_arriver }}</td>
-                                <td>{{ $sourcing->id_navire }}</td>
-                                <td class="h-100">
-                                    <span>{{ $sourcing->files->count() }}</span>
-                                </td>
-
-                                <td>
-                                    @if ($sourcing->statut == "draft")
-                                    <div class="badge rounded-pill text-light bg-secondary p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>Brouillon
-                                    </div>
-                                    @endif
-                                    @if ($sourcing->statut == "started")
-                                    <div class="badge rounded-pill text-light bg-secondary p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>Demarrage
-                                    </div>
-                                    @endif
-                                    @if ($sourcing->statut == "validateDoc")
-                                    <div class="badge rounded-pill text-info bg-light-info p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>Demarrage document
-                                    </div>
-                                    @endif
-                                    @if ($sourcing->statut == "odTransit")
-                                    <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>En cour de transit import
-                                    </div>
-                                    @endif
-                                    @if ($sourcing->statut == "odlivraison")
-                                    <div class="badge rounded-pill text-danger bg-light-danger p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>en cours de livraison
-                                    </div>
-                                    @endif
-                                    @if ($sourcing->statut == "stocked")
-                                    <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3 border-0">
-                                        <i class='bx bxs-circle me-1'></i>Reçu / Stocké
-                                    </div>
-                                    @endif
-
-                                </td>
-                                <td style="max-width: 100px">
-                                    <div class="d-flex order-actions text-end justify-content-between">
-                                        <a href="{{ route('admin.sourcing.show', $sourcing->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" title="Voir"><i class="lni lni-eye"></i></a>
-
-                                        @if ($sourcing->statut === "stocked")
-                                        <a type="button" class="border-0 text-success col mx-3 btn">
-                                            <i class='bx bxs-package'></i>
-                                        </a>
-                                        @else
-                                        <a type="button" class="border-0 col mx-3 btn" data-bs-toggle="modal" data-bs-target="#EditSourcing{{ $sourcing->uuid }}">
-                                            <i class='bx bxs-edit'></i>
-                                        </a>
-                                        @endif
-
-                                        <a class="deleteConfirmation col text-decoration-none" data-uuid="{{$sourcing->uuid}}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-type="confirmation_redirect" data-placement="top"
-                                            data-token="{{ csrf_token() }}"
-                                            data-url="{{route('admin.sourcing.destroy',$sourcing->uuid)}}"
-                                            data-title="Vous êtes sur le point de supprimer {{$sourcing->code}} "
-                                            data-id="{{$sourcing->uuid}}" data-param="0"
-                                            data-route="{{route('admin.sourcing.destroy',$sourcing->uuid)}}">
-                                            <i class='bx bxs-trash '></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            @include('admin.sourcing.productListModal')
-                            @include('admin.sourcing.fileListModal')
-                            @include('admin.sourcing.editModal')
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center">Aucun sourcing</td>
-                            </tr>
-                        @endforelse --}}

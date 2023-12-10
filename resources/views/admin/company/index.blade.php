@@ -23,11 +23,6 @@
     <div class="card">
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
-                <div class="position-relative">
-                    <input type="text" class="form-control ps-5 radius-30" placeholder="Recherche ..."> <span
-                        class="position-absolute top-50 product-show translate-middle-y"><i
-                            class="bx bx-search"></i></span>
-                </div>
 
                 <div class="ms-auto">
                     <a data-bs-toggle="modal" data-bs-target="#addcompany"
@@ -36,9 +31,9 @@
                 </div>
             </div>
 
-            <div class="table-responsive text-center align-items-center">
-                <table class="table mb-0 table-striped table-bordered">
-                    <thead class="table-light">
+            <div class="table-responsive">
+                <table id="example2" class="table table-striped table-bordered">
+                    <thead class="table-light mt-3">
                         <tr>
                             <th>Logo</th>
                             <th>code</th>

@@ -21,40 +21,38 @@
         </li>
 
         <li class="menu-label tex-uppercase">partenaire</li>
-                <li>
-                    <a href="{{ route('admin.company') }}">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-buildings"></i>
-                        </div>
-                        <div class="menu-title">Organisations</div>
-                    </a>
-                </li>
+        <li>
+            <a href="{{ route('admin.company') }}">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-buildings"></i>
+                </div>
+                <div class="menu-title">Organisations</div>
+            </a>
+        </li>
 
-                <li>
-                    <a href="{{ route('admin.client') }}">
-                        <div class="parent-icon"><i class='bx bx-cookie'></i>
-                        </div>
-                        <div class="menu-title" style="font-size: 13px !important">Clients</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.transporteur') }}">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-car"></i>
-                        </div>
-                        <div class="menu-title" style="font-size: 13px !important">Transporteurs</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.transitaire') }}">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-transfer-alt"></i>
-                        </div>
-                        <div class="menu-title" style="font-size: 13px !important">Transitaires</div>
-                    </a>
-                </li>
+        <li>
+            <a href="{{ route('admin.client') }}">
+                <div class="parent-icon"><i class='bx bx-cookie'></i>
+                </div>
+                <div class="menu-title" style="font-size: 13px !important">Clients</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.transporteur') }}">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-car"></i>
+                </div>
+                <div class="menu-title" style="font-size: 13px !important">Transporteurs</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('admin.transitaire') }}">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-transfer-alt"></i>
+                </div>
+                <div class="menu-title" style="font-size: 13px !important">Transitaires</div>
+            </a>
+        </li>
 
             {{-- </ul>
         </li> --}}
-
-
 
         <li class="menu-label">Articles</li>
         <li>
@@ -65,11 +63,11 @@
             </a>
         </li>
         <li>
-            <a class="has-arrow" href="javascript:;" id="variationDropdown">
+            <a class="has-arrow" href="javascript:;" id="">
                 <div class="parent-icon"><i class="fadeIn animated bx bx-equalizer fs-6" id="arrowIcon"></i></div>
                 <div class="menu-title">Variation</div>
             </a>
-            <ul id="variationSubMenu" style="display: none;">
+            <ul id="subMenu">
                 <li><a href="{{ route('admin.category') }}"><i class='bx bx-radio-circle'></i>Categories</a></li>
                 <li><a href="{{ route('admin.marque') }}"><i class='bx bx-radio-circle'></i>Marque</a></li>
                 <li><a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Ship Source</a></li>
@@ -153,9 +151,7 @@
                 <div class="menu-title">Facture fournisseur</div>
             </a>
         </li> --}}
-
         <li class="menu-label">Gestion des Comptes</li>
-
         <li class="menu-label text-capitalize pt-0 my-0">
             <a href="{{ route('admin.collaborateur.index') }}">
                 <div class="parent-icon"><i class="lni lni-consulting fs-6"></i>
@@ -163,7 +159,6 @@
                 <div class="menu-title">Collaborateurs</div>
             </a>
         </li>
-
         <li class="menu-label py-0 my-0">Paramètre</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -179,7 +174,7 @@
 
             </ul> --}}
         </li>
-        
+
     </ul>
     <!--end navigation-->
 </div>

@@ -16,14 +16,7 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">Settings</button>
-                <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-                </div>
+
             </div>
         </div>
     </div>
@@ -92,8 +85,8 @@
                             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expeditionModal">Creer nouveau</button>
                         </div>
                     </div>
-                    <div class="table-responsive mt-3">
-                        <table class="table table-striped table-hover table-sm mb-0">
+                    <div class="table-responsive mt-4">
+                        <table id="example2" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Code <i class='bx bx-up-arrow-alt ms-2'></i></th>

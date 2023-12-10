@@ -67,49 +67,6 @@
         <!--end breadcrumb-->
 
         <div class="container text-center row">
-            {{-- <div class="row">
-                <div class="col-md-10 my-auto">
-                    <ul class="tab-list d-flex justify-content-start">
-
-                        <!-- Step 1 -->
-                        <li class="tab-list__item {{ $sourcing->statut === 'draft' ? 'active' : '' }}">
-                            <a class="tab-list__link">
-                                <span class="step" {{ $sourcing->statut === 'draft' ? 'bg-light text-success' : '' }}>1</span>
-                                <span class="desc">Brouillon</span>
-                            </a>
-                        </li>
-
-
-
-                        <!-- Step 2 -->
-                        <li class="tab-list__item {{ $sourcing->statut === 'wait' ? 'active' : '' }}">
-                            <a class="tab-list__link">
-                                <span class="step {{ $sourcing->statut === 'validated' ? 'bg-light text-success' : '' }}">2</span>
-                                <span class="desc">En attente</span>
-                            </a>
-                        </li>
-
-                        <!-- Step 3 -->
-                        <li class="tab-list__item ">
-                            <a class="tab-list__link {{ $sourcing->statut === 'validated' ? 'bg-success' : '' }}">
-                                <span class="step  {{ $sourcing->statut === 'validated' ? 'bg-light text-success' : '' }}">3</span>
-                                <span class="desc">Valider</span>
-                            </a>
-                        </li>
-
-                        <!-- Step 4 -->
-                        <li class="tab-list__item">
-                            <a class="tab-list__link  {{ $sourcing->statut === 'refused' ? 'bg-danger' : '' }}">
-                                <span class="step  {{ $sourcing->statut === 'refused' ? 'text-danger bg-light' : '' }}">4</span>
-                                <span class="desc">Rejeter</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-
-            </div> --}}
-
             <div id="stepper1" class="bs-stepper col-12">
                 <div class="card">
 
@@ -244,8 +201,13 @@
                         <div class="content">
                             <div class="col-sm-12">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="d-flex align-items-center text-uppercase size_16">Marchandises</h5>
+                                    <div class="card-header d-flex align-items-center justify-content-between row">
+                                        <h5 class="col d-flex align-items-center text-uppercase size_16">Marchandises</h5>
+                                        <div class=" col ms-auto float-end d-flex justify-content-end text-align-end align-items-center align-self-center">
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#productListModal{{ $sourcing->uuid }}">
+                                                <img src="{{ asset('icone/choix.gif') }}" alt="Modifier" class="img-fluid" style="width: 40px; height: 30px">
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -327,9 +289,9 @@
 
                                                                 @endif
                                                             </td>
-                                                            <td >
+                                                            <td class=" col ms-auto float-end d-flex justify-content-end text-align-end align-items-center align-self-center">
                                                                 <button type="button" class="btn btn-info btn-sm radius-30 px-3 size_12">
-                                                                    <a href="{{ route('admin.article.show', ['uuid' => $sourcingProduct->product->uuid]) }}" class="text-uppercase text-decoration-none text-light py-1">Detail</a>
+                                                                    <a href="{{ route('admin.article.show', ['uuid' => $sourcingProduct->product->uuid]) }}" class="text-uppercase text-decoration-none text-light py-1">Voir</a>
                                                                 </button>
                                                             </td>
 
@@ -430,97 +392,11 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="card-bo mb-4">
-                    <ul class="nav nav-tabs nav-primary mb-0" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab"
-                                aria-selected="true">
-                                <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class='bx bx-comment-detail font-18 me-1'></i>
-                                    </div>
-                                    <div class="tab-title"> Suivi des action </div>
-                                </div>
-                            </a>
-                        </li>
-                        <!--<li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab"
-                                aria-selected="false">
-                                <div class="d-flex align-items-center">
-                                    <div class="tab-icon"><i class='bx bx-bookmark-alt font-18 me-1'></i>
-                                    </div>
-                                    <div class="tab-title">Note</div>
-                                </div>
-                            </a>
-                        </li>-->
-
-                    </ul>
-                    <div class="tab-content pt-3">
-                        <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
-                            <div class="content px-3">
-                                <div class=" p-3">
-                                    <div class="card-title gy-2">
-                                        <div class="row">
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Creer par</strong>
-                                                <p>{{ $sourcing->user_uuid}}</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Date de création</strong>
-                                                <p>{{ $sourcing->created_at->diffForHumans() }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Modifier par</strong>
-                                                <p>{{ $sourcing->user_uuid }}</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Date de modification</strong>
-                                                <p>{{ $sourcing->updated_at->diffForHumans() }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row my-3">
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Valider par</strong>
-                                                <p>{{ $sourcing->validated_by }}</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Date de validation</strong>
-                                                <p>{{ $sourcing->validated_date }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">rejeter par</strong>
-                                                <p>{{ $sourcing->refused_by }}</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong class="text-decoration-underline">Date de rejet</strong>
-                                                <p>{{ $sourcing->refused_date }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-                            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
-                                squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
-                                anderson artisan four loko farm-to-table craft beer twee. Qui photo booth
-                                letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
-                                cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.
-                                Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan
-                                fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY
-                                ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr
-                                butcher vero sint qui sapiente accusamus tattooed echo park.</p>
-                        </div>-->
-                    </div>
-                </div> --}}
             </div>
         </div>
         {{-- Modal de creation de documents  --}}
     <!-- Modal -->
+    @include('admin.sourcing.productListModal')
     @include('admin.sourcing.addDoc')
 
     </div>

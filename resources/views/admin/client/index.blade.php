@@ -15,16 +15,7 @@
             </div>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Settings</button>
-                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                        data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                            href="javascript:;">Action</a>
-                        <a class="dropdown-item" href="javascript:;">Another action</a>
-                        <a class="dropdown-item" href="javascript:;">Something else here</a>
-                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -34,8 +25,8 @@
             <div class="card-body">
 
 
-                <div class="table-responsive text-center">
-                    <table class="table mb-0 table-striped table-bordered">
+                <div class="table-responsive">
+                    <table id="example2" class="table table-striped table-bordered">
                         <thead class="table-light">
                             <tr>
                                 <th>Logo</th>

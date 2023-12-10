@@ -2,11 +2,13 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\Stock;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\Admin\ModelController;
 use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\FamilyController;
@@ -27,7 +29,6 @@ use App\Http\Controllers\Admin\TransitaireController;
 use App\Http\Controllers\Admin\TransporteurController;
 use App\Http\Controllers\Admin\CollaborateurController;
 use App\Http\Controllers\Admin\OdreExpeditionController;
-use App\Http\Controllers\ExcelImportController;
 
 
 /*
@@ -183,6 +184,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/receiv/document/{uuid}', [SourcingController::class, 'receptCommercialFact'])->name('sourcing.receptCommercialFact');
 
         Route::get('/getProductsByFamily/{familyId}', [SourcingController::class, 'getProductsByFamily'])->name('getByFamily');
+        Route::post('/add-new-product/{uuid}', [SourcingController::class, 'editProductSourcing'])->name('sourcing.editProduct');
 
         // Config Route
 
@@ -272,7 +274,14 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/marck_payed/{uuid}', [FacturationController::class, 'marck_payed'])->name('marck_payed');
         Route::post('/marck_canceled/{uuid}', [FacturationController::class, 'marck_canceled'])->name('marck_canceled');
 
-
+        // Statistic views des articles par statut
+        Route::get('/article/inFabrication', [Stock::class, 'inFabrication'])->name('inFabrication');
+        Route::get('/article/insortiUsine', [Stock::class, 'insortiUsine'])->name('insortiUsine');
+        Route::get('/article/enExpedition', [Stock::class, 'enExpedition'])->name('enExpedition');
+        Route::get('/article/arriverAuPod', [Stock::class, 'arriverAuPod'])->name('arriverAuPod');
+        Route::get('/article/stocked', [Stock::class, 'stocked'])->name('stocked');
+        Route::get('/article/expEnCours', [Stock::class, 'expEnCours'])->name('expEnCours');
+        Route::get('/article/delivered', [Stock::class, 'delivered'])->name('delivered');
     });
 });
 

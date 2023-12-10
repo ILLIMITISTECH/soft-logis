@@ -468,7 +468,6 @@ class ArticleController extends Controller
     public function searchByNumeroSerie($input) {
         // Logique de recherche des produits en fonction du numéro de série
         $products = Article::where('numero_serie', 'LIKE', '%' . $input . '%')
-        ->where('is_AddSourcing', 'false')
         ->get();
 
         return response()->json(['products' => $products]);

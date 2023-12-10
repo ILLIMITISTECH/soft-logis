@@ -830,26 +830,6 @@ function editoNewRow() {
     cloneLigneProduct.parentNode.appendChild(newRow);
 }
 
-
-// function addnewBlockProduct() {
-//     // Clone un modèle de document
-//     const documentExportContainer = document.getElementById('productBlock');
-//     const documentTemplate = document.createElement('div');
-//     const uniqueId = Date.now(); // Utilisez un timestamp unique comme identifiant
-//     documentTemplate.className = 'row col-12';
-//     documentTemplate.innerHTML = `
-//         <div class="col-5" style="position: relative;">
-//             <label for="numero_serie_input_${uniqueId}" class="form-label">N° serie</label>
-//             <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="numero_serie_input_${uniqueId}" oninput="searchProductsByNumeroSerie(${uniqueId})">
-//             <div id="search_results_${uniqueId}" style="width: 280px"></div>
-//             <input type="text" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_serie_${uniqueId}">
-//         </div>
-//         <div class="col-1 delet-document">
-//             <button type="button" class="btn btn-outline-danger border border-1 border-danger delete-document-utton" onclick="deleteproductBlock(this)"><i class="bx bx-trash"></i></button>
-//         </div>
-//     `;
-//     documentExportContainer.appendChild(documentTemplate);
-// }
 function addnewBlockProduct() {
     // Clone un modèle de document
     const documentExportContainer = document.getElementById('productBlock');
@@ -896,59 +876,60 @@ function addnewBlockProduct() {
     documentExportContainer.appendChild(documentTemplate);
 }
 
-function editBlockProduct() {
-    const documentExportContainer = document.getElementById('editproductBlock');
-    const documentTemplate = document.createElement('div');
-    const uniqueId = Date.now();
-    documentTemplate.className = 'row col-12';
-    documentTemplate.innerHTML = `
-    <div class="col-5" style="position: relative;">
-        <label for="bon_commande_input_${uniqueId}" class="form-label">Bon de commande</label>
-        <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="bon_commande_input_${uniqueId}" oninput="searchProductsByBonCommand(${uniqueId})">
-        <div id="search_resultsByBon_${uniqueId}"
-            style="
-            width: 280px;
-            position: absolute;
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            background-color: #fff;">
-        </div>
-        <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_bon_${uniqueId}">
-    </div>
-
-    <div class="col-6" style="position: relative;">
-        <label for="numero_serie_input_${uniqueId}" class="form-label">N° serie</label>
-        <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="numero_serie_input_${uniqueId}" oninput="searchProductsByNumeroSerie(${uniqueId})">
-        <div id="search_results_${uniqueId}"
-            style="
-                width: 280px;
-                position: absolute;
-                z-index: 1000;
-                max-height: 200px;
-                overflow-y: auto;
-                border: 1px solid #ccc;
-                background-color: #fff;">
-        </div>
-        <input type="hidden" class="form-control col-3" value="" name="product_uuid[]" id="selected_product_id_by_serie_${uniqueId}">
-    </div>
-
-    <div class="col-1 d-flex text-center py-2 justify-content-center text-align-center align-items-center align-self-center">
-        <button class="delete-button btn-outline-danger w-50 my-2" type="button" onclick="deleteRow(this)"><i class="fadeIn animated bx bx-x"></i></button>
-    </div>
-`;
-    documentExportContainer.appendChild(documentTemplate);
-}
-
 function deleteproductBlock(button) {
     const documentContainer = document.getElementById('productBlock');
     const rowToDelete = button.parentNode.parentNode;
     documentContainer.removeChild(rowToDelete);
 }
 
-function deleteproductBlockEdit(button) {
-    const documentContainer = document.getElementById('editproductBlock');
-    const rowToDelete = button.parentNode.parentNode;
-    documentContainer.removeChild(rowToDelete);
+
+function cloneProductRow() {
+    var originalRow = document.querySelector('.product-item');
+    var newRow = originalRow.cloneNode(true);
+    newRow.querySelectorAll('input[type="text"]').forEach(function (input) {
+        input.value = '';
+    });
+
+    var deleteButton = document.createElement('a');
+    deleteButton.setAttribute('type', 'button');
+    deleteButton.setAttribute('onclick', 'removeProductRow(this)');
+
+    // Ajouter l'icône à la nouvelle ligne
+    var trashIcon = document.createElement('i');
+    trashIcon.setAttribute('class', 'bx bxs-trash');
+    trashIcon.style.fontSize = '1.5em';
+    trashIcon.style.background = 'transparent';
+    trashIcon.style.color = '#dc3545';
+    deleteButton.appendChild(trashIcon);
+
+    newRow.appendChild(deleteButton);
+    document.getElementById('content-block').appendChild(newRow);
+}
+
+function removeProductRow(button) {
+    var rowToRemove = button.parentNode;
+    rowToRemove.parentNode.removeChild(rowToRemove);
+}
+
+
+function tggleFilterBlock(view) {
+    if (view === 'blockCategory') {
+        document.getElementById('blockCategory').style.display = 'block';
+        document.getElementById('blockmarque').style.display = 'none';
+        document.getElementById('blockFamille').style.display = 'none';
+    }
+}
+function toggleFilterBoc(view) {
+    if (view === 'blockMarque') {
+        document.getElementById('blockmarque').style.display = 'block';
+        document.getElementById('blockCategory').style.display = 'none';
+        document.getElementById('blockFamille').style.display = 'none';
+    }
+}
+function toggleFilteBloc(view) {
+    if (view === 'blockFamille') {
+        document.getElementById('blockFamille').style.display = 'block';
+        document.getElementById('blockmarque').style.display = 'none';
+        document.getElementById('blockCategory').style.display = 'none';
+    }
 }

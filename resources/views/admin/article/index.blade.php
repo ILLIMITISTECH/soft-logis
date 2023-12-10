@@ -16,7 +16,7 @@
 
         <div class="ms-auto">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">PARAMETTRES</button>
+                <button type="button" class="btn btn-primary">PARAMETRES</button>
                 <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden"></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
@@ -365,7 +365,7 @@
 <script>
     const searchInput = document.getElementById('Articlesearch');
     const articleListContainer = document.getElementById('articleList');
-    const addedArticles = []; 
+    const addedArticles = [];
 
 
     searchInput.addEventListener('input', function () {

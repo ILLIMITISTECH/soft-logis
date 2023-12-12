@@ -158,6 +158,8 @@ class CollaborateurController extends Controller
                 $role = Role::find($request->id_role);
                 $user->assignRole($role);
 
+                $user->syncRoles([$role->id]);
+
 
                 $dataResponse =[
                     'type'=>'success',

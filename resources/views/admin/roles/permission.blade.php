@@ -30,13 +30,13 @@
                 <div class="">
                     <h3 class="text-uppercase"> {{ $role->name ?? '--' }}</h3>
                 </div>
-                <div class="ms-auto">
+                {{-- <div class="ms-auto">
                     <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal"
                         data-bs-target="#addPermissionModal"><i class="bx bxs-plus-square"></i>Nouvelle
                         Permission</button>
                     <button type="button" class="btn btn-primary radius-30 mt-2 ms-3 mt-lg-0" data-bs-toggle="modal"
                         data-bs-target="#addGroupModal"><i class="bx bxs-plus-square"></i>Nouveau Group</button>
-                </div>
+                </div> --}}
 
                 <!-- Button trigger modal -->
 

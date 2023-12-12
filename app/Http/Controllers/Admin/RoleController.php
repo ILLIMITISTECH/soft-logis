@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -81,6 +82,7 @@ class RoleController extends Controller
             $permis_all = Permission::all();
             $role->revokePermissionTo($permis_all);
             $role->givePermissionTo($request->permissions);
+
 
         if ($role) {
 

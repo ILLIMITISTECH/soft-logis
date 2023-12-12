@@ -146,14 +146,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="id_role" class="col-form-label">Role:</label>
-                                                <select name="id_role" id="role" class="form-control">
-                                                    <option value="{{ $collaborateur->role->id ?? '' }}">{{ $collaborateur->role->name ?? 'N/A' }}</option>
+                                                <select name="id_role" id="roe" class="form-control">
+                                                    {{-- <option value="{{ $collaborateur->role->id ?? '' }}">{{ $collaborateur->role->name ?? 'N/A' }}</option> --}}
                                                     @foreach ($roles as $role)
-
                                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                          
                                                     @endforeach
                                                 </select>
+
                                             </div>
 
                                             <div class="modal-footer">

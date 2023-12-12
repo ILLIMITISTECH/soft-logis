@@ -285,6 +285,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Role Permission
         Route::get('/role', [RoleController::class, 'index'])->name('role');
         Route::post('/role-create', [RoleController::class, 'store'])->name('role.store');
+        Route::get('/permission/{id}', [RoleController::class, 'permission'])->name('permission');
+        Route::post('/permission-create', [RoleController::class, 'permissionStore'])->name('permission.store');
+        Route::post('/group-create', [RoleController::class, 'groupStore'])->name('group.store');
+
+        Route::post('/role-permission/{id}', [RoleController::class, 'rolePermissionSave'])->name('permission.save');
 
 
 

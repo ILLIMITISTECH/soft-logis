@@ -150,10 +150,8 @@
                                                     <option value="{{ $collaborateur->role->id ?? '' }}">{{ $collaborateur->role->name ?? 'N/A' }}</option>
                                                     @foreach ($roles as $role)
 
-                                                        @if ($role->id != $collaborateur->role->id)
                                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
-
-                                                        @endif
+                                          
                                                     @endforeach
                                                 </select>
                                             </div>

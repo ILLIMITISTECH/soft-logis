@@ -575,7 +575,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0">En Attente de livraison</p>
-                                                <h5 class="mb-0">{{ $sourcingPerMonths->where('statut', 'waitLivraison')->count() }}</h5>
+                                                <h5 class="mb-0">{{ $sourcingPerMonths->where('statut', 'odlivraison')->count() }}</h5>
                                             </div>
                                             <div class="ms-auto"><i class='bx bx-cart font-30'></i>
                                             </div>
@@ -617,7 +617,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0">Total Sourcing</p>
-                                                <h5 class="mb-0">{{ $sourcingPerWekly->count() }}</h5>
+                                                <h5 class="mb-0">{{ $countSourcingPerWeekly }}</h5>
                                             </div>
                                             <div class="ms-auto">	<i class='bx bx-cart font-30'></i>
                                             </div>
@@ -637,7 +637,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0">En Attente de livraison</p>
-                                                <h5 class="mb-0">{{ $sourcingPerWekly->where('statut', 'waitLivraison')->count() }}</h5>
+                                                <h5 class="mb-0">{{ $sourcingPerWekly->where('statut', 'odlivraison')->count() }}</h5>
                                             </div>
                                             <div class="ms-auto">	<i class='bx bx-cart font-30'></i>
                                             </div>
@@ -1128,7 +1128,7 @@
                                                     <i class='bx bxs-circle me-1'></i>Demarrer
                                                 </div>
                                                 @endif
-                                                @if ($sourcing->statut == "waitLivraison")
+                                                @if ($sourcing->statut == "odlivraison")
                                                 <div class="badge rounded-pill text-danger bg-light-danger p-2 text-uppercase px-3 border-0">
                                                     <i class='bx bxs-circle me-1'></i>Attente de livraison
                                                 </div>
@@ -1214,7 +1214,7 @@
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <p class="mb-0">En Attente de livraison</p>
-                                                <h5 class="mb-0">{{ $sourcingPerMonths->where('statut', 'waitLivraison')->count() }}</h5>
+                                                <h5 class="mb-0">{{ $sourcingPerMonths->where('statut', 'odlivraison')->count() }}</h5>
                                             </div>
                                             <div class="ms-auto"><i class='bx bx-cart font-30'></i>
                                             </div>

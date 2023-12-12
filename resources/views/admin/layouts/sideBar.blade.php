@@ -21,6 +21,7 @@
         </li>
 
         <li class="menu-label tex-uppercase">partenaire</li>
+        @can('Ajouter Organisation')
         <li>
             <a href="{{ route('admin.company') }}">
                 <div class="parent-icon"><i class="fadeIn animated bx bx-buildings"></i>
@@ -28,7 +29,9 @@
                 <div class="menu-title">Organisations</div>
             </a>
         </li>
+        @endcan
 
+        {{-- @can('Modifier client') --}}
         <li>
             <a href="{{ route('admin.client') }}">
                 <div class="parent-icon"><i class='bx bx-cookie'></i>
@@ -36,6 +39,7 @@
                 <div class="menu-title" style="font-size: 13px !important">Clients</div>
             </a>
         </li>
+        {{-- @endcan --}}
         <li>
             <a href="{{ route('admin.transporteur') }}">
                 <div class="parent-icon"><i class="fadeIn animated bx bx-car"></i>
@@ -159,6 +163,7 @@
                 <div class="menu-title">Collaborateurs</div>
             </a>
         </li>
+
         <li class="menu-label py-0 my-0">Paramètre</li>
         <li>
             <a class="has-arrow" href="javascript:;">

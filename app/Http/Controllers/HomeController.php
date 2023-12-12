@@ -56,6 +56,8 @@ class HomeController extends Controller
         $firstDayOfWeek = $today->startOfWeek()->format('Y-m-d H:i:s'); // semaine
         $lastDayOfWeek = $today->endOfWeek()->format('Y-m-d H:i:s');
 
+        $currentWeek = date('W'); // semaine en cours
+
 
         $stockGlobals = Article::where('etat', 'actif')->get();
 
@@ -101,12 +103,18 @@ class HomeController extends Controller
 
 
         // Reporting sur les entré de stock pour le mois And Semaine Conformity integré
-        $InStock = stockUpdate::where(['mouvement' => 'In'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
+        // $InStock = stockUpdate::where(['mouvement' => 'In'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
+
+        $InStock = stockUpdate::where(['mouvement' => 'In'])
+        ->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        ->get();
+
 
         $conformInStock = stockUpdate::where([
             'mouvement' => 'In',
             'conformity' => 'on'
-        ])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
+        ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        ->get();
         $noConformInStock = stockUpdate::where([
             'mouvement' => 'In',
             'conformity' => 'off'
@@ -115,17 +123,19 @@ class HomeController extends Controller
         // hebdomadaire
 
          // Requête pour obtenir les produits en stock pour la semaine en cours
-        $InStockWekly = stockUpdate::where(['mouvement' => 'In'])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        $InStockWekly = stockUpdate::where(['mouvement' => 'In'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        ->get();
 
         $conformInStockWeekly = stockUpdate::where([
             'mouvement' => 'In',
             'conformity' => 'on'
-        ])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        ->get();
 
         $noConformInStockWeekly = stockUpdate::where([
                 'mouvement' => 'In',
                 'conformity' => 'off'
-            ])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+            ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
 
         $listInStock = stockUpdate::where(['mouvement' => 'In'])
@@ -147,7 +157,7 @@ class HomeController extends Controller
 
         $outStockWekly = stockUpdate::where([
             'mouvement' => 'Out',
-        ])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
         $totalValueWeekly = $outStockWekly->sum(function($item) {
             return $item->product->price_unitaire;
@@ -167,18 +177,22 @@ class HomeController extends Controller
 
         $sourcingInValidatPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'validateDoc'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
         $sourcingReceive = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
-        $sourcingReceivePerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        $sourcingReceivePerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
-        $sourcingPerWekly = Sourcing::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        $sourcingPerWekly = Sourcing::where(['etat' => 'actif'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+
+
+        $countSourcingPerWeekly = Sourcing::where(['etat' => 'actif'])
+        ->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        ->count();
 
           // Récupérer le nombre total de sourcings
     $nbrTotalSourcings = $sourcings->count();
     $nbrSourcingsPerWekly = $sourcingPerWekly->count();
-    $percentageSourcingsPerWekly = ($nbrTotalSourcings !== 0) ? ($nbrSourcingsPerWekly / $nbrTotalSourcings) * 100 : 0;
+    $percentageSourcingsPerWekly = ($nbrTotalSourcings !== 0) ? ($countSourcingPerWeekly / $nbrTotalSourcings) * 100 : 0;
     // recu par weekly
     $nbrSourcReceivPerWekly = $sourcingReceivePerWekly->count();
     $percentagereceivPerWekly = ($nbrTotalSourcings !== 0) ? ($nbrSourcReceivPerWekly / $nbrTotalSourcings) * 100 : 0;
-
 
     $allSourcing = Sourcing::where(['etat' => 'actif'])->get();
 
@@ -216,9 +230,10 @@ class HomeController extends Controller
     $percentageSourcingsPerMonth = ($nbrTotalSourcings !== 0) ? ($nbrSourcingsPerMonth / $nbrTotalSourcings) * 100 : 0;
 
 
-    $sourcInWaitLivrPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'waitLivraison'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
 
-    $sourcInWaitLivrPerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'waitLivraison'])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+    $sourcInWaitLivrPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
+
+    $sourcInWaitLivrPerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
     // Récupérer le nombre total de sourcings
     // $nbrTotalSourcings = $sourcings->count();
@@ -234,7 +249,7 @@ class HomeController extends Controller
     // Ordre transite per Month
 
     $allTransitPerMonth = OdTransite::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
-    $allTransitPerWekly = OdTransite::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+    $allTransitPerWekly = OdTransite::where(['etat' => 'actif'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
     $mostUsedTransitaire = OdTransite::where(['etat' => 'actif'])
     ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
@@ -448,7 +463,7 @@ class HomeController extends Controller
 
 
         return view('admin.dashbord',
-        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures'));
+        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly'));
         // return view('adminHome');
     }
 

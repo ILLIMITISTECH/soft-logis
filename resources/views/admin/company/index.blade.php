@@ -23,12 +23,14 @@
     <div class="card">
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
-
+                @can('Ajouter Organisation')
                 <div class="ms-auto">
                     <a data-bs-toggle="modal" data-bs-target="#addcompany"
-                        class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Ajouter
-                        compagnie</a>
+                        class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>
+                        Ajouter compagnie
+                    </a>
                 </div>
+                @endcan
             </div>
 
             <div class="table-responsive">
@@ -78,9 +80,13 @@
                                     <a href="{{ route('admin.company.show', $company->uuid) }}"
                                         style="cursor: pointer"><i class="lni lni-eye"></i></a>
 
+                                    @can('Modifier Organisation')
                                     <a class="mx-2" data-bs-toggle="modal"
-                                        data-bs-target="#editcompany{{ $company->uuid }}" style="cursor: pointer"> <i
-                                            class='bx bxs-edit'></i></a>
+                                    data-bs-target="#editcompany{{ $company->uuid }}" style="cursor: pointer"> <i
+                                        class='bx bxs-edit'></i></a>
+                                    @endcan
+
+                                    @can('Supprimer Organisation')
 
                                     <a class=" deleteConfirmation" data-uuid="{{ $company->uuid }}"
                                         data-type="confirmation_redirect" data-placement="top"
@@ -89,6 +95,9 @@
                                         data-id="{{ $company->uuid }}" data-param="0"
                                         data-route="{{ route('admin.company.destroy') }}"><i class='bx bxs-trash'
                                             style="cursor: pointer"></i></a>
+
+                                    @endcan
+
                                 </div>
                             </td>
                         </tr>

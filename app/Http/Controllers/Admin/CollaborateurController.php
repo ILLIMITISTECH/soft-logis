@@ -143,7 +143,7 @@ class CollaborateurController extends Controller
         try {
 
 
-
+            $user = User::where(['uuid'=>$id])->first();
             $saving= User::where(['uuid'=>$id])->update([
 
                 'name' => $request->name,
@@ -155,6 +155,9 @@ class CollaborateurController extends Controller
             ]);
 
             if ($saving) {
+                $role = Role::find($request->id_role);
+                $user->assignRole($role);
+
 
                 $dataResponse =[
                     'type'=>'success',

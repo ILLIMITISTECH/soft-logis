@@ -158,6 +158,7 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3" style="margin-top: 20px">
+                        @can('Edit Articles')
                         <a class="ms-3 deleteConfirmation btn btn-primary text-light-primary" data-uuid="{{$article->uuid}}"
                             data-type="confirmation_redirect" data-placement="top"
                             data-token="{{ csrf_token() }}"
@@ -166,9 +167,11 @@
                             data-id="{{$article->uuid}}" data-param="0"
                             data-route="{{route('admin.article.destroy',$article->uuid)}}"><i
                                 class='bx bxs-trash' style="cursor: pointer"></i>Supprimer</a>
-
+                        @endcan
+                        @can('Delette Articles')
                         <button type="button" class="btn btn-primary mb-3 mb-lg-0 text-light-primary" data-bs-toggle="modal" data-bs-target="#editProduct">
                             <i class="text-primary" data-feather="edit"></i>Modifier</button>
+                        @endcan
                         </div>
                     </div>
                 </div>

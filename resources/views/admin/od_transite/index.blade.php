@@ -26,7 +26,7 @@
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
                 <div class="position-relative ">
-                    
+
                 </div>
                 <div class="ms-auto">
                     {{-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#CreateOdreTransite">
@@ -75,11 +75,13 @@
                                     <div class="d-flex order-actions text-end justify-content-between">
                                         <a href="{{ route('admin.od_transite.show', $odretransite->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="Plus d'info"><i class="lni lni-eye"></i></a>
-
+                                        @can('Edit Transit')
                                         <button type="button" class="border-0 col text-primary mx-3 btn bg-transparent" data-bs-toggle="modal" data-bs-target="#EditOdreTransite{{ $odretransite->uuid }}">
                                             <i class='bx bxs-edit'></i>
                                         </button>
+                                        @endcan
 
+                                        @can('Delette Transit')
                                         <a class="deleteConfirmation col bg-transparent text-decoration-none" data-uuid="{{ $odretransite->uuid }}"
                                             data-type="confirmation_redirect" data-placement="top"
                                             data-token="{{ csrf_token() }}"
@@ -92,6 +94,7 @@
                                                 <i class='bx bxs-trash bg-transparent'></i>
                                             </button>
                                         </a>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

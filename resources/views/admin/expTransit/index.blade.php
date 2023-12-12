@@ -82,10 +82,13 @@
                                     <a href="{{ route('admin.transit.to_expedition.show',$transit->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Plus d'info"><i class="lni lni-eye"></i></a>
 
+                                    @can('Edit Transit')
                                     <a class="col bg-transparent text-decoration-none mx-2" data-bs-toggle="modal" data-bs-target="#EditOdreTransite{{ $transit->uuid }}">
                                         <i class='bx bxs-edit'></i>
                                     </a>
+                                    @endcan
 
+                                    @can('Delette Transit')
                                     <a class="deleteConfirmation col bg-transparent text-decoration-none" data-bs-toggle="tooltip"
                                     data-bs-placement="top" data-uuid="{{ $transit->uuid }}"
                                         data-type="confirmation_redirect" data-placement="top"
@@ -96,6 +99,7 @@
                                         data-route="{{ route('admin.transit.to_expedition.destroy',$transit->uuid) }}">
                                         <i class='bx bxs-trash bg-transparent'></i>
                                     </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

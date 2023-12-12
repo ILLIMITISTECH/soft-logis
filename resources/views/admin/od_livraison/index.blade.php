@@ -64,11 +64,12 @@
                                         <a href="{{ route('admin.od_livraisons.show', $oDLivraison->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="Plus d'info"><i class="lni lni-eye"></i>
                                         </a>
-
+                                        @can('Edit Transport')
                                         <button type="button" class="border-0 col mx-3 btn bg-transparent" data-bs-toggle="modal" data-bs-target="#EditOdrelivraison{{ $oDLivraison->uuid }}">
                                             <i class='bx bxs-edit'></i>
                                         </button>
-
+                                        @endcan
+                                        @can('Delette Transport')
                                         <a class="deleteConfirmation col bg-transparent text-decoration-none" data-uuid="{{ $oDLivraison->uuid }}"
                                             data-type="confirmation_redirect" data-placement="top"
                                             data-token="{{ csrf_token() }}"
@@ -81,7 +82,7 @@
                                                 <i class='bx bxs-trash bg-transparent'></i>
                                             </button>
                                         </a>
-
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

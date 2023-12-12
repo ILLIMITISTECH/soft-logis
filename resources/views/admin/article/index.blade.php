@@ -33,8 +33,6 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-between">
 
-
-
                         <div class="position-relative col-sm-12 col-md-4 col-lg-6 col-xl-5 search-bar d-md-block d-none">
                             <input class="form-control px-5" type="search" id="Articlesearch" placeholder="Recherche">
                             <span class="position-absolute top-50 search-show ms-3 translate-middle-y start-0 top-50 fs-5"><i class='bx bx-search'></i></span>
@@ -107,9 +105,11 @@
 
                         <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 justify-content-end text-end float-lg-end">
                             <!-- Button trigger modal -->
+                            @can('Create Articles')
                             <button type="button" class="btn btn-primary mb-3 mb-lg-0" data-bs-toggle="modal"
                                 data-bs-target="#addnewproduct">
                                 <i class='bx bxs-plus-square'></i>Nouveau Produit</button>
+                            @endcan
                         </div>
 
 

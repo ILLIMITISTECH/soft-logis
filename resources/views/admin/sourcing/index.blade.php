@@ -44,9 +44,11 @@
                 </div>
 
                 <div class="ms-auto">
+                    @can('Create Sourcing')
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#CreateSourcing">
                         <i class="bx bxs-plus-square"></i> Nouveau sourcing
                     </button>
+                    @endcan
                 </div>
             </div>
             <div class="table-responsive text-center">
@@ -125,6 +127,7 @@
                                     </td>
                                     <td style="max-width: 100px">
                                         <div class="d-flex order-actions text-end justify-content-between">
+
                                             <a href="{{ route('admin.sourcing.show', $sourcing->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Voir"><i class="lni lni-eye"></i></a>
 
@@ -133,11 +136,14 @@
                                                 <i class='bx bxs-package'></i>
                                             </a>
                                             @else
+                                            @can('Edit Sourcing')
                                             <a type="button" class="border-0 col mx-3 btn" data-bs-toggle="modal" data-bs-target="#EditSourcing{{ $sourcing->uuid }}">
                                                 <i class='bx bxs-edit'></i>
                                             </a>
+                                            @endcan
                                             @endif
 
+                                            @can('Delette Sourcing')
                                             <a class="deleteConfirmation col text-decoration-none" data-uuid="{{$sourcing->uuid}}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
@@ -149,6 +155,7 @@
                                                 data-route="{{route('admin.sourcing.destroy',$sourcing->uuid)}}">
                                                 <i class='bx bxs-trash '></i>
                                             </a>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>

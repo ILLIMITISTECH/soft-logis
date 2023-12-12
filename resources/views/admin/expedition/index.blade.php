@@ -82,7 +82,9 @@
                             {{-- <h5 class="mb-0">Ordre d'expedition</h5> --}}
                         </div>
                         <div class="ms-auto">
+                            @can('Create Expedition')
                             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expeditionModal">Creer nouveau</button>
+                            @endcan
                         </div>
                     </div>
                     <div class="table-responsive mt-4">
@@ -139,8 +141,11 @@
                                                 <i class="lni lni-eye"></i>
                                             </a>
 
+                                            @can('Edit Expedition')
                                             <a data-bs-toggle="modal" data-bs-target="#editExpeditionModal{{ $expedition->uuid }}"  class="" style="cursor: pointer"><i class='bx bxs-edit'></i></a>
+                                            @endcan
 
+                                            @can('Delette Expedition')
                                             <a class="deleteConfirmation" data-uuid="{{$expedition->uuid}}"
                                                 data-type="confirmation_redirect" data-placement="top"
                                                 data-token="{{ csrf_token() }}"
@@ -150,6 +155,7 @@
                                                 data-route="{{route('admin.odre_expedition.destroy',$expedition->uuid)}}"><i
                                                     class='bx bxs-trash' style="cursor: pointer"></i>
                                             </a>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>

@@ -14,7 +14,7 @@
             </nav>
         </div>
         <div class="ms-auto">
-            
+
         </div>
     </div>
     <!--end breadcrumb-->
@@ -60,10 +60,13 @@
                                     <a href="{{ route('admin.expTransport.show', $ordreTransport->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Plus d'info"><i class="lni lni-eye"></i></a>
 
+                                    @can('Edit Transport')
                                     <a class="col bg-transparent text-decoration-none mx-2" data-bs-toggle="modal" data-bs-target="#editOrdreTransport{{ $ordreTransport->uuid }}">
                                         <i class='bx bxs-edit'></i>
                                     </a>
+                                    @endcan
 
+                                    @can('Delette Transport')
                                     <a class="deleteConfirmation col bg-transparent text-decoration-none" data-bs-toggle="tooltip"
                                     data-bs-placement="top" data-uuid="{{ $ordreTransport->uuid }}"
                                         data-type="confirmation_redirect" data-placement="top"
@@ -74,6 +77,7 @@
                                         data-route="{{ route('admin.transport.destroy',$ordreTransport->uuid) }}">
                                         <i class='bx bxs-trash bg-transparent'></i>
                                     </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

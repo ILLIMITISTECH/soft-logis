@@ -57,12 +57,14 @@
                         </div>
                         @endif
                         @if ($facture->statut == 'good_pay')
+                        @can('Payer Facture')
                         <div class="size_14 text-uppercase btn text-center">
                             <form action="{{ route('admin.marck_payed', $facture->uuid) }}" method="post" enctype="multipart/form-data" class="submitForm mx-0 px-0">
                                 @csrf
                                 <button type="submit" class="btn btn-success px-3">Payé</button>
                             </form>
                         </div>
+                        @endcan
                         @endif
                         @if ($facture->statut !== 'payed')
                         <div class="size_14 text-uppercase text-center btn mx-0 px-0">

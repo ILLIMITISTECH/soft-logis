@@ -86,9 +86,11 @@
     <div class="card">
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
-             
+
               <div class="ms-auto">
+                @can('Create Facture')
                 <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addFacture"><i class="bx bxs-plus-square"></i>Nouvelle Facture</button>
+                @endcan
               </div>
             </div>
             <div class="table-responsive">
@@ -157,10 +159,11 @@
                             <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4 text-white"><a href="{{ route('admin.facturation.show', $facture->uuid) }}" class="text-white"   >Detail</a></button></td>
                             <td>
                                 <div class="d-flex order-actions">
-
+                                    @can('Edit Facture')
                                     <a type="button" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $facture->uuid }}"><i class='bx bxs-edit'></i></a>
+                                    @endcan
                                     {{-- <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addFacture"><i class="bx bxs-plus-square"></i>Nouveau Facture</button> --}}
-
+                                    @can('Delette Facture')
                                     <a class="ms-3 deleteConfirmation" data-uuid="{{$facture->uuid}}"
                                         data-type="confirmation_redirect" data-placement="top"
                                         data-token="{{ csrf_token() }}"
@@ -168,7 +171,9 @@
                                         data-title="Vous êtes sur le point de supprimer {{$facture->code}} "
                                         data-id="{{$facture->uuid}}" data-param="0"
                                         data-route="{{route('admin.facturation.destroy',$facture->uuid)}}"><i
-                                            class='bx bxs-trash' style="cursor: pointer"></i></a>
+                                            class='bx bxs-trash' style="cursor: pointer"></i>
+                                    </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

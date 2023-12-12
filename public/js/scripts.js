@@ -933,3 +933,12 @@ function toggleFilteBloc(view) {
         document.getElementById('blockCategory').style.display = 'none';
     }
 }
+
+
+  // Fonction pour cloner un bloc de saisie de données de prestation
+
+
+  // Ajoute un gestionnaire d'événement pour le clic sur le bouton de suppression de prestation
+
+
+

@@ -70,7 +70,7 @@
             <ul id="subMenu">
                 <li><a href="{{ route('admin.category') }}"><i class='bx bx-radio-circle'></i>Categories</a></li>
                 <li><a href="{{ route('admin.marque') }}"><i class='bx bx-radio-circle'></i>Marque</a></li>
-                <li><a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Ship Source</a></li>
+                <li><a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Pays D'origine</a></li>
                 <li><a href="{{ route('admin.article_model') }}"><i class='bx bx-radio-circle'></i>Model d'article</a></li>
                 <li><a href="{{ route('admin.article_family') }}"><i class='bx bx-radio-circle'></i>Famille de produit</a></li>
             </ul>
@@ -144,13 +144,13 @@
                 <div class="menu-title">Facture Prestataire</div>
             </a>
         </li>
-        {{-- <li>
-            <a href="#">
-                <div class="parent-icon"><i class="lni lni-notepad fs-6"></i>
+        <li>
+            <a href="{{ route('admin.refacturation') }}">
+                <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
                 </div>
                 <div class="menu-title">Facture fournisseur</div>
             </a>
-        </li> --}}
+        </li>
         <li class="menu-label">Gestion des Comptes</li>
         <li class="menu-label text-capitalize pt-0 my-0">
             <a href="{{ route('admin.collaborateur.index') }}">
@@ -166,13 +166,14 @@
                 </div>
                 <div class="menu-title">Configuration</div>
             </a>
-            {{-- <ul>
+            <ul>
                 <li> <a href="{{ route('admin.config.index') }}"><i class='bx bx-radio-circle'></i>Documents</a>
                 </li>
-                <li> <a href=""><i class='bx bx-radio-circle'></i>Role</a>
+                <li> <a href="{{ route('admin.role') }}"><i class='bx bx-radio-circle'></i>Role</a>
                 </li>
 
-            </ul> --}}
+            </ul>
+
         </li>
 
     </ul>

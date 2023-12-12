@@ -899,7 +899,7 @@
                                            </div>
                                          </div>
                                          <div class="col">
-                                           <div class="p-3">
+                                           {{-- <div class="p-3">
                                              @if ($latestExpedition != null)
                                              <h5 class="mb-0">{{ Carbon\Carbon::parse($latestExpedition->date_liv)->format('d/m/Y')}}</h5>
                                              @else
@@ -907,7 +907,33 @@
                                              @endif
                                              <small class="mb-0">Date de la prochaine Expedition</small> <br>
                                             <span class="text-danger"> <i class="lni lni-alarm-clock me-1 size_12"></i>{{ $resultDate }}</span>
-                                           </div>
+                                           </div> --}}
+                                           <div class="p-3">
+                                            @if ($latestExpedition != null)
+                                                <h5 class="mb-0">{{ Carbon\Carbon::parse($latestExpedition->date_liv)->format('d/m/Y')}}</h5>
+                                                @php
+                                                    $date_livraison = Carbon\Carbon::parse($latestExpedition->date_liv);
+                                                    $date_actuelle = Carbon\Carbon::now();
+                                                    $interval = $date_livraison->diff($date_actuelle);
+                                                    $jours_restants = $interval->days;
+                                                    if ($date_actuelle->greaterThan($date_livraison)) {
+                                                        $resultDate = "Livraison en cours";
+                                                    } elseif ($jours_restants == 0) {
+                                                        $resultDate = "Livraison prévue aujourd'hui";
+                                                    } else {
+                                                        $resultDate = $jours_restants . " jours avant livraison";
+                                                    }
+                                                @endphp
+                                            @else
+                                                <h5 class="mb-0">--</h5>
+                                                @php
+                                                    $resultDate = "Aucune expédition active";
+                                                @endphp
+                                            @endif
+                                            <small class="mb-0">Date de la prochaine Expedition</small> <br>
+                                            <span class="text-danger"> <i class="lni lni-alarm-clock me-1 size_12"></i>{{ $resultDate }}</span>
+                                        </div>
+
                                          </div>
                                          <div class="col">
                                            <div class="p-3">
@@ -1462,20 +1488,21 @@
                                             <th scope="col">Date d'arrivé</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         @forelse ($nextArrive as $index => $item)
-                                        <tr>
-                                            <th scope="row">{{ $index + 1 }}</th>
-                                            {{-- <td>{{ $item->products->numero_serie }}</td> --}}
-                                            <td><a href="{{ route('admin.sourcing.show', $item->uuid) }}">{{ Carbon\Carbon::parse($item->date_arriver)->format('d/m/Y') }} <span><i class="bx bx-right-arrow-alt align-middle text-success"></i> </span></a></td>
-                                        </tr>
+                                            <tr class="{{ Carbon\Carbon::parse($item->date_arriver)->lt(now()) ? 'text-danger' : (Carbon\Carbon::parse($item->date_arriver)->eq(now()) ? 'text-success' : 'text-primary') }}">
+                                                <th scope="row">{{ $index + 1 }}</th>
+                                                {{-- <td>{{ $item->products->numero_serie }}</td> --}}
+                                                <td ><a href="{{ route('admin.sourcing.show', $item->uuid) }}" class="text-decoration-none ">{{ Carbon\Carbon::parse($item->date_arriver)->format('d/m/Y') }} <span><i class="bx bx-right-arrow-alt align-middle"></i></span></a></td>
+                                            </tr>
                                         @empty
                                             <tr>
                                                 <td colspan="3">Aucune arrivée en cours</td>
                                             </tr>
                                         @endforelse
-
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

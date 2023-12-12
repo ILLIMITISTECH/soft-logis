@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Stock;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ModelController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\ExcelImportController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\Admin\OdLivraisonController;
 use App\Http\Controllers\Admin\TransitaireController;
 use App\Http\Controllers\Admin\TransporteurController;
 use App\Http\Controllers\Admin\CollaborateurController;
+use App\Http\Controllers\Admin\RefacturationController;
 use App\Http\Controllers\Admin\OdreExpeditionController;
 
 
@@ -273,6 +275,31 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/marck_to_good_pay/{uuid}', [FacturationController::class, 'marck_to_good_pay'])->name('marck_to_good_pay');
         Route::post('/marck_payed/{uuid}', [FacturationController::class, 'marck_payed'])->name('marck_payed');
         Route::post('/marck_canceled/{uuid}', [FacturationController::class, 'marck_canceled'])->name('marck_canceled');
+        //Refacturation nemba
+
+        Route::get('/refacturation-index', [RefacturationController::class, 'index'])->name('refacturation');
+        Route::post('/store/refacturation', [RefacturationController::class, 'store'])->name('refacturation.store');
+
+
+
+        // Role Permission
+        Route::get('/role', [RoleController::class, 'index'])->name('role');
+        Route::post('/role-create', [RoleController::class, 'store'])->name('role.store');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Statistic views des articles par statut
         Route::get('/article/inFabrication', [Stock::class, 'inFabrication'])->name('inFabrication');

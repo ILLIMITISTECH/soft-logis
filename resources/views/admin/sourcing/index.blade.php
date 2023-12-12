@@ -50,8 +50,6 @@
                 </div>
             </div>
             <div class="table-responsive text-center">
-
-
                 <table id="sourcin_table" class="table table-striped table-bordered mb-0">
                     <thead class="table-light text-uppercase">
                         <tr>

@@ -458,4 +458,6 @@ class FacturationController extends Controller
         }
 
     }
+
 }
+

@@ -347,8 +347,9 @@ class HomeController extends Controller
     //Le plus recent expedition create ...
     $latestExpedition = Expedition::where('etat', 'actif')
     ->where('statut', '!=', 'livered')
-    ->latest('date_liv')
+    ->orderBy('date_liv', 'asc')
     ->first();
+
 
     if ($latestExpedition) {
         $date = Carbon::parse($latestExpedition->date_liv)->diffInDays();

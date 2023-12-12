@@ -119,7 +119,7 @@
                                 <dd class="col-sm-6">{{ $article->marque->libelle ?? ""}}</dd>
                             </dl>
                             <dl class="row col-12">
-                                <dt class="col-sm-6">Ship Source</dt>
+                                <dt class="col-sm-6">Pays d'Origine</dt>
                                 <dd class="col-sm-6">{{ $article->ship_source->libelle ?? "" }}</dd>
                             </dl>
                         </div>

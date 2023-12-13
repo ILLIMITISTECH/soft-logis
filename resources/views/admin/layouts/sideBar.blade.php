@@ -77,8 +77,8 @@
             </ul>
         </li>
         @endcan
-        <li class="menu-label">IMPORT</li>
         @can('Show Sourcing')
+        <li class="menu-label">IMPORT</li>
         <li>
             <a href="{{ route('admin.sourcing.index') }}">
                 <div class="parent-icon"><i class="lni lni-link fs-6"></i>
@@ -105,8 +105,8 @@
             </a>
         </li>
         @endcan
-        <li class="menu-label">EXPORT</li>
         @can('Show Expedition')
+        <li class="menu-label">EXPORT</li>
         <li>
             <a href="{{ route('admin.odre_expedition.index') }}">
                 <div class="parent-icon"><i class="lni lni-docker fs-6"></i>
@@ -133,6 +133,7 @@
             </a>
         </li>
         @endcan
+        @can('Gerer le Stock')
         <li class="menu-label">Gestion de Stock</li>
         <li>
             <a href="{{ route('admin.stock.mouvement') }}">
@@ -148,6 +149,7 @@
                 <div class="menu-title">Entrepots</div>
             </a>
         </li>
+        @endcan
         @can('Show Facture')
         <li class="menu-label text-uppercase">Facturation</li>
         <li>
@@ -165,6 +167,7 @@
             </a>
         </li>
         @endcan
+        @can('Admin Collaborateur')
         <li class="menu-label">Gestion des Comptes</li>
         <li class="menu-label text-capitalize pt-0 my-0">
             <a href="{{ route('admin.collaborateur.index') }}">
@@ -173,7 +176,8 @@
                 <div class="menu-title">Collaborateurs</div>
             </a>
         </li>
-
+        @endcan
+        @can('Admin Config')
         <li class="menu-label py-0 my-0">Paramètre</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -182,14 +186,13 @@
                 <div class="menu-title">Configuration</div>
             </a>
             <ul>
-                <li> <a href="{{ route('admin.config.index') }}"><i class='bx bx-radio-circle'></i>Documents</a>
-                </li>
+                {{-- <li> <a href="{{ route('admin.config.index') }}"><i class='bx bx-radio-circle'></i>Documents</a>
+                </li> --}}
                 <li> <a href="{{ route('admin.role') }}"><i class='bx bx-radio-circle'></i>Role</a>
                 </li>
-
             </ul>
-
         </li>
+        @endcan
 
     </ul>
     <!--end navigation-->

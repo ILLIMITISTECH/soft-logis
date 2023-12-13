@@ -52,11 +52,14 @@
                         </div>
                         @endif
 
-                        @if (in_array($sourcing->statut, ['stocked', 'odlivraison']))
-                        <div class="">
-                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
-                        </div>
-                    @endif
+                        @can(['	Gerer le Stock', 'Faire Des Entrées De Stock'])
+                            @if (in_array($sourcing->statut, ['stocked', 'odlivraison']))
+                            <div class="">
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
+                            </div>
+                            @endif
+                        @endcan
+
                         @include('admin.stock.reception')
                         @include('admin.od_livraison.addLivraison')
 

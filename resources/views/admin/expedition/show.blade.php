@@ -35,9 +35,13 @@
                     @if ($expedition->statut == 'odTransit')
                         <button class="btn btn-outline-primary text-primary-light" data-bs-toggle="modal" data-bs-target="#addOrdreTransport{{ $expedition->uuid }}">Ordre de transport</button>
                     @endif
-                    @if (in_array($expedition->statut, ['odTransit', 'outStock', 'odTransport']))
-                    <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#destockageModal">Destockage</button>
-                    @endif
+
+                    @can(['Gerer le Stock', 'Faire Des Sorties De Stock'])
+                        @if (in_array($expedition->statut, ['odTransit', 'outStock', 'odTransport']))
+                        <button type="button" class="btn btn-sm btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#destockageModal">Destockage</button>
+                        @endif
+                    @endcan
+
                     @if ($expedition->statut == 'outStock')
                         <form action="{{ route('admin.expedition.wait_expedite', ['uuid' => $expedition->uuid]) }}" method="POST" class="submitForm">
                             @csrf

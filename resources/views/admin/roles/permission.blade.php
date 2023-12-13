@@ -27,25 +27,26 @@
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
 
-                <div class="">
-                    <h3 class="text-uppercase"> {{ $role->name ?? '--' }}</h3>
-                </div>
-                {{-- <div class="ms-auto">
+
+                <div class="ms-auto">
                     <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal"
                         data-bs-target="#addPermissionModal"><i class="bx bxs-plus-square"></i>Nouvelle
                         Permission</button>
                     <button type="button" class="btn btn-primary radius-30 mt-2 ms-3 mt-lg-0" data-bs-toggle="modal"
                         data-bs-target="#addGroupModal"><i class="bx bxs-plus-square"></i>Nouveau Group</button>
-                </div> --}}
+                </div>
 
                 <!-- Button trigger modal -->
 
+            </div>
+            <div class="d-flex align-items-start justify-content-start my-4">
+                <h3 class="text-uppercase"> {{ $role->name ?? '--' }}</h3>
             </div>
 
             <div class="table-responsive">
                 <form action="{{ route('admin.permission.save', $role->id) }}" method="post" class="submitForm">
                     @csrf
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-bordered table-striped table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>Modules</th>

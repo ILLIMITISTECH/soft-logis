@@ -177,7 +177,7 @@
             </a>
         </li>
         @endcan
-        @can('Admin Config')
+        {{-- @can('Admin Config') --}}
         <li class="menu-label py-0 my-0">Paramètre</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -192,7 +192,7 @@
                 </li>
             </ul>
         </li>
-        @endcan
+        {{-- @endcan --}}
 
     </ul>
     <!--end navigation-->

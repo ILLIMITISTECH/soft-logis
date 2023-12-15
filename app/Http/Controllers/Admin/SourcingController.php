@@ -72,6 +72,7 @@ class SourcingController extends Controller
                 'uuid' => Str::uuid(),
                 'statut' => 'draft',
                 'id_navire' => $request->id_navire,
+                'packaging' => $request->packaging,
                 'info_navire' => $request->info_navire,
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
@@ -281,6 +282,7 @@ class SourcingController extends Controller
         try {
             $sourcing = Sourcing::where('uuid', $request->sourcing_id)->update([
                 'id_navire' => $request->id_navire,
+                'packaging' => $request->packaging,
                 'info_navire' => $request->info_navire,
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
@@ -470,7 +472,7 @@ class SourcingController extends Controller
                 $dataResponse =[
                     'type'=>'success',
                     'urlback'=>"back",
-                    'message'=>"Sourcing validé avec succes!",
+                    'message'=>"Operation reussie!",
                     'code'=>200,
                 ];
                 DB::commit();

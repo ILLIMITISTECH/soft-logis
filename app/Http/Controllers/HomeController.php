@@ -271,13 +271,18 @@ class HomeController extends Controller
     $totalDelayTransit = 0;
 
     foreach ($allTransit as $transit) {
-        $livraisonBySourcing = OdLivraison::where(['etat' => 'actif', 'sourcing_id' => $sourcing->uuid])->first();
+        $sourcing = Sourcing::where('uuid', $transit->sourcing_uuid)->first();
 
-        if ($livraisonBySourcing) {
-            $createDateLivSourcing = $livraisonBySourcing->created_at;
-            $totalDelayTransit += Carbon::parse($transit->created_at)->diffInDays($createDateLivSourcing);
-        } else {
-            $totalDelayTransit += 0; // Ajouter 0 si aucune autre mesure
+        if($sourcing != null) {
+            $livraisonBySourcing = OdLivraison::where(['etat' => 'actif', 'sourcing_id' => $sourcing->uuid])->first();
+
+            if ($livraisonBySourcing) {
+                $createDateLivSourcing = $livraisonBySourcing->created_at;
+                $totalDelayTransit += Carbon::parse($transit->created_at)->diffInDays($createDateLivSourcing);
+            } else {
+                $totalDelayTransit += 0; // Ajouter 0 si aucune autre mesure
+            }
+
         }
     }
 

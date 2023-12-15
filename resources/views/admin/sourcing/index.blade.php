@@ -118,9 +118,16 @@
                                             <i class='bx bxs-circle me-1'></i>en cours de livraison
                                         </div>
                                         @endif
+                                        @if ($sourcing->statut == "received")
+                                        <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3 border-0">
+                                            <i class='bx bxs-circle me-1'></i>Reçu ||
+                                            <span>{{   $sourcing->products->where('is_received', true)->count()  }}</span> /
+                                            <span>{{ $sourcing->products->count() }}</span>
+                                        </div>
+                                        @endif
                                         @if ($sourcing->statut == "stocked")
                                         <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3 border-0">
-                                            <i class='bx bxs-circle me-1'></i>Reçu / Stocké
+                                            <i class='bx bxs-circle me-1'></i>Stocké
                                         </div>
                                         @endif
 

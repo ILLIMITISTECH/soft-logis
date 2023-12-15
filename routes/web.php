@@ -96,6 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/update/profile/{uuid}', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/update/mot-passe/{uuid}', [ProfileController::class, 'updateMp'])->name('mot-passe.update');
         // end profile route
 
         // email route
@@ -219,6 +220,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Gestion de stock Reception (in sourcing)
 
         Route::post('/store/stock_reception', [StockController::class, 'receiveProducts'])->name('stock_reception.store');
+        Route::post('/store/stockaction', [StockController::class, 'stockProducts'])->name('stockaction.store');
+
         Route::get('/stock/mouvement', [StockController::class, 'stockMouvement'])->name('stock.mouvement');
         Route::post('/stock/add', [StockController::class, 'addStockProducts'])->name('stock.add.store');
         Route::post('/stock/remove', [StockController::class, 'removeStockProducts'])->name('stock.remove');

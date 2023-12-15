@@ -284,9 +284,19 @@
                                                                 placeholder="00.00" name="largeur" autocomplete="off">
                                                         </div>
                                                         <div class="col-sm-12 col-md-12">
-                                                            <label for="price_unitaire" class="form-label">Prix</label>
+                                                            <label for="price_unitaire" class="form-label">Prix (FCFA)</label>
                                                             <input type="number" class="form-control" id="price_unitaire"
                                                                 placeholder="00.00" name="price_unitaire" autocomplete="off">
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <label for="price_dollars" class="form-label">Prix (Dollars)</label>
+                                                            <input type="number" class="form-control" id="price_dollars"
+                                                                placeholder="00.00" name="price_dollars" autocomplete="off">
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <label for="price_euro" class="form-label">Prix (Euro)</label>
+                                                            <input type="number" class="form-control" id="price_euro"
+                                                                placeholder="00.00" name="price_euro" autocomplete="off">
                                                         </div>
 
                                                         <div class="col-sm-12 col-md-12">
@@ -323,16 +333,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="col-12">
-                                                            <label for="inputCollection"
-                                                                class="form-label">Packaging</label>
-                                                            <select class="form-select" id="inputCollection"
-                                                                name="packaging" autocomplete="off">
-                                                                <option></option>
-                                                                <option value="roro">Roro</option>
-                                                                <option value="container">Container</option>
-                                                            </select>
-                                                        </div>
+
                                                         <input type="hidden" name="status" id="status" value="enFabrication">
                                                         <div class="col-12">
                                                             <div class="d-grid">

@@ -55,6 +55,12 @@ return new class extends Migration
             $table->integer('TotalTvaTransport')->nullable()->default(0);
 
             $table->string('facture_original')->nullable();
+
+            $table->string('num_blTransit')->nullable();
+            $table->string('file_BlTransit')->nullable();
+            $table->string('num_blTransport')->nullable();
+            $table->string('file_BlTransport')->nullable();
+
             $table->string('user_create')->nullable();
             $table->string('user_payed')->nullable();
             $table->longText('note')->nullable();

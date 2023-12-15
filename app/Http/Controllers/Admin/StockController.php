@@ -168,16 +168,16 @@ class StockController extends Controller
 
             $userId = auth()->user()->id;
 
-            $sourcing = Sourcing::where(['uuid'=>$request->input('sourcing_uuid')])->first();
-
             $product = Article::where('uuid', $request->input('product_uuid'))->first();
 
             Article::where('uuid', $request->input('product_uuid'))->update([
-                'entrepot_uuid' => $request->input('entrepot_uuid'),
-                'status' => 'stocked',
+                'date_reception' => $request->input('date_reception'),
+                'status' => 'received',
             ]);
 
-            // dd($request->input('product_uuid'));
+            $isReceived = Sourcing_product::where('product_uuid', $request->input('product_uuid'))->update([
+                'is_received' => true,
+            ]);
 
             if ($product) {
                 if ($request->filled('file')) {
@@ -200,6 +200,57 @@ class StockController extends Controller
                 ]);
 
 
+
+                $updateSourcing = Sourcing::where(['uuid' => $request->input('sourcing_uuid')])->update([
+                    'statut' => 'received',
+                ]);
+
+
+                $dataResponse = [
+                    'type' => 'success',
+                    'urlback' => "back",
+                    'message' => "Enregistré avec succès!",
+                    'code' => 200,
+                ];
+
+                DB::commit();
+            } else {
+                $dataResponse = [
+                    'type' => 'error',
+                    'urlback' => '',
+                    'message' => "Produit non trouvé!",
+                    'code' => 404,
+                ];
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse = [
+                'type' => 'error',
+                'urlback' => '',
+                'message' => "Erreur système! $th",
+                'code' => 500,
+            ];
+        }
+
+        return response()->json($dataResponse);
+    }
+    public function stockProducts(Request $request) {
+        try {
+            DB::beginTransaction();
+
+            $userId = auth()->user()->id;
+
+            $sourcing = Sourcing::where(['uuid'=>$request->input('sourcing_uuid')])->first();
+
+            $product = Article::where('uuid', $request->input('product_uuid'))->first();
+
+            Article::where('uuid', $request->input('product_uuid'))->update([
+                'date_stockage' => $request->input('date_stockage'),
+                'entrepot_uuid' => $request->input('entrepot_uuid'),
+                'status' => 'stocked',
+            ]);
+
+            if ($product) {
 
                 $updateSourcing = Sourcing::where(['uuid' => $request->input('sourcing_uuid')])->update([
                     'statut' => 'stocked',
@@ -273,8 +324,6 @@ class StockController extends Controller
 
         return response()->json($dataResponse);
     }
-
-
 
 
     public function removeStockProducts(Request $request) {

@@ -100,6 +100,26 @@ class FacturationController extends Controller
                     $image = Str::uuid().'.'.$file->getClientOriginalExtension();
                     $file->move('files/',$image);
                 }
+
+                $doc_blTransit = $request->file_BlTransit ?? "";
+                if($doc_blTransit == null) {
+                 $file= 'default.pdf';
+                }else{
+                    $file = $request->file('file_BlTransit');
+                 //    dd($image);
+                    $doc_blTransit = Str::uuid().'.'.$file->getClientOriginalExtension();
+                    $file->move('files/',$doc_blTransit);
+                }
+
+                $doc_blTransport = $request->file_BlTransport ?? "";
+                if($doc_blTransport == null) {
+                 $file= 'default.pdf';
+                }else{
+                    $file = $request->file('file_BlTransport');
+                 //    dd($image);
+                    $doc_blTransport = Str::uuid().'.'.$file->getClientOriginalExtension();
+                    $file->move('files/',$doc_blTransport);
+                }
                 $user = auth()->user();
 
                 $saving= Facturation::create([
@@ -143,6 +163,12 @@ class FacturationController extends Controller
                     'montantTotalHtTransport' => $totalHtTransport,
                     'montantTotalTtcTransport' => $totalTtcTransport,
                     'TotalTvaTransport' => $tauxTvaGlobalTransport,
+
+                    'num_blTransit' => $request->num_blTransit,
+                    'file_BlTransit' => $doc_blTransit,
+
+                    'num_blTransport' => $request->num_blTransport,
+                    'file_BlTransport' => $doc_blTransport,
 
                     'facture_original' => $image,
                     'note' => $request->note,
@@ -219,6 +245,28 @@ class FacturationController extends Controller
                     $image = Str::uuid().'.'.$file->getClientOriginalExtension();
                     $file->move('files/',$image);
                 }
+
+
+                $doc_blTransit = $request->file_BlTransit ?? "";
+                if($doc_blTransit == null) {
+                 $file= $request->file_BlTransit;
+                }else{
+                    $file = $request->file('file_BlTransit');
+                 //    dd($image);
+                    $doc_blTransit = Str::uuid().'.'.$file->getClientOriginalExtension();
+                    $file->move('files/',$doc_blTransit);
+                }
+
+                $doc_blTransport = $request->file_BlTransport ?? "";
+                if($doc_blTransport == null) {
+                 $file= $request->file_BlTransport;
+                }else{
+                    $file = $request->file('file_BlTransport');
+                 //    dd($image);
+                    $doc_blTransport = Str::uuid().'.'.$file->getClientOriginalExtension();
+                    $file->move('files/',$doc_blTransport);
+                }
+
                 $user = auth()->user()->name .' '. auth()->user()->lastname;
 
                 $saving= Facturation::where('uuid', $id)->update([
@@ -252,6 +300,12 @@ class FacturationController extends Controller
 
                     'montantTotalTtc' => $request->montantTotalTtc,
                     'montantTotalHt' => $request->montantTotalHt,
+
+                    'num_blTransit' => $request->num_blTransit,
+                    'file_BlTransit' => $doc_blTransit,
+
+                    'num_blTransport' => $request->num_blTransport,
+                    'file_BlTransport' => $doc_blTransport,
 
                     'facture_original' => $image,
                     'note' => $request->note,

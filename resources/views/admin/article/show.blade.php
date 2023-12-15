@@ -88,8 +88,12 @@
 
                             <div> <span class="badge bg-success py-1 px-2 text-light-success mt-2 ms-3">Entrepot</span><span class="ms-3">{{ $article->entrepot->nom ?? "N/A" }}</span></div>
                         </div>
-                        <div class="col-4 my-auto">
-                            <div class="badge bg-success px-2 py-2 fs-4 text-end">{{ number_format($article->price_unitaire, 0, ',', ' ') }} Fcfa</div>
+                        <div class="col-4 my-auto g-3">
+                            <div class="badge text-success bold px-2 py-1 size_16 text-end">{{ number_format($article->price_unitaire, 0, ',', ' ') }} </div> <span> Fcfa</span> <br>
+
+                            <div class="badge text-success px-2 py-1 size_16 text-end my-2">{{ number_format($article->price_dollars, 0, ',', ' ') }} </div><span> $</span> <br>
+
+                            <div class="badge text-success px-2 py-1 size_16  text-end">{{ number_format($article->price_euro, 0, ',', ' ') }} </div> <span> €</span>
                         </div>
                     </div>
 
@@ -131,12 +135,6 @@
                                 <dt class="col-sm-6">Hauteur</dt>
                                 <dd class="col-sm-6">{{ $article->hauteur }} Mètre</dd>
                             </dl>
-
-                            <dl class="row col-12 my-2">
-                                <dt class="col-sm-6">Packaging</dt>
-                                <dd class="col-sm-6">{{ $article->packaging }}</dd>
-                            </dl>
-
                             <dl class="row col-12">
                                 <dt class="col-sm-6">Largeur</dt>
                                 <dd class="col-sm-6">{{ $article->largeur }} Mètre</dd>
@@ -359,17 +357,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div> --}}
-                                                        <div class="col-12">
-                                                            <label for="inputCollection" class="form-label">Packaging</label>
-                                                            <select class="form-select" id="inputCollection" name="packaging" value="{{ $article->packaging }}">
-                                                                <option>{{ $article->packaging }}</option>
-                                                                @if ($article->packaging == 'container')
-                                                                    <option value="roro">Roro</option>
-                                                                @elseif ($article->packaging == 'roro')
-                                                                    <option value="container">Container</option>
-                                                                @endif
-                                                            </select>
-                                                        </div>
+
                                                         <div class="col-12">
                                                             <div class="d-grid">
                                                                 <button type="submit" class="btn btn-primary">Sauvegarder</button>

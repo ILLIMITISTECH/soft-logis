@@ -35,6 +35,17 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-6 col-md-6 col-lg-6 row">
+                                    <div class="col-8">
+                                        <label for="num_blTransit" class="form-label">N° BL</label>
+                                        <input type="text" class="form-control" id="num_blTransit" name="num_blTransit"
+                                        value="{{ $facture->num_blTransit }}">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="file_BlTransit" class="form-label">Doc BL</label>
+                                        <input type="file" class="form-control" id="file_BlTransit" name="file_BlTransit" value="{{ $facture->file_BlTransit }}">
+                                    </div>
+                                </div>
 
                                 <div class="form-group mt-4">
                                     <hr>
@@ -161,6 +172,16 @@
                                             <option value="{{ $prestatairesTransport->uuid }}" class="transporteur-option">{{ $prestatairesTransport->raison_sociale }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-6 col-md-6 col-lg-6 row">
+                                    <div class="col-8">
+                                        <label for="num_blTransport" class="form-label">N° BL</label>
+                                        <input type="text" class="form-control" id="num_blTransport" name="num_blTransport" value="{{ $facture->num_blTransport }}">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="file_BlTransport" class="form-label">Doc BL</label>
+                                        <input type="file" class="form-control" id="file_BlTransport" name="file_BlTransport" value="{{ $facture->file_BlTransport }}">
+                                    </div>
                                 </div>
 
 

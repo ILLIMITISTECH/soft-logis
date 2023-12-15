@@ -16,8 +16,9 @@ return new class extends Migration
             $table->uuid('uuid')->index();
             $table->string('code')->nullable();
             $table->string('etat')->default('actif');
-            $table->enum('statut', ['draft', 'started', 'validateDoc','odTransit', 'odlivraison', 'stocked'])->default('draft');
+            $table->enum('statut', ['draft', 'started', 'validateDoc','odTransit', 'odlivraison','received', 'stocked'])->default('draft');
             $table->string('id_navire')->nullable();
+            $table->enum('packaging', ['roro', 'container'])->nullable();
             $table->longText('info_navire')->nullable();
             $table->string('date_arriver')->nullable();
             $table->string('date_depart')->nullable();

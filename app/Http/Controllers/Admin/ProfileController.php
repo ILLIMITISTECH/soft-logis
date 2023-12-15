@@ -56,11 +56,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Valider les données du formulaire (nom, email, etc.)
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'string|max:255',
-        ]);
 
         DB::beginTransaction();
         try {
@@ -75,14 +70,12 @@ class ProfileController extends Controller
                    $avatar = Str::uuid().'.'.$file->getClientOriginalExtension();
                    $file->move('avatars/',$avatar);
                }
-
             $saving= User::where(['uuid'=>$id])->update([
 
                 'name' => $request->name,
                 'lastname' => $request->lastname,
                 'phone' => $request->phone,
                 'avatar' => $avatar,
-
             ]);
 
             if ($saving) {
@@ -103,6 +96,71 @@ class ProfileController extends Controller
                     'code'=>500,
                 ];
            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme!",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+
+    public function updateMp(Request $request, string $id)
+    {
+
+        DB::beginTransaction();
+        try {
+            if ($request->filled('password')) {
+                $request->validate([
+                    'password' => 'nullable|string|min:6|confirmed',
+                ]);
+
+                if ($request->password !== $request->password_confirmation) {
+                    DB::rollback();
+                    $dataResponse = [
+                        'type' => 'error',
+                        'urlback' => '',
+                        'message' => "Les mots de passe ne correspondent pas",
+                        'code' => 400,
+                    ];
+                    return response()->json($dataResponse);
+                }
+
+                $mp = auth()->user()->update(['password' => bcrypt($request->password)]);
+
+                if ($mp) {
+                    // Déconnexion de l'utilisateur
+                    auth()->logout();
+
+                    $dataResponse = [
+                        'type' => 'success',
+                        'urlback' => "back",
+                        'message' => "Modifié avec succès! Veuillez vous reconnecter avec votre nouveau mot de passe.",
+                        'code' => 200,
+                    ];
+                    DB::commit();
+                } else {
+                    DB::rollback();
+                    $dataResponse = [
+                        'type' => 'error',
+                        'urlback' => '',
+                        'message' => "Erreur lors de la modification",
+                        'code' => 500,
+                    ];
+                }
+            } else {
+                $dataResponse = [
+                    'type' => 'error',
+                    'urlback' => 'back',
+                    'message' => "Le mot de passe ne doit pas être vide",
+                    'code' => 400,
+                ];
+            }
+
 
         } catch (\Throwable $th) {
             DB::rollBack();

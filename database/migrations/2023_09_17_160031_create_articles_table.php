@@ -27,14 +27,19 @@ return new class extends Migration
             $table->string('famille_uuid')->nullable();
             $table->string('source_uuid')->nullable();
             $table->string('entrepot_uuid')->nullable();
-            $table->enum('status', ['enFabrication', 'sortiUsine', 'enExpedition', 'arriverAuPod', 'stocked', 'expEnCours', 'delivered'])->default("enFabrication");
-            $table->enum('packaging', ['roro', 'container'])->nullable();
+            $table->enum('status', ['enFabrication', 'sortiUsine', 'enExpedition', 'arriverAuPod','received', 'stocked', 'expEnCours', 'delivered'])->default("enFabrication");
+
+            $table->date('date_reception')->nullable();
+            $table->date('date_stockage')->nullable();
+
             $table->integer('poid_tonne')->nullable();
             $table->integer('hauteur')->nullable();
             $table->integer('largeur')->nullable();
             $table->integer('volume')->nullable();
             $table->integer('longueur')->nullable();
             $table->string('price_unitaire')->nullable();
+            $table->string('price_dollars')->nullable();
+            $table->string('price_euro')->nullable();
             $table->string('is_AddSourcing')->default('false');
 
             $table->string('etat')->default('actif');

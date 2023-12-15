@@ -16,16 +16,7 @@
             </nav>
         </div>
         <div class="ms-auto">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary">Settings</button>
-                <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-                </div>
-            </div>
+
         </div>
     </div>
     <!--end breadcrumb-->
@@ -125,10 +116,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
-                                <form action="{{ route('admin.profile.update', auth()->user()->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data">
+                                <form action="{{ route('admin.mot-passe.update', auth()->user()->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
-                                        <div class="row mb-3">
+                                        {{-- <div class="row mb-3">
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Ancien mot de passe</h6>
                                             </div>
@@ -150,6 +141,24 @@
                                             </div>
                                             <div class="col-sm-9 text-secondary">
                                                 <input type="password" class="form-control" value="" name="newpassword"/>
+                                            </div>
+                                        </div> --}}
+
+
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Nouveau mot de passe</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input type="password" class="form-control" name="password"/>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Retaper le mot de passe</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <input type="password" class="form-control" name="password_confirmation"/>
                                             </div>
                                         </div>
 

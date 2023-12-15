@@ -28,16 +28,19 @@ class Article extends Model
     'source_uuid',
     'entrepot_uuid',
     'status',
-    'packaging',
     'poid_tonne',
     'hauteur',
     'largeur',
     'volume',
     'longueur',
     'price_unitaire',
+    'price_dollars',
+    'price_euro',
     'etat',
     'is_AddSourcing',
-    'is_destock'
+    'is_destock',
+    'date_reception',
+    'date_stockage'
    ];
 
    /**
@@ -45,6 +48,9 @@ class Article extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+
+     protected $dates = ['date_reception', 'date_stockage'];
+
    public function category(): BelongsTo
    {
        return $this->belongsTo(Category::class, 'categorie_uuid', 'uuid');

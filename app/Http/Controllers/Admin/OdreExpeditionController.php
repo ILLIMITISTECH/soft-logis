@@ -463,7 +463,7 @@ class OdreExpeditionController extends Controller
                 $dataResponse =[
                     'type'=>'success',
                     'urlback'=>"back",
-                    'message'=>"Documents Approuver !",
+                    'message'=>"Operation reussie !",
                     'code'=>200,
                 ];
                 DB::commit();

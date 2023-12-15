@@ -92,7 +92,7 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase">Entré en Stock</h5>
+                <h5 class="modal-title text-uppercase">Reception de Marchandise</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="stronger" style="min-height: 300px;">
@@ -103,7 +103,7 @@
                                 <tr>
                                     <th >Famille</th>
                                     <th >N* serie</th>
-                                    <th >Entrepot</th>
+                                    <th>Date de reception</th>
                                     <th >Conforme</th>
                                     <th ></th>
                                     <th >Action</th>
@@ -119,30 +119,26 @@
                                             <td >{{ $product->product->numero_serie ?? '' }}</td>
                                             <input type="hidden" name="product_uuid" value="{{ $product->product->uuid }}">
                                             @if ($product->product->status == 'arriverAuPod')
-                                                <td >
-                                                    <select name="entrepot_uuid" class="form-select" id="entrepot_uuid" required>
-                                                        <option selected disabled>Choisir entrepôt</option>
-                                                        @foreach ($entrepots as $entrepot)
-                                                            <option value="{{ $entrepot->uuid }}">{{ $entrepot->nom }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('entrepot_uuid')
+
+                                                <td>
+                                                    <input type="date" class="form-control" name="date_reception" required>
+                                                    @error('date_reception')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </td>
 
-                                                <td class="row d-flex justify-content-between px-1">
+                                                <td class="row d-flex justify-content-between px-0">
                                                     <input type="radio" name="conformity" value="on" class="btn-check" id="conforme{{$loop->index}}" autocomplete="off">
                                                     <label class="btn btn-outline-success" for="conforme{{$loop->index}}">Oui</label>
 
                                                     <input type="radio" name="conformity" value="off" class="btn-check" id="non-conforme{{$loop->index}}" autocomplete="off">
                                                     <label class="btn btn-outline-danger" for="non-conforme{{$loop->index}}">Non</label>
                                                 </td>
-                                                <td style="max-width: 180px">
+                                                <td style="max-width: 140px">
                                                     <input type="file" class="form-control" name="file">
                                                 </td>
-                                                <td >
-                                                    <button type="submit" class="btn btn-primary">Receptionné</button>
+                                                <td class="text-center">
+                                                    <button type="submit" class="btn btn-primary text-center">Receptionné</button>
                                                 </td>
                                             @elseif (in_array($product->product->status, ['enFabrication', 'sortiUsine', 'enExpedition']))
                                                 <td class="col-md-3 text-danger size_12">Produit pas encore au POD</td>

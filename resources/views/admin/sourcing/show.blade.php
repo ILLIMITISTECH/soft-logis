@@ -44,7 +44,6 @@
                             <button type="submit" data-bs-toggle="modal" data-bs-target="#CreateOdreTransite" class="btn btn-primary">Ordre de transit</button>
                         @endif
 
-
                         @if ($sourcing->statut === 'odTransit')
                         <div class="">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateOdrelivraison">Ordre de livraison
@@ -52,15 +51,37 @@
                         </div>
                         @endif
 
-                        @can(['	Gerer le Stock', 'Faire Des Entrées De Stock'])
-                            @if (in_array($sourcing->statut, ['stocked', 'odlivraison']))
+                        @can(['Gerer le Stock'])
+                            @if (in_array($sourcing->statut, ['received', 'odlivraison']))
+                            @if ($sourcing->products->where('is_received', true)->count() < $sourcing->products->count())
+                                <div class="">
+                                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
+                                </div>
+
+                            @endif
+                            @endif
+                        @elsecan('Faire Des Entrées De Stock')
+                        @if (in_array($sourcing->statut, ['received','odlivraison']))
+                            @if ($sourcing->products->where('is_received', true)->count() < $sourcing->products->count())
+                                <div class="">
+                                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
+                                </div>
+
+                            @endif
+
+                        @endif
+                        @endcan
+
+                        @can(['Gerer le Stock'])
+                            @if (in_array($sourcing->statut, ['odlivraison','stocked', 'received']))
                             <div class="">
-                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addStockage">Stocké le produit</button>
                             </div>
                             @endif
                         @endcan
 
                         @include('admin.stock.reception')
+                        @include('admin.stock.stockage')
                         @include('admin.od_livraison.addLivraison')
 
                     </div>
@@ -77,7 +98,7 @@
                         <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between overflow-x-scroll"
                             role="tablist">
 
-
+                            @if (in_array($sourcing->statut, ['started', 'validateDoc']))
                             <div class="">
                                 <div class="step" data-target="#test-l-1">
                                     <div class="step-trigger " role="tab" id="stepper1trigger1" aria-controls="test-l-1">
@@ -90,6 +111,7 @@
                                 </div>
                             </div>
                             <div class="bs-stepper-line"></div>
+                            @endif
 
                             <div class="step" data-target="#test-l-2">
                                 <div class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2">
@@ -126,14 +148,28 @@
                             <div class="bs-stepper-line"></div>
 
                             <div class="step" data-target="#test-l-5">
-                                <div class="step-trigger " role="tab" id="stepper1trigger5" aria-controls="test-l-5">
-                                    <div class="bs-stepper-circle {{ $sourcing->statut === 'stocked' ? 'bg-success text-light' : '' }}">5</div>
+                                <div class="step-trigger" role="tab" id="stepper1trigger5" aria-controls="test-l-5">
+                                    <div class="bs-stepper-circle {{ $sourcing->statut === 'received' ? 'bg-success text-light' : '' }}">5</div>
                                     <div class="">
-                                        <h5 class="mb-0 steper-title {{ $sourcing->statut === 'stocked' ? 'text-success' : '' }}">Reçu/Stocké</h5>
+                                        <h5 class="mb-0 steper-title {{ $sourcing->statut === 'received' ? 'text-success' : '' }}">Reçu</h5>
+                                        <p class="mb-0 steper-sub-title">Reception</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (!in_array($sourcing->statut, ['started', 'validateDoc']))
+                            <div class="bs-stepper-line"></div>
+
+                            <div class="step" data-target="#test-l-6">
+                                <div class="step-trigger " role="tab" id="stepper1trigger5" aria-controls="test-l-5">
+                                    <div class="bs-stepper-circle {{ $sourcing->statut === 'stocked' ? 'bg-success text-light' : '' }}">6</div>
+                                    <div class="">
+                                        <h5 class="mb-0 steper-title {{ $sourcing->statut === 'stocked' ? 'text-success' : '' }}">Stocké</h5>
                                         <p class="mb-0 steper-sub-title">Mise en stock</p>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -155,45 +191,40 @@
 
                             <hr>
                             <div class="card-body w-100">
-                                <div class="row mb-3 mt-3">
-                                    <div class="col-md-4">
-                                        <h6 class="mb-0">N* de sourcing</h6>
-                                    </div>
-                                    <div class="col-md-8 text-secondary">
-                                        <div class="text-muted">{{ ($sourcing->code) ? $sourcing->code : '--' }}</div>
-                                    </div>
+                                <div class="col-12 row">
+                                    <dl class="row col-6">
+                                        <dt class="col-sm-6">N* de sourcing</dt>
+                                        <dd class="col-sm-6">{{ ($sourcing->code) ? $sourcing->code : '--' }}</dd>
+                                    </dl>
+                                    <dl class="row col-6 my-2">
+                                        <dt class="col-sm-6">Packaging</dt>
+                                        <dd class="col-sm-6">{{ $sourcing->packaging ?? '--' }}</dd>
+                                    </dl>
+
                                 </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <h6 class="mb-0">Date de départ</h6>
-                                    </div>
-                                    <div class="col-md-8 text-secondary">
-                                        <div class="text-muted">{{ Carbon\Carbon::parse($sourcing->date_depart)->format('d/m/Y') ?? '--' }}</div>
-                                    </div>
+                                <div class="col-12 row">
+                                    <dl class="row col-6">
+                                        <dt class="col-sm-6">Date de départ</dt>
+                                        <dd class="col-sm-6">{{ Carbon\Carbon::parse($sourcing->date_depart)->format('d/m/Y') ?? '--' }}</dd>
+                                    </dl>
+                                    <dl class="row col-6 my-2">
+                                        <dt class="col-sm-6">Date d'arrivée</dt>
+                                        <dd class="col-sm-6">{{ Carbon\Carbon::parse($sourcing->date_arriver)->format('d/m/Y') ?? '--' }}</dd>
+                                    </dl>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <h6 class="mb-0">Date d'arrivée</h6>
-                                    </div>
-                                    <div class="col-md-8 text-secondary">
-                                        <div class="text-muted">{{ Carbon\Carbon::parse($sourcing->date_arriver)->format('d/m/Y') ?? '--' }}</div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <h6 class="mb-0">Identifiant du Navire</h6>
-                                    </div>
-                                    <div class="col-md-8 text-secondary">
-                                        <div class="text-muted">{{ ($sourcing->id_navire) ? $sourcing->id_navire : '--' }}</div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3 col-12">
+
+                                <dl class="row col-6 my-2">
+                                    <dt class="col-sm-6">Identifiant du Navire</dt>
+                                    <dd class="col-sm-6">{{ ($sourcing->id_navire) ? $sourcing->id_navire : '--' }}</dd>
+                                </dl>
+
+                                <div class=" my-3 col-12">
                                     <div class="col-md-4">
                                         <h6 class="mb-0">Information sur le navire</h6>
                                     </div>
-                                    <div class="col-md-8 text-secondary">
-                                        <div class="form-control disabled text-start" disabled>
+                                    <div class="col-md-12 text-secondary">
+                                        <div class="form-control disabled text-start" disabled @readonly(true)>
                                             {{ ($sourcing->info_navire) ? $sourcing->info_navire : '--' }}
                                         </div>
                                     </div>
@@ -254,8 +285,11 @@
                                                                     Arrivé au POD
                                                                 </span>
                                                                 @endif
+                                                                @if ($sourcingProduct->product->status == 'received')
+                                                                <span class="badge bg-warning py-2 rounded"> <span class="text-uppercase">Reçu</span> | {{  $sourcingProduct->product->date_reception  }}</span>
+                                                                @endif
                                                                 @if ($sourcingProduct->product->status == 'stocked')
-                                                                <span class="badge bg-warning py-2 rounded">Reçu/Stocké</span>
+                                                                <span class="badge bg-warning py-2 rounded">Stocké</span>
                                                                 @endif
                                                                 @if ($sourcingProduct->product->status == 'expEnCours')
                                                                 <span class="badge bg-primary py-2 rounded">En cours d'expedition Export</span>

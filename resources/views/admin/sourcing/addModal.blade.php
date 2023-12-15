@@ -45,7 +45,7 @@
                         </div>
                     </div> --}}
                     <div class="content">
-                        <div class="row col-12">
+                        <div class="row col-16">
                             <div class="mb-3" style="font-size: 13px">
                                 <label for="id_navire" class="form-label text-uppercase">Identifiant du navire <span><span class="text-danger">*</span></span></label>
                                 <input type="text" class="form-control @error('id_navire') is-invalid @enderror" id="id_navire" name="id_navire" autocomplete="off">
@@ -55,6 +55,16 @@
                                 </span>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="col-16 my-3">
+                            <label for="inputCollection"
+                                class="form-label">Packaging</label>
+                            <select class="form-select" id="inputCollection"
+                                name="packaging" autocomplete="off">
+                                <option></option>
+                                <option value="roro">Roro</option>
+                                <option value="container">Container</option>
+                            </select>
                         </div>
 
                         <div class=" row text-uppercase" style="font-size: 13px">

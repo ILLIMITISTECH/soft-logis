@@ -16,6 +16,7 @@ class Sourcing extends Model
         'code',
         'etat',
         'statut',
+        'packaging',
         'id_navire',
         'info_navire',
         'date_arriver',

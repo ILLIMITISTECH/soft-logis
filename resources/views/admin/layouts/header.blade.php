@@ -335,7 +335,7 @@
                     <img src="{{ asset("avatars/".auth()->user()->avatar) }}" class="user-img" alt="user avatar">
                     <div class="user-info">
                         <p class="user-name mb-0">{{ auth()->user()->name. ' ' .auth()->user()->lastname }}</p>
-                        <p class="designattion mb-0">Administrateur</p>
+                        <p class="designattion mb-0">{{  auth()->user()->role->name ?? '--'}}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">

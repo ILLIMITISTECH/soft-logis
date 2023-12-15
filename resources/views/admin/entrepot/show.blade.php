@@ -99,15 +99,7 @@
                             class='bx bx-dots-horizontal-rounded font-22 text-option'></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">Action</a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;">Another action</a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;">Something else here</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -121,6 +113,8 @@
                             <th>Image</th>
                             <th>N* Serie</th>
                             <th>Statut</th>
+                            <th>Date Reception</th>
+                            <th>Date stockage</th>
                             <th>Conformité</th>
                         </tr>
                     </thead>
@@ -130,11 +124,14 @@
                                 <td>{{ $product->familly->libelle ?? ''}}</td>
                                 <td><img src="{{ asset('files/' . $product->image) }}" height="50"></td>
                                 <td>{{ $product->numero_serie ?? ''}}</td>
+
                                 <td>
                                     @if ($product->status == 'stocked')
                                         <span class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3">Reçu/Stocké</span>
                                     @endif
                                 </td>
+                                <td>{{ Carbon\Carbon::parse($product->date_reception)->format('d/m/Y') ?? ''}}</td>
+                                <td>{{ Carbon\Carbon::parse($product->date_stockage)->format('d/m/Y') ?? ''}}</td>
                                 <td>
                                     @php
                                         $productConformity =  App\Models\stockUpdate::where('product_id', $product->id)->first();

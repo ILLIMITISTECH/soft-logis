@@ -33,8 +33,19 @@
                         </div>
                         <div class="mb-3" style="font-size: 13px">
                             <label for="info_navire" class="form-label text-uppercase">Description du navire</label>
-                            <textarea class="form-control" id="info_navire" name="info_navire" >{{ $sourcing->info_navire }}</textarea>
+                            <textarea class="form-control" id="info_navire" name="info_navire" >{{ $sourcing->info_navire ?? '' }}</textarea>
                         </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputCollection" class="form-label">Packaging</label>
+                        <select class="form-select" id="inputCollection" name="packaging" value="{{ $sourcing->packaging }}">
+                            <option>{{ $sourcing->packaging ?? ''}}</option>
+                            @if ($sourcing->packaging == 'container')
+                                <option value="roro">Roro</option>
+                            @elseif ($sourcing->packaging == 'roro')
+                                <option value="container">Container</option>
+                            @endif
+                        </select>
                     </div>
 
                     <div class="modal-footer">

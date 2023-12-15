@@ -40,14 +40,29 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center gy-2">
+                            {{-- <div class="d-flex flex-column align-items-center text-center gy-2">
                                 <img src="{{ asset('files/' . $company->logo) }}" class="rounded-circle') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                 <div class="mt-3">
                                     <h4 class="text-uppercase">{{ $company->raison_sociale }}</h4>
                                     <p class="text-secondary mb-2 text-capitalize">{{ $company->type }}</p>
                                 </div>
 
-                            </div>
+                            </div> --}}
+
+                            <div class="d-flex flex-column align-items-center text-center gy-2 position-relative">
+                                @if ($company->isActive == 'false')
+                                  <div class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger text-uppercase" style="transform: skew(-20deg);">Inactive</div>
+                                @else
+                                  <div class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-success text-uppercase" style="transform: skew(-20deg);">Active</div>
+                                @endif
+                                <img src="{{ asset('files/' . $company->logo) }}" class="rounded-circle" alt="Admin" width="110">
+                                <div class="mt-3">
+                                  <h4 class="text-uppercase">{{ $company->raison_sociale }}</h4>
+                                  <p class="text-secondary mb-2 text-capitalize">{{ $company->type }}</p>
+                                </div>
+                              </div>
+
+
                             <hr class="my-4" />
                             <ul class="list-group list-group-flush">
                                 @if ($company->type === 'transporteur')

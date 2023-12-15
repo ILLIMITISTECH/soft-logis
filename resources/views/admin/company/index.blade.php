@@ -71,7 +71,7 @@
                             <td>
 
                                 @if ($company->isActive === 'true')
-                                <span class="badge bg-danger p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Inactif</span>
+                                <span class="badge bg-success p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Actif</span>
                                 @else
                                 <span class="badge bg-danger p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Inactif</span>
                                 @endif

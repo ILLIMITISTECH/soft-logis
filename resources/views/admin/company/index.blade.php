@@ -69,9 +69,13 @@
                             <td>{{ $company->phone }}</td>
                             <td class="text-capitalize">{{ $company->type }}</td>
                             <td>
-                                <span
-                                    class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i
-                                        class='bx bxs-circle me-1'></i>{{ $company->etat }}</span>
+
+                                @if ($company->isActive === 'true')
+                                <span class="badge bg-danger p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Inactif</span>
+                                @else
+                                <span class="badge bg-danger p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Inactif</span>
+                                @endif
+
                             </td>
 
                             <td>
@@ -339,8 +343,8 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="contact_one_lastName" class="col-form-label">Prénom du contact:</label>
-                            <input type="text" class="form-control" id="contact_one_name
-                                contact_one_lastName" name="contact_one_lastName">
+                            <input type="text" class="form-control"
+                            id="contact_one_lastName" name="contact_one_lastName">
                         </div>
                     </div>
                     <hr class="my-3">

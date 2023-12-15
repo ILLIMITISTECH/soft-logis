@@ -15,6 +15,22 @@
         </div>
         <div class="ms-auto">
 
+            @if($company->isActive === 'true')
+            <form action="{{ route('admin.company.block', $company->id) }}" method="post" class="submitForm">
+                @csrf
+
+                <input type="hidden" name="company_uuid" value="{{ $company->uuid }}">
+                <button type="submit" class="btn btn-primary">BLOQUER</button>
+            </form>
+            @elseif ($company->isActive === 'false')
+            <form action="{{ route('admin.company.active', $company->uuid) }}" method="post" class="submitForm">
+                @csrf
+
+                <input type="hidden" name="company_uuid" value="{{ $company->uuid }}">
+                <button type="submit" class="btn btn-primary text-uppercase">Debloquer</button>
+            </form>
+            @endif
+
         </div>
     </div>
     <!--end breadcrumb-->

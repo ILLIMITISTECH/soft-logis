@@ -177,7 +177,9 @@
                                 </div>
                             </td>
                         </tr>
-                        @include('admin.facturation.editModal')
+                            {{-- @if ($facture->transitaire) --}}
+                                @include('admin.facturation.editModal')
+                            {{-- @endif --}}
                         @empty
 
                         @endforelse

@@ -317,10 +317,42 @@
                                                             <input type="number" class="form-control" id="largeur"
                                                                 placeholder="{{ $article->largeur }}" name="largeur" value="{{ $article->largeur }}">
                                                         </div>
+                                                        <div class="col-6">
+                                                            <label for="inputProductMarque" class="form-label">Marque</label>
+                                                            <select class="form-select" id="inputProductMarque" name="marque_uuid" >
+                                                                <option value="{{ $article->marque->uuid ?? "" }}">{{ $article->marque->libelle ?? ""}}</option>
+                                                                @foreach ($marques as $marque)
+                                                                    @if ($marque->uuid != $article->marque->uuid)
+                                                                    <option value="{{ $marque->uuid }}">{{ $marque->libelle }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="inputCategory" class="form-label">Categorie</label>
+                                                            <select class="form-select" id="inputCategory" name="categorie_uuid" autocomplete="off">
+                                                                <option value="{{ $article->category->uuid ?? "" }}">{{ $article->category->libelle ?? "" }}</option>
+                                                                @foreach ($categories as $categorie)
+                                                                    @if ($categorie->uuid != $article->category->uuid )
+                                                                    <option value="{{ $categorie->uuid }}">{{ $categorie->libelle }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                         <div class="col-md-12">
                                                             <label for="price_unitaire" class="form-label">Prix (FCFA)</label>
                                                             <input type="number" class="form-control" id="price_unitaire"
                                                                 placeholder="{{ $article->price_unitaire }}" name="price_unitaire" value="{{ $article->price_unitaire }}">
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <label for="price_dollars" class="form-label">Prix (Dollars)</label>
+                                                            <input type="number" class="form-control" id="price_dollars"
+                                                                 name="price_dollars" value="{{ $article->price_dollars }}}}">
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <label for="price_euro" class="form-label">Prix (Euro)</label>
+                                                            <input type="number" class="form-control" id="price_euro"
+                                                                 name="price_euro" value="{{ $article->price_euro }}}}">
                                                         </div>
 
                                                         <div class="col-md-12">
@@ -335,28 +367,7 @@
                                                             </select>
                                                         </div>
 
-                                                        <div class="col-12">
-                                                            <label for="inputProductMarque" class="form-label">Marque</label>
-                                                            <select class="form-select" id="inputProductMarque" name="marque_uuid" >
-                                                                <option value="{{ $article->marque->uuid ?? "" }}">{{ $article->marque->libelle ?? ""}}</option>
-                                                                @foreach ($marques as $marque)
-                                                                    @if ($marque->uuid != $article->marque->uuid)
-                                                                    <option value="{{ $marque->uuid }}">{{ $marque->libelle }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        {{-- <div class="col-12">
-                                                            <label for="inputCategory" class="form-label">Categorie</label>
-                                                            <select class="form-select" id="inputCategory" name="categorie_uuid" autocomplete="off">
-                                                                <option value="{{ $article->category->uuid ?? "" }}">{{ $article->category->libelle ?? "" }}</option>
-                                                                @foreach ($categories as $categorie)
-                                                                    @if ($categorie->uuid != $article->category->uuid )
-                                                                    <option value="{{ $categorie->uuid }}">{{ $categorie->libelle }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </div> --}}
+
 
                                                         <div class="col-12">
                                                             <div class="d-grid">

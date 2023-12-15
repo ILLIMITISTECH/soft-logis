@@ -20,33 +20,9 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    {{-- <div class="content">
-                        <div class="row col-12">
-                            <div class="mb-3" style="font-size: 13px">
-                                <label for="id_navire" class="form-label text-uppercase">Identifiant du navire <span><span class="text-danger">*</span></span></label>
-                                <input type="text" class="form-control" id="id_navire" name="id_navire" autocomplete="off" required>
-                                @error('id_navire')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class=" row text-uppercase" style="font-size: 13px">
-                            <div class="col-6">
-                                <label for="date_depart" class="form-label">Date de départ</label>
-                                <input type="date" class="form-control" id="date_depart" name="date_depart" autocomplete="off">
-                            </div>
-                            <div class="col-6">
-                                <label for="date_arriver" class="form-label">Date estimative d'arrivée</label>
-                                <input type="date" class="form-control" id="date_arriver" name="date_arriver" autocomplete="off">
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="content">
-                        <div class="row col-16">
-                            <div class="mb-3" style="font-size: 13px">
+                        <div class="row ">
+                            <div class="mb-3 col-6" style="font-size: 13px">
                                 <label for="id_navire" class="form-label text-uppercase">Identifiant du navire <span><span class="text-danger">*</span></span></label>
                                 <input type="text" class="form-control @error('id_navire') is-invalid @enderror" id="id_navire" name="id_navire" autocomplete="off">
                                 @error('id_navire')
@@ -55,17 +31,19 @@
                                 </span>
                                 @enderror
                             </div>
+
+                            <div class="col-6">
+                                <label for="inputCollection"
+                                    class="form-label">Packaging</label>
+                                <select class="form-select" id="inputCollection"
+                                    name="packaging" autocomplete="off">
+                                    <option></option>
+                                    <option value="roro">Roro</option>
+                                    <option value="container">Container</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-16 my-3">
-                            <label for="inputCollection"
-                                class="form-label">Packaging</label>
-                            <select class="form-select" id="inputCollection"
-                                name="packaging" autocomplete="off">
-                                <option></option>
-                                <option value="roro">Roro</option>
-                                <option value="container">Container</option>
-                            </select>
-                        </div>
+
 
                         <div class=" row text-uppercase" style="font-size: 13px">
                             <div class="col-6">

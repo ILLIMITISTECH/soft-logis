@@ -33,6 +33,8 @@ return new class extends Migration
             $table->string('contact_two_lastName')->nullable();
             $table->string('contact_two_email')->nullable();
 
+            $table->enum('isActive')->default('true');
+
             $table->string('etat')->default('actif');
             $table->timestamps();
         });

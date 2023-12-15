@@ -28,5 +28,6 @@ class Company extends Model
         'contact_two_name',
         'contact_two_lastName',
         'contact_two_email',
+        'isActive',
     ];
 }

@@ -108,6 +108,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/destroy/company', [CompanyController::class, 'destroy'])->name('company.destroy');
         Route::post('/update/company/{uuid}', [CompanyController::class, 'update'])->name('company.update');
         Route::get('/show/company/{uuid}', [CompanyController::class, 'show'])->name('company.show');
+
+        Route::post('/active/company', [CompanyController::class, 'toActive'])->name('company.active');
+        Route::post('/block/company', [CompanyController::class, 'toBlock'])->name('company.block');
+
         // transporteur route
         Route::get('/transporteur', [TransporteurController::class, 'index'])->name('transporteur');
         Route::post('/store/transporteur', [TransporteurController::class, 'store'])->name('transporteur.store');

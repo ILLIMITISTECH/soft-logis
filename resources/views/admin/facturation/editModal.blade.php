@@ -12,7 +12,7 @@
 
                         @if ($facture->typeFacture == 'transitaire')
 
-                            @if ($facture->transitaire->type == 'transitaire')
+                            {{-- @if ($facture->transitaire->type == 'transitaire') --}}
 
                             <div class="row">
                                 <div class="col-12 col-lg-6">
@@ -26,6 +26,7 @@
                                 </div>
                             </div>
                             <div class="content row d-flex flex-row py-4 col-12">
+                                @if ($facture->transitaire)
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <label for="input47" class="form-label">Transitaire</label>
                                     <select class="form-select" id="input47" name="transitaire_uuid">
@@ -35,6 +36,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @endif
                                 <div class="col-6 col-md-6 col-lg-6 row">
                                     <div class="col-8">
                                         <label for="num_blTransit" class="form-label">N° BL</label>
@@ -139,7 +141,7 @@
                                 </div>
                             </div>
 
-                            @endif
+                            {{-- @endif --}}
 
                         @endif
 

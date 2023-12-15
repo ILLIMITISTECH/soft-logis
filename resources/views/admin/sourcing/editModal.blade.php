@@ -25,28 +25,32 @@
                     <hr class="mb-4 mt-2">
 
                     <!-- Informations sur le Navire -->
-                    <div class="">
+                    <div class=" row">
 
-                        <div class="mb-3" style="font-size: 13px">
+                        <div class="mb-3 col-6" style="font-size: 13px">
                             <label for="id_navire" class="form-label text-uppercase">Identifiant du navire</label>
                             <input type="text" class="form-control" id="id_navire" name="id_navire"  value="{{ $sourcing->id_navire }}">
                         </div>
-                        <div class="mb-3" style="font-size: 13px">
-                            <label for="info_navire" class="form-label text-uppercase">Description du navire</label>
-                            <textarea class="form-control" id="info_navire" name="info_navire" >{{ $sourcing->info_navire ?? '' }}</textarea>
+
+                        <div class="col-6">
+                            <label for="inputCollection" class="form-label">Packaging</label>
+                            <select class="form-select" id="inputCollection" name="packaging" value="{{ $sourcing->packaging }}">
+                                <option>{{ $sourcing->packaging ?? ''}}</option>
+                                @if ($sourcing->packaging == 'container')
+                                    <option value="roro">Roro</option>
+                                @elseif ($sourcing->packaging == 'roro')
+                                    <option value="container">Container</option>
+                                @endif
+                            </select>
                         </div>
+
                     </div>
-                    <div class="col-12">
-                        <label for="inputCollection" class="form-label">Packaging</label>
-                        <select class="form-select" id="inputCollection" name="packaging" value="{{ $sourcing->packaging }}">
-                            <option>{{ $sourcing->packaging ?? ''}}</option>
-                            @if ($sourcing->packaging == 'container')
-                                <option value="roro">Roro</option>
-                            @elseif ($sourcing->packaging == 'roro')
-                                <option value="container">Container</option>
-                            @endif
-                        </select>
+
+                    <div class="mb-3 row" style="font-size: 13px">
+                        <label for="info_navire" class="form-label text-uppercase col-12">Description du navire</label>
+                        <textarea class="form-control col-12" id="info_navire" name="info_navire" >{{ $sourcing->info_navire ?? '' }}</textarea>
                     </div>
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>

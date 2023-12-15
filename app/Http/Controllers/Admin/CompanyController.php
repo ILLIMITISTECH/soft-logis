@@ -113,7 +113,7 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        $company = Company::where(['uuid'=>$id])->first();
+        $company = Company::where(['uuid'=>$id])->firstOrFail();
         return view('admin.company.show', compact('company'));
     }
 
@@ -197,7 +197,6 @@ class CompanyController extends Controller
         }
         return response()->json($dataResponse);
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -206,6 +205,90 @@ class CompanyController extends Controller
         DB::beginTransaction();
         try {
             $deleted = Company::where(['uuid'=>$request->id])->update(['etat'=>"inactif"]);
+            if ($deleted) {
+                $dataResponse = [
+                    'type' => 'success',
+                    'urlback' => "back",
+                    'message' => "Opération effectuée avec succes",
+                    'code' => 200,
+                ];
+                DB::commit();
+                return response()->json($dataResponse);
+            }
+            else{
+                $dataResponse = [
+                    'type' => 'warning',
+                    'urlback' => "back",
+                    'message' => "l'opération a échouée",
+                    'code' => 500,
+                ];
+                DB::rollback();
+                return response()->json($dataResponse);
+            }
+        } catch (\Exception $e) {
+
+            $dataResponse = [
+                'type' => 'warning',
+                'urlback' => '',
+                'message' => "l'Opération a échouée contactez l'administrateur".$e,
+                'code' => 500,
+            ];
+            DB::rollback();
+            return response()->json($dataResponse);
+        }
+
+    }
+    public function toActive(Request $request)
+    {
+
+        // dd($request->company_uuid);
+        DB::beginTransaction();
+        try {
+
+            $deleted = Company::where(['uuid'=>$request->company_uuid])->update(['isActive' => 'true']);
+
+            // dd($deleted);
+
+            if ($deleted) {
+                $dataResponse = [
+                    'type' => 'success',
+                    'urlback' => "back",
+                    'message' => "Opération effectuée avec succes",
+                    'code' => 200,
+                ];
+                DB::commit();
+                return response()->json($dataResponse);
+            }
+            else{
+                $dataResponse = [
+                    'type' => 'warning',
+                    'urlback' => "back",
+                    'message' => "l'opération a échouée",
+                    'code' => 500,
+                ];
+                DB::rollback();
+                return response()->json($dataResponse);
+            }
+        } catch (\Exception $e) {
+
+            $dataResponse = [
+                'type' => 'warning',
+                'urlback' => '',
+                'message' => "l'Opération a échouée contactez l'administrateur".$e,
+                'code' => 500,
+            ];
+            DB::rollback();
+            return response()->json($dataResponse);
+        }
+
+    }
+    public function toBlock(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $deleted = Company::where(['uuid'=>$request->company_uuid])->update(['isActive' => 'false']);
+
             if ($deleted) {
                 $dataResponse = [
                     'type' => 'success',

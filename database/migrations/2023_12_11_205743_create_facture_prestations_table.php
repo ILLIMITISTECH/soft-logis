@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('facture_prestations', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->index()->unique();
+            $table->string('etat')->default('actif');
             $table->string('facture_uuid')->nullable();
             $table->string('prestation')->nullable();
+            $table->string('type_prestation')->nullable();
             $table->integer('qty')->nullable();
             $table->string('description')->nullable();
             $table->integer('prixunitaire')->nullable();
+            $table->string('total')->nullable();
             $table->timestamps();
         });
     }

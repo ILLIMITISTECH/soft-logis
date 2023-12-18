@@ -53,12 +53,6 @@ class Facturation extends Model
         'montantTotalTtcTransport',
         'TotalTvaTransport',
 
-        'num_blTransit',
-        'file_BlTransit',
-
-        'num_blTransport',
-        'file_BlTransport',
-
         'facture_original',
         'note',
         'user_create',

@@ -1,38 +1,21 @@
-
-@extends('admin.layouts.admin')
-@section('section')
-
-
-
-	<!--start page wrapper -->
-			<div class="page-content">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+  <title>SoftLogis : Refacturation</title>
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="container">
+   <!--start page wrapper -->
+   <div class="page-content">
 				<!--breadcrumb-->
-				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">Applications</div>
-					<div class="ps-3">
-						<nav aria-label="breadcrumb">
-							<ol class="breadcrumb mb-0 p-0">
-								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-								</li>
-								<li class="breadcrumb-item active" aria-current="page">Facture</li>
-							</ol>
-						</nav>
-					</div>
-					
-				</div>
+				
 				<!--end breadcrumb-->
 				<div class="card">
 					<div class="card-body">
 						<div id="invoice">
-							<div class="toolbar hidden-print">
-								<div class="text-end">
-                                    <div class="btn btn-auto" data-bs-toggle="modal" data-bs-target="#addSendMail">
-                                        <button class="btn btn-primary radius-30"><i class="bx bxs-plus-square"></i>Envoyer</button>
-                                    </div>
-									<button type="button" class="btn btn-primary" style="color: #000000;"><i class="fa fa-file-pdf-o"></i><a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}" style="color: #fff;">Export PDF</a></button>
-								</div>
-								<hr/>
-							</div>
 							<div class="invoice overflow-auto">
 								<div style="min-width: 600px">
 									<header>
@@ -41,8 +24,7 @@
 												<a href="javascript:;">
                                                 <img src="{{ asset('assets/images/logo_jalo.jpg') }}" style="width:100px" class="logo-icon" alt="logo icon">
 												</a>
-                                                 <div>
-                                                </div>
+                                                
                                                 </div>
 											<div class="col company-details">
 												<h5 class="name">
@@ -215,10 +197,10 @@
 						</div>
 					</div>
 				</div>
-                @include('admin.refacturation.sendMail')
 
 			</div>
 		<!--end page wrapper -->
-
-
-@endsection
+  </div>
+  <script src="{{ asset('js/app.js') }}" type="text/js"></script>
+</body>
+</html>

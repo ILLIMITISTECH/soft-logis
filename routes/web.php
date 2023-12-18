@@ -292,6 +292,13 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         Route::get('/refacturation-index', [RefacturationController::class, 'index'])->name('refacturation');
         Route::post('/store/refacturation', [RefacturationController::class, 'store'])->name('refacturation.store');
+        Route::get('/show/refacturation/{uuid}', [RefacturationController::class, 'show'])->name('refacturation.show');
+        Route::post('/destroy/refacturation/{uuid}', [RefacturationController::class, 'destroy'])->name('refacturation.destroy');
+        Route::post('/update/refacturation/{uuid}', [RefacturationController::class, 'update'])->name('refacturation.update');
+
+        Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
+        Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
+       
 
         // Fact Proforma
         Route::get('/proforma-index', [FactProformaController::class, 'index'])->name('proforma');

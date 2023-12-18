@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('date_transport')->nullable();
             $table->date('date_destockage')->nullable();
 
-            $table->enum('statut', ['draft', 'started', 'startedDoc', 'odTransit', 'odTransport', 'outStock', 'wait_exp', 'livered'])->default('draft');
+            $table->enum('statut', ['draft', 'started', 'startedDoc', 'odTransit', 'odTransport', 'outStock', 'wait_exp', 'livered', 'facturer'])->default('draft');
             $table->string('client_uuid')->nullable();
             $table->timestamps();
         });

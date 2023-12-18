@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\PorteChar;
 use App\Mail\LogisticaMail;
+use App\Models\Destination;
+use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -114,7 +117,10 @@ class CompanyController extends Controller
     public function show(string $id)
     {
         $company = Company::where(['uuid'=>$id])->firstOrFail();
-        return view('admin.company.show', compact('company'));
+        $destinations = Destination::where(['etat'=>'actif'])->get();
+        $porteChars = PorteChar::where(['etat'=>'actif'])->get();
+        $grilleTarifaires = GrilleTarif::where(['etat'=>'actif', 'transporteur_uuid'=>$company->uuid])->get();
+        return view('admin.company.show', compact('company', 'destinations', 'porteChars','grilleTarifaires'));
     }
 
     /**

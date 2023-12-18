@@ -634,4 +634,45 @@ class OdreExpeditionController extends Controller
         return response()->json($dataResponse);
     }
 
+
+    function marckToFactured(Request $request, string $id)
+    {
+        DB::beginTransaction();
+        try {
+
+            $saving= Expedition::where('uuid', $id)->update([
+                'statut' => 'facturer',
+            ]);
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Expedition Facturé !",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+
 }

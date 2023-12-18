@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Document;
+use App\Models\PorteChar;
+use App\Models\Destination;
+use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +16,18 @@ class ConfigController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+    public function indexGrille()
+     {
+        $destinations = Destination::where('etat','actif')->get();
+        $porteChars = PorteChar::where('etat','actif')->get();
+        $grilleTarifaires = GrilleTarif::where('etat','actif')->get();
+
+        return view('admin.config.grille', compact('destinations', 'porteChars', 'grilleTarifaires'));
+     }
+
+
     public function index()
     {
         $docs = Document::where('etat','actif')->get();
@@ -86,10 +101,7 @@ class ConfigController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

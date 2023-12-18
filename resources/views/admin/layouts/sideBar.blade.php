@@ -166,6 +166,13 @@
                 <div class="menu-title">Facture fournisseur</div>
             </a>
         </li>
+        {{-- <li>
+            <a href="{{   route('admin.proforma') }}">
+                <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
+                </div>
+                <div class="menu-title">Facture proformat</div>
+            </a>
+        </li> --}}
         @endcan
         @can('Admin Collaborateur')
         <li class="menu-label">Gestion des Comptes</li>
@@ -189,6 +196,8 @@
                 {{-- <li> <a href="{{ route('admin.config.index') }}"><i class='bx bx-radio-circle'></i>Documents</a>
                 </li> --}}
                 <li> <a href="{{ route('admin.role') }}"><i class='bx bx-radio-circle'></i>Role</a>
+                </li>
+                <li> <a href="{{ route('admin.grille.index') }}"><i class='bx bx-radio-circle'></i>Grille Tarifaire</a>
                 </li>
             </ul>
         </li>

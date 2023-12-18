@@ -157,7 +157,79 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10">
+                            <h5 class="card-title">GRILLE TARIFAIRE <span class="text-uppercase">{{   $company->raison_sociale }}</span></h5>
+                        </div>
+                        <div class="ms-auto col-2 text-end">
+                            <button class="btn btn-primary p-1 text-center" data-bs-toggle="modal" data-bs-target="#addTransportGrille">
+                                <i class="bx bxs-plus-square mx-auto"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    Grille Tarifaire
+                                </button>
+
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="example2" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Destination</th>
+                                                            <th>PorteChar</th>
+                                                            <th>Montant</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($grilleTarifaires->groupBy('destination.libelle') as $libelle => $items)
+                                                            <tr>
+                                                                <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                                                <td>{{ $items[0]->porteChar->libelle }}</td>
+                                                                <td>{{ $items[0]->cout }}</td>
+                                                            </tr>
+                                                            @for ($i = 1; $i < count($items); $i++)
+                                                                <tr>
+                                                                    <td>{{ $items[$i]->porteChar->libelle }}</td>
+                                                                    <td>{{ $items[$i]->cout }}</td>
+                                                                </tr>
+                                                            @endfor
+                                                        @endforeach
+                                                    </tbody>
+
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Destination</th>
+                                                            <th>PorteChar</th>
+                                                            <th>Montant</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    @include('admin.company.grilleTarif.addTransportModal')
 </div>
 @endsection()

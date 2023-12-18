@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\GrilleTarif;
+use App\Models\FactProforma;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\Stock;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +27,10 @@ use App\Http\Controllers\Admin\ExpTransitController;
 use App\Http\Controllers\Admin\OdTransiteController;
 use App\Http\Controllers\Admin\ExTransportController;
 use App\Http\Controllers\Admin\FacturationController;
+use App\Http\Controllers\Admin\GrilleTarifController;
 use App\Http\Controllers\Admin\OdLivraisonController;
 use App\Http\Controllers\Admin\TransitaireController;
+use App\Http\Controllers\Admin\FactProformaController;
 use App\Http\Controllers\Admin\TransporteurController;
 use App\Http\Controllers\Admin\CollaborateurController;
 use App\Http\Controllers\Admin\RefacturationController;
@@ -242,6 +246,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/show/odre_expedition/{uuid}', [OdreExpeditionController::class, 'show'])->name('odre_expedition.show');
         Route::post('/update/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.update');
         Route::post('/destroy/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.destroy');
+
+        Route::post('/mark-to-factured/{uuid}', [OdreExpeditionController::class, 'marckToFactured'])->name('expedition.marckToFactured');
             Route::post('/destroy/exp-file/{uuid}', [OdreExpeditionController::class, 'destroy_file'])->name('expedition.fil.destroy');
             Route::post('/add/exp_document/{uuid}', [OdreExpeditionController::class, 'addExpDoc'])->name('expedition.add');
             // status odre expedition
@@ -282,10 +288,29 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/marck_to_good_pay/{uuid}', [FacturationController::class, 'marck_to_good_pay'])->name('marck_to_good_pay');
         Route::post('/marck_payed/{uuid}', [FacturationController::class, 'marck_payed'])->name('marck_payed');
         Route::post('/marck_canceled/{uuid}', [FacturationController::class, 'marck_canceled'])->name('marck_canceled');
-        //Refacturation nemba
+        //Refacturation
 
         Route::get('/refacturation-index', [RefacturationController::class, 'index'])->name('refacturation');
         Route::post('/store/refacturation', [RefacturationController::class, 'store'])->name('refacturation.store');
+
+        // Fact Proforma
+        Route::get('/proforma-index', [FactProformaController::class, 'index'])->name('proforma');
+        Route::get('/proforma-create', [FactProformaController::class, 'create'])->name('proforma.create');
+        Route::post('/proforma-store', [FactProformaController::class, 'store'])->name('proforma.store');
+
+        // endPoint Pour les filtre
+        Route::get('/destinations/{transporteurUuid}/{porteCharUuid?}', [GrilleTarifController::class, 'getDestinations'])->name('destinations');
+
+
+
+        // Exemple dans votre fichier web.php
+
+
+
+
+
+
+
 
 
 
@@ -303,7 +328,14 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 
+        Route::get('/index-grille', [ConfigController::class, 'indexGrille'])->name('grille.index');
+        Route::post('/add-destinations', [GrilleTarifController::class, 'storeDestinations'])->name('storeDestinations');
+        Route::post('/destroy-destinations/{uuid}', [GrilleTarifController::class, 'destroyDestinations'])->name('destroyDestinations');
 
+        Route::post('/add-porteChar', [GrilleTarifController::class, 'storePorteChar'])->name('storePorteChar');
+        Route::post('/destroy-porteChar/{uuid}', [GrilleTarifController::class, 'destroyPorteChar'])->name('destroyPorteChar');
+
+        Route::post('/add-grille', [GrilleTarifController::class, 'store'])->name('offre.store');
 
 
 

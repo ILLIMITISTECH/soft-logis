@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\GrilleTarif;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
 {
@@ -30,4 +31,9 @@ class Company extends Model
         'contact_two_email',
         'isActive',
     ];
+
+    public function grilleTarifaire()
+    {
+        return $this->hasMany(GrilleTarif::class);
+    }
 }

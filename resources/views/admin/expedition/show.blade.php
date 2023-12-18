@@ -54,6 +54,12 @@
                             <button class="btn btn-outline-primary text-primary-light">Marqué comme livré</button>
                         </form>
                     @endif
+                    @if ($expedition->statut == 'delivered')
+                        <form action="{{ route('admin.expedition.marckToFactured', ['uuid' => $expedition->uuid]) }}" method="POST" class="submitForm">
+                            @csrf
+                            <button class="btn btn-outline-primary text-primary-light">Marqué comme Facturé</button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

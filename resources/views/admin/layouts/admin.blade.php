@@ -106,7 +106,7 @@
 
                 language: {
                 search: "Recherche :",
-                lengthMenu: "Afficher _MENU_ éléments par page",
+                lengthMenu: "Afficher MENU éléments par page",
                 // Autres paramètres...
             },
 

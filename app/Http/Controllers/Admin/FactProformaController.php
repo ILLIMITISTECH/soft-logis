@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Company;
 use App\Models\PorteChar;
 use App\Models\Destination;
-use App\Models\GrilleTarif;
+use App\Models\GrilleTarif;  
 use Illuminate\Support\Str;
 use App\Models\FactProforma;
 use Illuminate\Http\Request;

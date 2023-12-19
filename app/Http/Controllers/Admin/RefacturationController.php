@@ -162,6 +162,10 @@ class RefacturationController extends Controller
     public function send_facture(Request $request)
     {
        //the facturation
+       DB::beginTransaction();
+
+       try {
+
         $refacturation = Refacturation::find($id);
         $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
         $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
@@ -173,10 +177,44 @@ class RefacturationController extends Controller
         $total_xof = ($total_ht + $tva);
   
         //$transporteurName = "fallou.g@illimitis.com";
-        $email = $request->get('email');
-        Mail::to($email)->send(new Facture($refacturation,$prestations,$prestations_debours,
-        $prestations_totals,$prestations_totals_debours,$user,$total_ht,$tva,$total_xof));
-        dd("ok");
+        //$email = $request->get('email');
+        if($refacturation->email)
+        {
+            Mail::to($refacturation->email)->send(new Facture($refacturation,$prestations,$prestations_debours,
+            $prestations_totals,$prestations_totals_debours,$user,$total_ht,$tva,$total_xof));
+            dd("ok");
+        }
+
+        if ($refacturation->email) {
+
+            $dataResponse =[
+                'type'=>'success', 
+                'urlback'=>"back",
+                'message'=>"Enregistré avec succes!",
+                'code'=>200,
+            ];
+            DB::commit();
+
+       } else {
+            DB::rollback();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur lors de l'enregistrement!",
+                'code'=>500,
+            ];
+       }
+
+    } catch (\Throwable $th) {
+        DB::rollBack();
+        $dataResponse =[
+            'type'=>'error',
+            'urlback'=>'',
+            'message'=>"Erreur systeme! $th",
+            'code'=>500,
+        ];
+    }
+       
         return back()->with(['success']);
     }
 

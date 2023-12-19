@@ -166,13 +166,13 @@
                 <div class="menu-title">Facture fournisseur</div>
             </a>
         </li>
-        {{-- <li>
-            <a href="{{   route('admin.proforma') }}">
+        <li>
+            <a href="{{   route('admin.facture_proforma') }}">
                 <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
                 </div>
                 <div class="menu-title">Facture proformat</div>
             </a>
-        </li> --}}
+        </li> 
         @endcan
         @can('Admin Collaborateur')
         <li class="menu-label">Gestion des Comptes</li>

@@ -1,7 +1,7 @@
 $(".wrapper").on('click', '.deleteConfirmation', function () {
     var type = $(this).data('type');
     var title = $(this).data('title');
-    var message = $(this).data('message');
+    var message = $(this).data('message'); 
     var id = $(this).data('id');
     var uuid = $(this).data('uuid');
     var token = $(this).data('token');

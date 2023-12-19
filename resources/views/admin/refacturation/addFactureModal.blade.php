@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div id="stepper1" class="bs-stepper">
-                    <div class="card">
+                    <div class="card">  
 
                         <div class="card-header">
                             <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between"
@@ -57,7 +57,7 @@
                         <div class="card-body">
 
                                 <div class="bs-stepper-content">
-                                    <form method="post" action="{{ route('admin.refacturation.store') }}" class="submitForm">
+                                    <form method="post" action="{{ route('admin.refacturation.store') }}" class="submitForm" enctype="multipart/form-data">
                                         @csrf
                                         <div id="test-l-1" role="tabpanel" class="bs-stepper-pane"
                                             aria-labelledby="stepper1trigger1">
@@ -194,7 +194,7 @@
                                                                 <input type="number" name="qty[]" class="form-control"
                                                                     placeholder="0">
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-2">
                                                                 <input type="text" name="description[]" class="form-control"
                                                                     placeholder="Description">
                                                             </div>

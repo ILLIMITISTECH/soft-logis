@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\GrilleTarifController;
 use App\Http\Controllers\Admin\OdLivraisonController;
 use App\Http\Controllers\Admin\TransitaireController;
 use App\Http\Controllers\Admin\FactProformaController;
+use App\Http\Controllers\Admin\FactureProformaController;
 use App\Http\Controllers\Admin\TransporteurController;
 use App\Http\Controllers\Admin\CollaborateurController;
 use App\Http\Controllers\Admin\RefacturationController;
@@ -304,6 +305,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/proforma-index', [FactProformaController::class, 'index'])->name('proforma');
         Route::get('/proforma-create', [FactProformaController::class, 'create'])->name('proforma.create');
         Route::post('/proforma-store', [FactProformaController::class, 'store'])->name('proforma.store');
+
+        Route::get('/facture_proforma-index', [FactureProformaController::class, 'index'])->name('facture_proforma.index');
+        Route::get('/facture_proforma-create', [FactureProformaController::class, 'create'])->name('facture_proforma.create');
+        Route::post('/facture_proforma-store', [FactureProformaController::class, 'store'])->name('facture_proforma.store');
 
         // endPoint Pour les filtre
         Route::get('/destinations/{transporteurUuid}/{porteCharUuid?}', [GrilleTarifController::class, 'getDestinations'])->name('destinations');

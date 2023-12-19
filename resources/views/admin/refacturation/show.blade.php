@@ -24,12 +24,13 @@
 				<div class="card">
 					<div class="card-body">
 						<div id="invoice">
-							<div class="toolbar hidden-print">
-								<div class="text-end">
-                                    <div class="btn btn-auto" data-bs-toggle="modal" data-bs-target="#addSendMail">
-                                        <button class="btn btn-primary radius-30"><i class="bx bxs-plus-square"></i>Envoyer</button>
-                                    </div>
-									<button type="button" class="btn btn-primary" style="color: #000000;"><i class="fa fa-file-pdf-o"></i><a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}" style="color: #fff;">Export PDF</a></button>
+							<div class="toolbar hidden-print pull-right align-right">
+								<div class="text-end pull-right" style="display:flex;">
+									<form action="{{ route('admin.refacturation.send_facture') }}" method="POST" enctype="multipart/form-data" class="submitForm">
+										@csrf
+											<button type="submit" class="btn btn-primary radius-30"><i class="bx bxs-plus-square"></i>Envoyer</button>
+									</form>
+									<button type="button" class="btn btn-primary radius-30" style="color: #000000; margin-left: 10px;"><i class="fa fa-file-pdf-o"></i><a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}" style="color: #fff;">Export PDF</a></button>
 								</div>
 								<hr/>
 							</div>
@@ -187,7 +188,7 @@
 												<tr>
 													<td colspan="2"></td>
 													<td colspan="2">TOTAL HT</td>
-													<td>{{ number_format($total_ht)}}</td>
+													<td>{{ number_format($total_ht)}} XOF</td>
 												</tr>
                                                 <tr>
 													<td colspan="2"></td>
@@ -197,7 +198,7 @@
                                                 <tr>
 													<td colspan="2"></td>
 													<td colspan="2">TOTAL XOF</td>
-													<td>{{ number_format($total_xof)}} XOOF</td>
+													<td>{{ number_format($total_xof)}} XOF</td>
 												</tr>
 											</tfoot>
 										</table>

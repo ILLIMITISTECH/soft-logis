@@ -6,14 +6,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="stepper1" class="bs-stepper">
+                <div id="stepper11" class="bs-stepper">
                     <div class="card">
 
                         <div class="card-header">
                             <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between"
                                 role="tablist">
-                                <div class="step" data-target="#test-l-1">
-                                    <div class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1">
+                                <div class="step" data-target="#test-l-11">
+                                    <div class="step-trigger" role="tab" id="stepper11trigger11" aria-controls="test-l-11">
                                         <div class="bs-stepper-circle">1</div>
                                         <div class="">
                                             <h5 class="mb-0 steper-title">Beneficiaire</h5>
@@ -22,8 +22,8 @@
                                     </div>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="step" data-target="#test-l-2">
-                                    <div class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2">
+                                <div class="step" data-target="#test-l-22">
+                                    <div class="step-trigger" role="tab" id="stepper11trigger22" aria-controls="test-l-22">
                                         <div class="bs-stepper-circle">2</div>
                                         <div class="">
                                             <h5 class="mb-0 steper-title">Marchandises</h5>
@@ -32,8 +32,8 @@
                                     </div>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="step" data-target="#test-l-3">
-                                    <div class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3">
+                                <div class="step" data-target="#test-l-33">
+                                    <div class="step-trigger" role="tab" id="stepper11trigger33" aria-controls="test-l-33">
                                         <div class="bs-stepper-circle">3</div>
                                         <div class="">
                                             <h5 class="mb-0 steper-title">Prestation</h5>
@@ -42,8 +42,8 @@
                                     </div>
                                 </div>
                                 <div class="bs-stepper-line"></div>
-                                <div class="step" data-target="#test-l-4">
-                                    <div class="step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-4">
+                                <div class="step" data-target="#test-l-44">
+                                    <div class="step-trigger" role="tab" id="stepper11trigger44" aria-controls="test-l-44">
                                         <div class="bs-stepper-circle">4</div>
                                         <div class="">
                                             <h5 class="mb-0 steper-title">ID Facturier</h5>
@@ -59,9 +59,14 @@
                                 <div class="bs-stepper-content">
                                 <form action="{{ route('admin.refacturation.update', $item->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data" >
                                         @csrf
-                                        <div id="test-l-1" role="tabpanel" class="bs-stepper-pane"
-                                            aria-labelledby="stepper1trigger1">
-
+                                        <div id="test-l-11" role="tabpanel1" class="bs-stepper-pane2"
+                                            aria-labelledby="stepper11trigger11">
+                                            <div class="">
+                                            <h5 class="mb-0 steper-title">Beneficiaire</h5>
+                                            <p class="mb-0 steper-sub-title">Entrer les details du fournisseur</p>
+                                        </div>
+                                        <hr>
+                                        <br>
                                             <div class="row g-3">
                                                 <div class="col-12 col-lg-6">
                                                     <label for="refClient" class="form-label">Ref Client</label>
@@ -101,16 +106,23 @@
                                                         placeholder="Doit">
                                                 </div>
 
-                                                <div class="col-12 col-lg-6">
-                                                    <button class="btn btn-primary px-4" onclick="event.preventDefault(); stepper1.next()">Suivant<i class='bx bx-right-arrow-alt ms-2'></i></button>
-                                                  </div>
+                                                <!--<div class="col-12 col-lg-6">
+                                                    <button class="btn btn-primary px-4" onclick="event.preventDefault(); stepper11.next()">Suivant<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                                                  </div>-->
                                             </div>
                                             <!---end row-->
 
                                         </div>
-                                        <div id="test-l-2" role="tabpanel" class="bs-stepper-pane"
-                                            aria-labelledby="stepper1trigger2">
-
+                                        <hr>
+                                             <br>
+                                        <div id="test-l-22" role="tabpanel1" class="bs-stepper-pane2"
+                                            aria-labelledby="stepper11trigger22">
+                                            <div class="">
+                                            <h5 class="mb-0 steper-title">Marchandises</h5>
+                                            <p class="mb-0 steper-sub-title">Detail des marchandises</p>
+                                           </div>
+                                           <hr>
+                                           <br>
                                             <div class="row g-3">
                                                 <div class="col-12 col-lg-6">
                                                     <label for="designation" class="form-label">Designation</label>
@@ -157,24 +169,30 @@
                                                     <input type="text" class="form-control" id="volume" placeholder="volume" value="{{ $item->volume ?? 'N/A'  }}"
                                                         name="volume">
                                                 </div>
-                                                <div class="col-12">
+                                               <!--<div class="col-12">
                                                     <div class="d-flex align-items-center gap-3">
                                                         <button class="btn btn-outline-secondary px-4"
-                                                        onclick="event.preventDefault(); stepper1.previous()"><i
+                                                        onclick="event.preventDefault(); stepper11.previous()"><i
                                                                 class='bx bx-left-arrow-alt me-2'></i>Retour</button>
                                                         <button class="btn btn-primary px-4"
-                                                        onclick="event.preventDefault(); stepper1.next()">Suivant<i
+                                                        onclick="event.preventDefault(); stepper11.next()">Suivant<i
                                                                 class='bx bx-right-arrow-alt ms-2'></i></button>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                             <!---end row-->
 
                                         </div>
-
-                                        <div id="test-l-3" role="tabpanel" class="bs-stepper-pane"
-                                            aria-labelledby="stepper1trigger3">
-
+                                        <hr>
+                                             <br>
+                                        <div id="test-l-33" role="tabpanel1" class="bs-stepper-pane2"
+                                            aria-labelledby="stepper11trigger33">
+                                            <div class="">
+                                            <h5 class="mb-0 steper-title">Prestation</h5>
+                                            <p class="mb-0 steper-sub-title">Detail des Prestations</p>
+                                         </div>
+                                         <hr>
+                                         <br>
                                             <div class="row g-3">
                                                 <div id="prestationss">
                                                     <div class="prestationss mb-2">
@@ -209,10 +227,7 @@
                                                                 <input type="number" name="total[]" value="{{ $prestation->total ?? 'N/A'  }}" class="form-control"
                                                                     placeholder="Total" readonly>
                                                             </div>
-                                                            <div class="col-auto">
-
-                                                                <button type="button" class="btn btn-danger remove-btn px-2 text-center"><i class='bx bxs-trash remove-btn'></i></button>
-                                                            </div>
+                                                           
                                                             @endif
                                                             @empty
                                                             <div>Aucune Facture enregistré</div>
@@ -261,23 +276,30 @@
                                                 <button type="button" id="add-btn" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
 
                                                 <hr>
-                                                <div class="col-12 mt-4">
+                                               <!-- <div class="col-12 mt-4">
                                                     <div class="d-flex align-items-center gap-3">
                                                         <button class="btn btn-outline-secondary px-4"
-                                                            onclick="event.preventDefault(); stepper1.previous()"><i
+                                                            onclick="event.preventDefault(); stepper11.previous()"><i
                                                                 class='bx bx-left-arrow-alt me-2'></i>Retour</button>
                                                         <button class="btn btn-primary px-4"
-                                                            onclick="event.preventDefault(); stepper1.next()">Suivant<i
+                                                            onclick="event.preventDefault(); stepper11.next()">Suivant<i
                                                                 class='bx bx-right-arrow-alt ms-2'></i></button>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                             </div>
                                             <!---end row-->
 
                                         </div>
-
-                                        <div id="test-l-4" role="tabpanel" class="bs-stepper-pane"
-                                            aria-labelledby="stepper1trigger4">
+                                        <hr>
+                                             <br>
+                                        <div id="test-l-44" role="tabpanel1" class="bs-stepper-pane2"
+                                            aria-labelledby="stepper11trigger44">
+                                            <div class="">
+                                            <h5 class="mb-0 steper-title">ID Facturier</h5>
+                                            <p class="mb-0 steper-sub-title">Detail sur le responsable</p>
+                                             </div>
+                                             <hr>
+                                             <br>
                                             <div class="row g-3">
                                                 <div class="col-12 col-lg-6">
                                                     <label for="facturier_uuid" class="form-label">Facturier</label>
@@ -306,13 +328,13 @@
 
                                                 <div class="col-12">
                                                     <div class="d-flex align-items-center gap-3">
-                                                        <button class="btn btn-primary px-4"
-                                                            onclick="event.preventDefault(); stepper1.previous()"><i
-                                                                class='bx bx-left-arrow-alt me-2'></i>Retour</button>
+                                                        <!--<button class="btn btn-primary px-4"
+                                                            onclick="event.preventDefault(); stepper11.previous()"><i
+                                                                class='bx bx-left-arrow-alt me-2'></i>Retour</button>-->
                                                         <button type="submit" class="btn btn-success px-4"
                                                             >Enregistrer</button>
                                                     </div>
-                                                </div>
+                                                </div> 
                                             </div>
                                             <!---end row-->
 
@@ -327,7 +349,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>-->
                 {{-- <button type="button" class="btn btn-primary">Sauvegarder changements</button> --}}
             </div>
         </div>

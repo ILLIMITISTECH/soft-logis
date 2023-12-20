@@ -167,10 +167,10 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.facture_proforma.index') }}">
+            <a href="{{   route('admin.proforma') }}">
                 <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
                 </div>
-                <div class="menu-title">Offres Tarifaire</div>
+                <div class="menu-title">Offres Tarifaires</div>
             </a>
         </li>
 

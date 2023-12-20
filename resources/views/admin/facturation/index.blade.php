@@ -98,11 +98,13 @@
                     <thead class="table-light">
                         <tr>
                             <th>N° Facture</th>
+                            <th>N° BL</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
                             <th>Total TTC(Fcfa)</th>
+                            <th>Total (Euro)</th>
                             <th>Date</th>
-                            <th>Voir Detail</th>
+
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -119,6 +121,14 @@
                                         <h6 class="mb-0 font-14">#{{ $facture->numFacture ?? 'N/A'}}</h6>
                                     </div>
                                 </div>
+
+                            </td>
+                            <td>
+                                @if ($facture->typeFacture == 'transitaire')
+                                    {{ $facture->num_blTransit ?? 'N/A' }}
+                                @elseif ($facture->typeFacture == 'transporteur')
+                                    {{ $facture->num_blTransport ?? 'N/A' }}
+                                @endif
                             </td>
                             <td>
                                 @if ($facture->typeFacture == 'transitaire')
@@ -150,21 +160,31 @@
                                 @endif
                             </td>
                             @if ($facture->typeFacture == 'transitaire')
-                            <td>{{ number_format($facture->montantTotalTtcTransit, 0, ',', ' ') }} Fcfa</td>
+                            <td>{{ number_format($facture->montantTotalTtcTransit, 0, ',', ' ') }} </td>
                             @endif
                             @if ($facture->typeFacture == 'transporteur')
-                            <td>{{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} Fcfa</td>
+                            <td>{{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} </td>
                             @endif
+                            <td>
+                                @if($facture->typeFacture == 'transitaire')
+                                {{ number_format($facture->totalEurosTransit, 0, ',', ' ') }}
+                                @elseif($facture->typeFacture == 'transporteur')
+                                    {{ number_format($facture->totalEuros, 0, ',', ' ') }}
+                                @endif
+                            </td>
                             <td>{{ $facture->created_at->diffForHumans() }}</td>
-                            <td><button type="button" class="btn btn-primary btn-sm radius-30 px-4 text-white"><a href="{{ route('admin.facturation.show', $facture->uuid) }}" class="text-white"   >Detail</a></button></td>
+
                             <td>
                                 <div class="d-flex order-actions">
+
+                                    <a href="{{ route('admin.facturation.show', $facture->uuid) }}" class="bg-transparent"><i class='bx bxs-show'></i></a>
+
                                     @can('Edit Facture')
                                     <a type="button" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $facture->uuid }}"><i class='bx bxs-edit'></i></a>
                                     @endcan
                                     {{-- <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addFacture"><i class="bx bxs-plus-square"></i>Nouveau Facture</button> --}}
                                     @can('Delette Facture')
-                                    <a class="ms-3 deleteConfirmation" data-uuid="{{$facture->uuid}}"
+                                    <a class="deleteConfirmation" data-uuid="{{$facture->uuid}}"
                                         data-type="confirmation_redirect" data-placement="top"
                                         data-token="{{ csrf_token() }}"
                                         data-url="{{route('admin.facturation.destroy',$facture->uuid)}}"

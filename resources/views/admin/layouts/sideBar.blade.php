@@ -166,7 +166,14 @@
                 <div class="menu-title">Facture fournisseur</div>
             </a>
         </li>
-       
+        <li>
+            <a href="{{ route('admin.facturation.proforma.index') }}">
+                <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
+                </div>
+                <div class="menu-title">Facture fournisseur</div>
+            </a>
+        </li>
+
         @endcan
         @can('Admin Collaborateur')
         <li class="menu-label">Gestion des Comptes</li>

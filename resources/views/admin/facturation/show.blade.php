@@ -286,6 +286,11 @@
                                         <td colspan="2">GRAND TOTAL TTC</td>
                                         <td>{{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} <span class="st-icon-pandora"> Fcfa</span></td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td colspan="2">GRAND TOTAL TTC (Euro)</td>
+                                        <td>{{ number_format($facture->totalEuros, 0, ',', ' ') }} <span class="st-icon-pandora"> €</span></td>
+                                    </tr>
                                 </tfoot>
                                 @endif
 

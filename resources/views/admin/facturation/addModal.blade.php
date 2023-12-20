@@ -196,6 +196,7 @@
                                     </div>
                                 </div>
                             </div>
+                           
                             {{-- block si value type = transporteur --}}
 
                             <div class="col-12 col-lg-12">

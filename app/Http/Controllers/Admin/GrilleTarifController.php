@@ -270,4 +270,111 @@ class GrilleTarifController extends Controller
         return response()->json($dataResponse);
     }
 
+    // public function updateUuid(Request $request)
+    // {
+    //     $selectedUuid = $request->input('transporteurUuid');
+
+    //     // Mettez à jour la valeur de $transporteur_uuid ici, par exemple dans la session
+    //     session(['transporteur_uuid' => $selectedUuid]);
+
+    //     // Réponse du serveur (peut être ajusté selon vos besoins)
+    //     return response()->json(['message' => 'Transporteur UUID mis à jour avec succès']);
+    // }
+
+    // public function updateUuid(Request $request)
+    // {
+    //     $selectedUuid = $request->input('transporteurUuid');
+
+    //     // Mettez à jour la valeur de $transporteur_uuid ici, par exemple dans la session
+    //     session(['transporteur_uuid' => $selectedUuid]);
+    //     $transporteurUuid = session('transporteur_uuid', '');
+
+    //     // Récupérez les nouvelles données en fonction du transporteur_uuid
+    //     $grillesTarifaires = \App\Models\GrilleTarif::where('transporteur_uuid', $transporteurUuid)->get();
+
+    //     // Réponse du serveur avec les nouvelles données
+    //     return response()->json(['grillesTarifaires' => $grillesTarifaires]);
+    // }
+
+    // public function updateUuid(Request $request)
+    // {
+    //     $selectedTransporteurUuid = $request->input('transporteurUuid');
+    //     $selectedDestinationUuid = $request->input('destinationUuid');
+
+    //     // Mettez à jour la valeur de $transporteur_uuid et $destination_uuid ici, par exemple dans la session
+    //     session(['transporteur_uuid' => $selectedTransporteurUuid]);
+    //     session(['destination_uuid' => $selectedDestinationUuid]);
+
+    //     $transporteurUuid = session('transporteur_uuid', '');
+    //     $destinationUuid = session('destination_uuid', '');
+
+    //     // Récupérez les nouvelles données en fonction du transporteur_uuid et destination_uuid
+    //     $grillesTarifaires = \App\Models\GrilleTarif::where('transporteur_uuid', $transporteurUuid)
+    //                                                 ->where('destination_uuid', $destinationUuid)
+    //                                                 ->get();
+
+
+    //     // Réponse du serveur avec les nouvelles données
+    //     return response()->json(['grillesTarifaires' => $grillesTarifaires]);
+    // }
+
+    // public function updateUuid(Request $request)
+    // {
+    //     $selectedTransporteurUuid = $request->input('transporteurUuid');
+    //     $selectedDestinationUuid = $request->input('destinationUuid');
+    //     $selectedPorteCharUuid = $request->input('porteCharUuid');
+
+    //     // Mettez à jour la valeur de $transporteur_uuid, $destination_uuid et $porteChar_uuid
+    //     session(['transporteur_uuid' => $selectedTransporteurUuid]);
+    //     session(['destination_uuid' => $selectedDestinationUuid]);
+    //     session(['porteChar_uuid' => $selectedPorteCharUuid]);
+
+    //     $transporteurUuid = session('transporteur_uuid', '');
+    //     $destinationUuid = session('destination_uuid', '');
+    //     $porteCharUuid = session('porteChar_uuid', '');
+
+    //     // Récupérez les nouvelles données en fonction du transporteur_uuid, destination_uuid et porteChar_uuid
+    //     $grillesTarifaires = \App\Models\GrilleTarif::where('transporteur_uuid', $transporteurUuid)
+    //                                                 ->where('destination_uuid', $destinationUuid)
+    //                                                 ->where('porteChar_uuid', $porteCharUuid)
+    //                                                 ->get();
+
+    //     // ... Autre logique ...
+    //     // Réponse du serveur avec les nouvelles données
+    //     return response()->json(['grillesTarifaires' => $grillesTarifaires]);
+    // }
+
+    public function updateUuid(Request $request)
+    {
+        $selectedTransporteurUuid = $request->input('transporteurUuid');
+        $selectedDestinationUuid = $request->input('destinationUuid');
+        $selectedPorteCharUuid = $request->input('porteCharUuid');
+
+        session(['transporteur_uuid' => $selectedTransporteurUuid]);
+        session(['destination_uuid' => $selectedDestinationUuid]);
+        session(['porteChar_uuid' => $selectedPorteCharUuid]);
+
+        $transporteurUuid = session('transporteur_uuid', '');
+        $destinationUuid = session('destination_uuid', '');
+        $porteCharUuid = session('porteChar_uuid', '');
+
+        $grillesTarifaires = \App\Models\GrilleTarif::with(['transporteur', 'destination', 'porteChar' ])->where('transporteur_uuid', $transporteurUuid)
+            ->when($destinationUuid, function ($query) use ($destinationUuid) {
+                return $query->where('destination_uuid', $destinationUuid);
+            })
+            ->when($porteCharUuid, function ($query) use ($porteCharUuid) {
+                return $query->where('porteChar_uuid', $porteCharUuid);
+            })
+            ->get();
+
+
+        return response()->json(['grillesTarifaires' => $grillesTarifaires]);
+    }
+
+
+
+
 }
+
+// Ajoutez une fonction pour mettre à jour les grilles tarifaires
+

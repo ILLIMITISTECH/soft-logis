@@ -64,6 +64,10 @@ class CollaborateurController extends Controller
             ])->save();
 
             if ($saving) {
+                $role = Role::find($request->id_role);
+                $user->assignRole($role);
+
+                $user->syncRoles([$role->id]);
 
                 // Envoie d'email
 

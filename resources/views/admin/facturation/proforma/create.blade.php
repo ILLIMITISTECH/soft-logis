@@ -103,17 +103,17 @@
                                                 ->distinct('destination_uuid')
                                                 ->pluck('destination_uuid');
 
-                                                $destinationsDetails = \App\Models\Destination::whereIn('uuid', $destinations)->get();
+                                                // $destinationsDetails = \App\Models\Destination::whereIn('uuid', $destinations)->get();
 
-                                                // $destinationsDetails = \App\Models\Destination::all();
+                                                $destinationsDetails = \App\Models\Destination::all();
 
                                                 $porteChar = \App\Models\GrilleTarif::where('transporteur_uuid', $transporteurUuid)
                                                 ->distinct('porteChar_uuid')
                                                 ->pluck('porteChar_uuid');
 
-                                                $porteCharsDetails = \App\Models\PorteChar::whereIn('uuid', $porteChar)->get();
+                                                // $porteCharsDetails = \App\Models\PorteChar::whereIn('uuid', $porteChar)->get();
 
-                                                // $porteCharsDetails = \App\Models\PorteChar::all();
+                                                $porteCharsDetails = \App\Models\PorteChar::all();
                                             @endphp
 
                                             <div class="col-12 col-md-4 col-lg-4">

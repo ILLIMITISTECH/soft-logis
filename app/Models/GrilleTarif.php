@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Company;
+use App\Models\GrilleHad;
 use App\Models\PorteChar;
 use App\Models\Destination;
 use Illuminate\Database\Eloquent\Model;

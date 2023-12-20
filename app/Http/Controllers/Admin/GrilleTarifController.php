@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\GrilleHad;
 use App\Models\PorteChar;
 use App\Models\Destination;
 use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\GrilleTransit;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -200,7 +202,7 @@ class GrilleTarifController extends Controller
                 'uuid'=>Str::uuid(),
                 'libelle' => $request->libelle,
                 'etat' => 'actif',
-                'code' => Refgenerate(PorteChar::class, 'Dest', 'code'),
+                'code' => Refgenerate(PorteChar::class, 'PChar', 'code'),
             ])->save();
 
             if ($saving) {
@@ -238,6 +240,137 @@ class GrilleTarifController extends Controller
         DB::beginTransaction();
         try {
             $saving= Portechar::where('uuid', $request->id)->update(['etat' => 'inactif']);
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+
+    // store Transite grid    ..... HAD
+
+    public function storeHad(request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+
+            $saving= GrilleHad::create([
+                'uuid'=>Str::uuid(),
+                'libelle' => $request->libelle,
+                'etat' => 'actif',
+                'code' => Refgenerate(GrilleHad::class, 'HAD', 'code'),
+            ])->save();
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+    public function destroyHad(request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+            $saving= GrilleHad::where('uuid', $request->id)->update(['etat' => 'inactif']);
+
+
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+
+    public function storeTransit(request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+
+            $saving= GrilleTransit::create([
+                'uuid'=>Str::uuid(),
+                'transitaire_uuid' => $request->transitaire_uuid,
+                'had_uuid' => $request->had_uuid,
+                'cout' => $request->cout,
+                'etat' => 'actif',
+                // 'code' => Refgenerate(GrilleTransit::class, 'GrT', 'code'),
+            ])->save();
 
             if ($saving) {
 

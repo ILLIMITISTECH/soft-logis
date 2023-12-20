@@ -120,7 +120,4 @@
     @include('admin.facturation.proforma.addModal')
 </div>
 
-
-
-
 @endsection

@@ -351,6 +351,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/destroy-porteChar/{uuid}', [GrilleTarifController::class, 'destroyPorteChar'])->name('destroyPorteChar');
 
         Route::post('/add-grille', [GrilleTarifController::class, 'store'])->name('offre.store');
+        Route::post('/add-grille-transit', [GrilleTarifController::class, 'storeTransit'])->name('offre.storeTransit');
+
+        // transit had
+        Route::post('/transit-add-had', [GrilleTarifController::class, 'storeHad'])->name('transit_had.store');
+        Route::post('/destroy-had/{uuid}', [GrilleTarifController::class, 'destroyHad'])->name('destroyHad');
 
 
 

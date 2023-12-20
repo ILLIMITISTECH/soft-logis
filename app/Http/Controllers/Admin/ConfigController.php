@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Document;
+use App\Models\GrilleHad;
 use App\Models\PorteChar;
 use App\Models\Destination;
 use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\GrilleTransit;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -22,9 +24,11 @@ class ConfigController extends Controller
      {
         $destinations = Destination::where('etat','actif')->get();
         $porteChars = PorteChar::where('etat','actif')->get();
+        $grilleHads = GrilleHad::where('etat','actif')->get();
         $grilleTarifaires = GrilleTarif::where('etat','actif')->get();
+        $grilleTariftransits = GrilleTransit::with('had')->where(['etat'=>'actif'])->get();
 
-        return view('admin.config.grille', compact('destinations', 'porteChars', 'grilleTarifaires'));
+        return view('admin.config.grille', compact('destinations', 'porteChars', 'grilleTarifaires', 'grilleHads', 'grilleTariftransits'));
      }
 
 

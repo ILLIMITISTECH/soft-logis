@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\GrilleHad;
 use App\Models\PorteChar;
 use App\Mail\LogisticaMail;
 use App\Models\Destination;
 use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\GrilleTransit;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -120,7 +122,10 @@ class CompanyController extends Controller
         $destinations = Destination::where(['etat'=>'actif'])->get();
         $porteChars = PorteChar::where(['etat'=>'actif'])->get();
         $grilleTarifaires = GrilleTarif::where(['etat'=>'actif', 'transporteur_uuid'=>$company->uuid])->get();
-        return view('admin.company.show', compact('company', 'destinations', 'porteChars','grilleTarifaires'));
+        $grilleTariftransits = GrilleTransit::where(['etat'=>'actif', 'transitaire_uuid'=>$company->uuid])->get();
+
+        $hads = GrilleHad::where(['etat'=>'actif'])->get();
+        return view('admin.company.show', compact('company', 'destinations', 'porteChars','grilleTarifaires', 'hads', 'grilleTariftransits'));
     }
 
     /**

@@ -1032,6 +1032,9 @@
                                         @if ($item->statut == 'livered')
                                             <span class="badge bg-success text-success-light px-3 py-1">Livré</span>
                                         @endif
+                                        @if ($item->statut == 'facturer')
+                                            <span class="badge bg-success text-success-light px-3 py-1">Facturé</span>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

@@ -54,7 +54,7 @@
                             <button class="btn btn-outline-primary text-primary-light">Marqué comme livré</button>
                         </form>
                     @endif
-                    @if ($expedition->statut == 'delivered')
+                    @if ($expedition->statut == 'livered')
                         <form action="{{ route('admin.expedition.marckToFactured', ['uuid' => $expedition->uuid]) }}" method="POST" class="submitForm">
                             @csrf
                             <button class="btn btn-outline-primary text-primary-light">Marqué comme Facturé</button>
@@ -70,6 +70,7 @@
                 <div class="card-header">
                     <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between overflow-x-scroll"
                         role="tablist">
+
                         <div class="step" data-target="#test-l-1">
                             <div class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1">
                                 {{-- <div class="bs-stepper-circle">1</div> --}}
@@ -79,6 +80,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="bs-stepper-line {{ $expedition->statut === 'startedDoc' ? 'bg-success' : ' ' }}"></div>
                         <div class="step" data-target="#test-l-2">
                             <div class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2">
@@ -137,6 +139,16 @@
                                 <div class="">
                                     <h5 class="mb-0 steper-title text-center {{ $expedition->statut === 'livered' ? 'text-success text-uppercase' : '' }}">Livré</h5>
                                     <p class="mb-0 steper-sub-title text-center">Expedié/Livré</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bs-stepper-line  {{ $expedition->statut === 'facturer' ? 'bg-success' : '' }}"></div>
+                        <div class="step" data-target="#test-l-4">
+                            <div class="step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-4">
+                                {{-- <div class="bs-stepper-circle">7</div> --}}
+                                <div class="">
+                                    <h5 class="mb-0 steper-title text-center {{ $expedition->statut === 'facturer' ? 'text-success text-uppercase' : '' }}">Facturer</h5>
+                                    <p class="mb-0 steper-sub-title text-center">Refacturation cloturé</p>
                                 </div>
                             </div>
                         </div>

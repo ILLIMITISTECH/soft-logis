@@ -131,6 +131,9 @@
                                         @if ($expedition->statut == 'livered')
                                             <span class="badge bg-success text-success-light px-3 py-1">Livré</span>
                                         @endif
+                                        @if ($expedition->statut == 'facturer')
+                                            <span class="badge bg-success text-success-light px-3 py-1">Facturer</span>
+                                        @endif
                                     </td>
 
                                     <td>{{ $expedition->date_liv }}</td>

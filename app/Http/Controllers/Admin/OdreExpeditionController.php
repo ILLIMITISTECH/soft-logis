@@ -14,6 +14,7 @@ use App\Models\ExpTransport;
 use Illuminate\Http\Request;
 use App\Models\ArticleFamily;
 use App\Models\Expedition_File;
+use App\Models\Expedition_product;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -93,8 +94,9 @@ class OdreExpeditionController extends Controller
                 $product = Article::find($productId);
 
                 if ($product) {
-                    $expeditions->products()->create([
+                    $expeditions= Expedition_product::create([
                         'uuid' => Str::uuid(),
+                        'expedition_id' => $expeditions->id,
                         'famille_uuid' => $product->famille_uuid,
                         'product_id' => $productId,
                     ]);
@@ -177,6 +179,22 @@ class OdreExpeditionController extends Controller
                 'client_uuid' => $request->client_uuid,
                 'incoterm'=> $request->incoterm,
             ]);
+
+            $productIds = $request->input('product_id');
+
+            $expeditionId = $request->input('expedition_id');
+            foreach ($productIds as $key => $productId) {
+                $product = Article::find($productId);
+
+                if ($product) {
+                    $expeditions= Expedition_product::create([
+                        'uuid' => Str::uuid(),
+                        'expedition_id' => $expeditionId,
+                        'famille_uuid' => $product->famille_uuid,
+                        'product_id' => $productId,
+                    ]);
+                }
+            }
 
             if ($expeditions) {
 
@@ -640,7 +658,7 @@ class OdreExpeditionController extends Controller
         DB::beginTransaction();
         try {
 
-            $saving= Expedition::where('uuid', $id)->update([
+            $saving = Expedition::where('uuid', $id)->update([
                 'statut' => 'facturer',
             ]);
 

@@ -32,7 +32,7 @@
                 @endcan
               </div>
             </div>
-            <div class="table-responsive">
+            {{-- <div class="table-responsive">
                 <table id="example2" class="table table-striped table-bordered">
                     <thead class="table-light">
                         <tr>
@@ -75,6 +75,44 @@
 
                         @endforelse
                     </tbody>
+                </table>
+            </div> --}}
+            <div class="table-responsive">
+                <table id="example2" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Transporteur</th>
+                            <th>Destination</th>
+                            <th>PorteChar</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($grilleTarifs->groupBy('destination.libelle') as $libelle => $items)
+                            <tr>
+                                <td>{{ $items[0]->transporteur->raison_sociale }}</td>
+                                <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                <td>{{ $items[0]->porteChar->libelle }}</td>
+                                <td>{{ $items[0]->cout }}</td>
+                            </tr>
+                            @for ($i = 1; $i < count($items); $i++)
+                                <tr>
+                                    <td>{{ $items[0]->transporteur->raison_sociale }}</td>
+                                    <td>{{ $items[$i]->porteChar->libelle }}</td>
+                                    <td>{{ $items[$i]->cout }}</td>
+                                </tr>
+                            @endfor
+                        @endforeach
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>Transporteur</th>
+                            <th>Destination</th>
+                            <th>PorteChar</th>
+                            <th>Montant</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

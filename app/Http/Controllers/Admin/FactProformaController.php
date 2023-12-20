@@ -26,6 +26,7 @@ class FactProformaController extends Controller
         $porteChars = PorteChar::where('etat', 'actif')->get();
 
         $factureProformas = FactProforma::where('etat', 'actif')->get();
+    
 
         $grilleTarifs = GrilleTarif::all();
 //

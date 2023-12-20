@@ -76,6 +76,9 @@ All Admin Routes List
 
         Route::post('/import-excel', [ExcelImportController::class, 'import'])->name('import.excel');
 
+        // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/update-transporteur-uuid', [GrilleTarifController::class, 'updateUuid']);
+
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware('guest', 'PreventBackHistory')->group(function(){
     });
@@ -299,7 +302,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
         Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
-       
+
 
         // Fact Proforma
         Route::get('/proforma-index', [FactProformaController::class, 'index'])->name('proforma');

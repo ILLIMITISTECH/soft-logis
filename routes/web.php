@@ -300,8 +300,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/destroy/refacturation/{uuid}', [RefacturationController::class, 'destroy'])->name('refacturation.destroy');
         Route::post('/update/refacturation/{uuid}', [RefacturationController::class, 'update'])->name('refacturation.update');
 
+        // Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
+        // Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
         Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
-        Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
+        Route::post('/send-facture/{id}', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
 
 
         // Fact Proforma
@@ -416,5 +418,4 @@ Route::prefix('manager')->name('manager.')->group(function(){
     });
 
 });
-
 

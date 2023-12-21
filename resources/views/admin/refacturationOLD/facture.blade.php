@@ -116,7 +116,6 @@
 												</tr>
 											</thead>
 										</table>
-										@php $exchangeRate = 0.00152; @endphp
 										<table style="width:100%;">
 											<thead>
 												<tr>
@@ -124,8 +123,7 @@
 													<th class="text-left" style="background:lightgray; height: 80px;">DESCRIPTION</th>
 													<th class="text-right" style="background:lightgray; height: 80px;">PRIX UNITAIRE</th>
 													<th class="text-right" style="background:lightgray; height: 80px;">QTE</th>
-													<th class="text-right" style="background:lightgray; height: 80px;">TOTAL (XOF)</th>
-													<th class="text-right" style="background:lightgray; height: 80px;">TOTAL (€)</th>
+													<th class="text-right" style="background:lightgray; height: 80px;">TOTAL</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -135,14 +133,13 @@
 													<td class="text-left">
 														<h5>
                                                         <a target="_blank" href="javascript:;">
-                                                        {{ $prestations_debour->type_prestation ?? 'N/A'}}
+                                                        {{ $prestations_debour->prestation ?? 'N/A'}}
                                                         </a>
 										            </h5>
 													{{ $prestations_debour->description ?? 'N/A'  }}</td>
 													<td class="unit">{{ $prestations_debour->prixunitaire ?? 'N/A' }}</td>
 													<td class="qty">{{ $prestations_debour->qty ?? 'N/A' }}</td>
-													<td class="total">{{ $prestations_debour->total ?? 'N/A' }}</td>
-													<td class="total">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
+													<td class="total">{{ $prestations_debour->total ?? 'N/A' }} XOF</td>
 												</tr>
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
@@ -152,9 +149,7 @@
 												<tr>
 													<td colspan="2" ></td>
 													<td colspan="2" style="background:lightgray; height: 80px;">SOUS TOTAL DEBOURS</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals_debours)}}</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals_debours * $exchangeRate)}}</td>
-
+													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals_debours)}} XOF</td>
 												</tr>
                                             <hr>
                                                 @forelse ($prestations as $item )
@@ -163,34 +158,22 @@
 													<td class="text-left">
 														<h5>
                                                         <a target="_blank" href="javascript:;">
-                                                        {{ $item->type_prestation ?? 'N/A'}}
+                                                        {{ $item->prestation ?? 'N/A'}}
                                                         </a>
 										            </h5>
 													{{ $item->description ?? 'N/A'  }}</td>
 													<td class="unit">{{ $item->prixunitaire ?? 'N/A' }}</td>
 													<td class="qty">{{ $item->qty ?? 'N/A' }}</td>
-													<td class="total">{{ $item->total ?? 'N/A' }}</td>
-													<td class="total">{{ $item->total * $exchangeRate ?? 'N/A' }}</td>
+													<td class="total">{{ $item->total ?? 'N/A' }} XOF</td>
 												</tr>
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
                                             @endforelse
-											    <tr>
-													<td class="no"></td>
-													<td class="text-left">
-														COMMISSION SUR DEBOURS
-													</td>
-													<td class="unit">1,95%</td>
-													<td class="qty">1</td>
-													<td class="total">{{ $comm_sous_debours ?? 'N/A' }}</td>
-													<td class="total">{{ $comm_sous_debours * $exchangeRate ?? 'N/A' }}</td>
-												</tr>
+
                                                 <tr>
 													<td colspan="2"></td>
 													<td colspan="2" style="background:lightgray; height: 80px;">SOUS TOTAL DE PRESTATION</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals)}}</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals * $exchangeRate)}}</td>
-
+													<td style="background:lightgray; height: 80px;">{{ number_format($prestations_totals)}} XOF</td>
 												</tr>
 
                                                 <tr>
@@ -209,13 +192,11 @@
 													<td colspan="2"></td>
 													<td colspan="2" style="80px;">TVA</td>
 													<td style="height: 80px;">{{ number_format($tva)}}</td>
-													<td style="height: 80px;">{{ number_format($tva * $exchangeRate)}}</td>
 												</tr>
 												<tr>
 													<td colspan="2"></td>
 													<td colspan="2" style="height: 80px;">TOTAL HT</td>
-													<td style="height: 80px;">{{ number_format($total_ht)}}</td>
-													<td style="height: 80px;">{{ number_format($total_ht * $exchangeRate)}}</td>
+													<td style="height: 80px;">{{ number_format($total_ht)}} XOF</td>
 												</tr>
                                                 <tr>
 													<td colspan="2"></td>
@@ -225,9 +206,7 @@
                                                 <tr>
 													<td colspan="2"></td>
 													<td colspan="2" style="background:lightgray; height: 80px;">TOTAL XOF</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($total_xof)}}</td>
-													<td style="background:lightgray; height: 80px;">{{ number_format($total_xof * $exchangeRate)}}</td>
-
+													<td style="background:lightgray; height: 80px;">{{ number_format($total_xof)}} XOF</td>
 												</tr>
 											</tfoot>
 										</table>

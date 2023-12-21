@@ -13,12 +13,11 @@ class FacturePrestation extends Model
     protected $fillable = [
         'uuid',
         'facture_uuid',
-        'prestation',
+        'type_prestation',
         'qty',
         'description',
         'prixunitaire',
         'total',
-        'etat',
     ];
 
     public function facture()
@@ -26,4 +25,3 @@ class FacturePrestation extends Model
         return $this->belongsTo(Refacturation::class, 'facture_uuid');
     }
 }
-

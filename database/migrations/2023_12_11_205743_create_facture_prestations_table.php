@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('uuid')->index()->unique();
             $table->string('etat')->default('actif');
             $table->string('facture_uuid')->nullable();
-            $table->string('prestation')->nullable();
+            //$table->string('prestation')->nullable();
             $table->string('type_prestation')->nullable();
             $table->integer('qty')->nullable();
             $table->string('description')->nullable();

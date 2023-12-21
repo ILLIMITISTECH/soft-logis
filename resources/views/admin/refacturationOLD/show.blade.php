@@ -26,12 +26,11 @@
 						<div id="invoice">
 							<div class="toolbar hidden-print pull-right align-right">
 								<div class="text-end pull-right" style="display:flex;">
-									<form action="{{ route('admin.refacturation.send_facture', $refacturation->id)}}" method="POST" enctype="multipart/form-data">
+									<form action="{{ route('admin.refacturation.send_facture') }}" method="POST" enctype="multipart/form-data" class="submitForm">
 										@csrf
 											<button type="submit" class="btn btn-primary radius-30"><i class="bx bxs-plus-square"></i>Envoyer</button>
 									</form>
-									<button type="button" class="btn btn-primary radius-30" style="color: #000000; margin-left: 10px;"><i class="fa fa-file-pdf-o"></i>
-									<a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}" style="color: #fff;">Export PDF</a></button>
+									<button type="button" class="btn btn-primary radius-30" style="color: #000000; margin-left: 10px;"><i class="fa fa-file-pdf-o"></i><a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}" style="color: #fff;">Export PDF</a></button>
 								</div>
 								<hr/>
 							</div>
@@ -116,42 +115,34 @@
 													<th class="text-left">DESCRIPTION</th>
 													<th class="text-right">PRIX UNITAIRE</th>
 													<th class="text-right">QTE</th>
-													<th>Total (XOF)</th>
-                            						<th>Total (€)</th>
+													<th class="text-right">TOTAL</th>
 												</tr>
 											</thead>
 											<tbody>
-												@php $exchangeRate = 0.00152; @endphp
                                             @forelse ($prestations_debours as $prestations_debour)
 												<tr>
 													<td class="no">{{ $prestations_debour->id ?? 'N/A'}}</td>
 													<td class="text-left">
 														<h3>
                                                         <a target="_blank" href="javascript:;">
-                                                        {{ $prestations_debour->type_prestation ?? 'N/A'}}
+                                                        {{ $prestations_debour->prestation ?? 'N/A'}}
                                                         </a>
 										            </h3>
 													{{ $prestations_debour->description ?? 'N/A'  }}</td>
 													<td class="unit">{{ $prestations_debour->prixunitaire ?? 'N/A' }}</td>
 													<td class="qty">{{ $prestations_debour->qty ?? 'N/A' }}</td>
-													<td class="total">{{ $prestations_debour->total ?? 'N/A' }}</td>
-													<td class="total">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
+													<td class="total">{{ $prestations_debour->total ?? 'N/A' }} XOF</td>
 												</tr>
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
                                             @endforelse
-
-
 											</tbody>
 											<tfoot>
 												<tr>
 													<td colspan="2"></td>
 													<td colspan="2">SOUS TOTAL DEBOURS</td>
-													<td>{{ number_format($prestations_totals_debours)}}</td>
-													<td>{{ number_format($prestations_totals_debours * $exchangeRate)}}</td>
+													<td>{{ number_format($prestations_totals_debours)}} XOF</td>
 												</tr>
-
-												
 
                                                 @forelse ($prestations as $item )
 												<tr>
@@ -159,34 +150,22 @@
 													<td class="text-left">
 														<h3>
                                                         <a target="_blank" href="javascript:;">
-                                                        {{ $item->type_prestation ?? 'N/A'}}
+                                                        {{ $item->prestation ?? 'N/A'}}
                                                         </a>
 										            </h3>
 													{{ $item->description ?? 'N/A'  }}</td>
 													<td class="unit">{{ $item->prixunitaire ?? 'N/A' }}</td>
 													<td class="qty">{{ $item->qty ?? 'N/A' }}</td>
-													<td class="total">{{ $item->total ?? 'N/A' }}</td>
-													<td class="total">{{ $item->total * $exchangeRate ?? 'N/A' }}</td>
+													<td class="total">{{ $item->total ?? 'N/A' }} XOF</td>
 												</tr>
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
                                             @endforelse
-											    <tr>
-													<td class="no"></td>
-													<td class="text-left">
-														COMMISSION SUR DEBOURS
-													</td>
-													<td class="unit">1,95%</td>
-													<td class="qty">1</td>
-													<td class="total">{{ $comm_sous_debours ?? 'N/A' }}</td>
-													<td class="total">{{ $comm_sous_debours * $exchangeRate ?? 'N/A' }}</td>
-												</tr>
 
                                                 <tr>
 													<td colspan="2"></td>
 													<td colspan="2">SOUS TOTAL DE PRESTATION</td>
-													<td>{{ number_format($prestations_totals)}}</td>
-													<td>{{ number_format($prestations_totals * $exchangeRate)}}</td>
+													<td>{{ number_format($prestations_totals)}} XOF</td>
 												</tr>
 
                                                 <tr>
@@ -205,13 +184,11 @@
 													<td colspan="2"></td>
 													<td colspan="2">TVA</td>
 													<td>{{ number_format($tva)}}</td>
-													<td>{{ number_format($tva * $exchangeRate)}}</td>
 												</tr>
 												<tr>
 													<td colspan="2"></td>
 													<td colspan="2">TOTAL HT</td>
-													<td>{{ number_format($total_ht)}}</td>
-													<td>{{ number_format($total_ht * $exchangeRate)}}</td>
+													<td>{{ number_format($total_ht)}} XOF</td>
 												</tr>
                                                 <tr>
 													<td colspan="2"></td>
@@ -220,9 +197,8 @@
 												</tr>
                                                 <tr>
 													<td colspan="2"></td>
-													<td colspan="2">TOTAL</td>
-													<td>{{ number_format($total_xof)}}</td>
-													<td>{{ number_format($total_xof * $exchangeRate)}}</td>
+													<td colspan="2">TOTAL XOF</td>
+													<td>{{ number_format($total_xof)}} XOF</td>
 												</tr>
 											</tfoot>
 										</table>
@@ -232,7 +208,7 @@
 											<div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
 										</div>-->
 									</main>
-									<!--<footer>Invoice was created on a computer and is valid without the signature and seal.</footer>-->
+									<footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
 								</div>
 								<!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
 								<div></div>
@@ -240,6 +216,7 @@
 						</div>
 					</div>
 				</div>
+                @include('admin.refacturation.sendMail')
 
 			</div>
 		<!--end page wrapper -->

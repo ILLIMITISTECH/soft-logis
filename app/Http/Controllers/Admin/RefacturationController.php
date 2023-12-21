@@ -18,7 +18,7 @@ class RefacturationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+
 
     public function index()
     {
@@ -80,35 +80,35 @@ class RefacturationController extends Controller
 
             $refacturation_FAC = Refacturation::OrderBy('id', 'desc')->first();
 
-            $prestation = $request->input('prestation');
+            //$prestation = $request->input('prestation');
             $type_prestation = $request->input('type_prestation');
-            $qty = $request->input('qty'); 
-            $description = $request->input('description'); 
-            $prixunitaire = $request->input('prixunitaire');  
-            $total = $request->input('total');  
-                    
-                    for($i=0; $i < count($prestation); $i++){
+            $qty = $request->input('qty');
+            $description = $request->input('description');
+            $prixunitaire = $request->input('prixunitaire');
+            $total = $request->input('total');
+
+                    for($i=0; $i < count($type_prestation); $i++){
                     $prestations = [
                         'uuid' => Str::uuid(),
                         'facture_uuid' => $refacturation_FAC->uuid,
                         'etat' => "actif",
-                        'prestation' => $prestation[$i],
+                        //'prestation' => $prestation[$i],
                         'type_prestation' => $type_prestation[$i],
                         'qty' => $qty[$i],
                         'description' => $description[$i],
                         'prixunitaire' => $prixunitaire[$i],
                         'total' => $total[$i],
                          ];
-                     if($prestation[$i] !== null){
+                     if($type_prestation[$i] !== null){
                             DB::table('facture_prestations')->insert($prestations);
-                            
+
                         }
-                    }  
+                    }
 
             if ($refacturation) {
 
                 $dataResponse =[
-                    'type'=>'success', 
+                    'type'=>'success',
                     'urlback'=>"back",
                     'message'=>"Enregistré avec succes!",
                     'code'=>200,
@@ -148,39 +148,53 @@ class RefacturationController extends Controller
 
         $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
         $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
-        $prestations_totals = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
         $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+        $com = 1.95;
+        $comm_debours = $prestations_totals_debours * $com;
+        $comm_sous_debours = ($comm_debours / 100);
+        $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+        $prestations_totals = $prestations_totalsS + $comm_sous_debours;
+
         $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
         $total_ht = ($prestations_totals + $prestations_totals_debours);
-        $tva = "181893";
+        $tva = "21175";
         $total_xof = ($total_ht + $tva);
 
-        return view('admin.refacturation.show', compact('total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
+
+
+        return view('admin.refacturation.show', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
 
     }
 
-    public function send_facture(Request $request)
+    public function send_facture($id)
     {
        //the facturation
-       DB::beginTransaction();
+       //DB::beginTransaction();
 
-       try {
+      // try {
 
         $refacturation = Refacturation::find($id);
+
         $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
         $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
-        $prestations_totals = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
         $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+        $com = 1.95;
+        $comm_debours = $prestations_totals_debours * $com;
+        $comm_sous_debours = ($comm_debours / 100);
+        $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+        $prestations_totals = $prestations_totalsS + $comm_sous_debours;
+
         $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
         $total_ht = ($prestations_totals + $prestations_totals_debours);
-        $tva = "181893";
+        $tva = "21175";
         $total_xof = ($total_ht + $tva);
-  
+
         //$transporteurName = "fallou.g@illimitis.com";
         //$email = $request->get('email');
+       // dd($refacturation->email);
         if($refacturation->email)
         {
-            Mail::to($refacturation->email)->send(new Facture($refacturation,$prestations,$prestations_debours,
+            Mail::to($refacturation->email)->send(new Facture($comm_sous_debours,$refacturation,$prestations,$prestations_debours,
             $prestations_totals,$prestations_totals_debours,$user,$total_ht,$tva,$total_xof));
             dd("ok");
         }
@@ -188,7 +202,7 @@ class RefacturationController extends Controller
         if ($refacturation->email) {
 
             $dataResponse =[
-                'type'=>'success', 
+                'type'=>'success',
                 'urlback'=>"back",
                 'message'=>"Enregistré avec succes!",
                 'code'=>200,
@@ -205,34 +219,32 @@ class RefacturationController extends Controller
             ];
        }
 
-    } catch (\Throwable $th) {
-        DB::rollBack();
-        $dataResponse =[
-            'type'=>'error',
-            'urlback'=>'',
-            'message'=>"Erreur systeme! $th",
-            'code'=>500,
-        ];
-    }
-       
+
+
+
         return back()->with(['success']);
     }
 
-   
+
         public function downloadPDF($id) {
 
                 $refacturation = Refacturation::find($id);
                 $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
                 $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
-                $prestations_totals = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
                 $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+                $com = 1.95;
+                $comm_debours = $prestations_totals_debours * $com;
+                $comm_sous_debours = ($comm_debours / 100);
+                $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+                $prestations_totals = $prestations_totalsS + $comm_sous_debours;
+
                 $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
                 $total_ht = ($prestations_totals + $prestations_totals_debours);
-                $tva = "181893";
+                $tva = "21175";
                 $total_xof = ($total_ht + $tva);
 
-                $pdf = PDF::loadView('admin.refacturation.facture', compact('total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
-                
+                $pdf = PDF::loadView('admin.refacturation.facture', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
+
                 return $pdf->download('refacturation.pdf');
         }
 
@@ -290,39 +302,39 @@ class RefacturationController extends Controller
 
             $refacturation_FAC = Refacturation::orderBy('updated_at', 'desc')->first();
 
-            
+
             DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation_FAC->uuid])->update(['etat'=>"inactif"]);
 
 
-            $prestation = $request->input('prestation');
+           // $prestation = $request->input('prestation');
             $type_prestation = $request->input('type_prestation');
-            $qty = $request->input('qty'); 
-            $description = $request->input('description'); 
-            $prixunitaire = $request->input('prixunitaire');  
-            $total = $request->input('total');  
-                    
-                    for($i=0; $i < count($prestation); $i++){
+            $qty = $request->input('qty');
+            $description = $request->input('description');
+            $prixunitaire = $request->input('prixunitaire');
+            $total = $request->input('total');
+
+                    for($i=0; $i < count($type_prestation); $i++){
                     $prestations = [
                         'uuid' => Str::uuid(),
                         'facture_uuid' => $refacturation_FAC->uuid,
                         'etat' => "actif",
-                        'prestation' => $prestation[$i],
+                        //'prestation' => $prestation[$i],
                         'type_prestation' => $type_prestation[$i],
                         'qty' => $qty[$i],
                         'description' => $description[$i],
                         'prixunitaire' => $prixunitaire[$i],
                         'total' => $total[$i],
                          ];
-                     if($prestation[$i] !== null){
+                     if($type_prestation[$i] !== null){
                             DB::table('facture_prestations')->insert($prestations);
-                            
+
                         }
-                    }  
+                    }
 
             if ($refacturation) {
 
                 $dataResponse =[
-                    'type'=>'success', 
+                    'type'=>'success',
                     'urlback'=>"back",
                     'message'=>"Enregistré avec succes!",
                     'code'=>200,

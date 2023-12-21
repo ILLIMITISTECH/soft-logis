@@ -200,8 +200,11 @@
                                                             @php  $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get(); @endphp
                                                             @forelse ($prestations as $prestation )
                                                             @if($prestation)
-                                                            
-                                                            <div class="col-3">
+                                                            <div class="col-2">
+                                                                <input type="text" value="{{ $prestation->prestation ?? 'N/A'  }}" name="prestation[]" class="form-control"
+                                                                    placeholder="Prestation">
+                                                            </div>
+                                                            <div class="col-2">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="{{ $prestation->type_prestation ?? 'N/A'  }}">{{ $prestation->type_prestation ?? 'N/A'  }}</option>
                                                                 <option value="prestation">PRESTATION</option>
@@ -212,7 +215,7 @@
                                                                 <input type="number" name="qty[]" value="{{ $prestation->qty ?? 'N/A'  }}" class="form-control"
                                                                     placeholder="0">
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-2">
                                                                 <input type="text" name="description[]" value="{{ $prestation->description ?? 'N/A'  }}" class="form-control"
                                                                     placeholder="Description">
                                                             </div>
@@ -235,8 +238,11 @@
                                                 <div id="prestations">
                                                     <div class="prestation mb-2">
                                                         <div class="form-row row">
-                                                            
-                                                            <div class="col-3">
+                                                            <div class="col-2">
+                                                                <input type="text" name="prestation[]" class="form-control"
+                                                                    placeholder="Prestation">
+                                                            </div>
+                                                            <div class="col-2">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="">Sélect le type</option>
                                                                 <option value="prestation">PRESTATION</option>
@@ -247,7 +253,7 @@
                                                                 <input type="number" name="qty[]" class="form-control"
                                                                     placeholder="0">
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-2">
                                                                 <input type="text" name="description[]" class="form-control"
                                                                     placeholder="Description">
                                                             </div>

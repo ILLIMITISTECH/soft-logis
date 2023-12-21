@@ -37,20 +37,13 @@
                             <th>N°</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
-                            <th>Total (XOF)</th>
-                            <th>Total (€)</th>
+                            <th>Total</th>
                             <th>Date Echeance</th>
-                            
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($refacturations as $item )
-                        @php  
-                             $fac_pres = DB::table('facture_prestations')->where('etat', 'actif')->where('facture_uuid', $item->uuid)->sum('total');  
-                             $exchangeRate = 0.00152;
-                             $euroAmount = $fac_pres * $exchangeRate;
-                        @endphp
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
@@ -61,23 +54,21 @@
                                         <h6 class="mb-0 font-14">#{{ $item->num_facture ?? 'N/A'}}</h6>
                                     </div>
                                 </div>
-                            </td> 
+                            </td>
                             <td>{{ $item->refClient ?? 'N/A' }}</td>
                             <td>
                                 <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i class='bx bxs-circle me-1'></i>{{ $item->statut ?? 'N/A'}}</div>
                             </td>
-                            <td>{{ $fac_pres ?? 'N/A'  }}   </td>
-                            <td>{{ $euroAmount ?? 'N/A'  }}   </td>
+                            <td>{{ $item->total ?? 'N/A'  }}</td>
                             <td>{{ $item->date_echeance ?? 'N/A' }}</td>
                             <td>
                                 <div class="d-flex order-actions">
                                     <a href="{{ route('admin.refacturation.show', $item->uuid) }}"
                                         style="cursor: pointer"><i class="lni lni-eye"></i>
                                     </a>
-                                    <a href="javascript:;" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $item->uuid }}"><i class='bx bxs-edit'></i></a>
-                                    
-                                    <a href="javascript:;" class="ms-3">
-                                    <a class="ms-3 deleteConfirmation" data-uuid="{{$item->uuid}}"
+                                    <a href="javascript:;" class="mx-3" data-bs-toggle="modal" data-bs-target="#editFacture{{ $item->uuid }}"><i class='bx bxs-edit'></i></a>
+
+                                    <a class="deleteConfirmation" data-uuid="{{$item->uuid}}"
                                         data-type="confirmation_redirect" data-placement="top"
                                         data-token="{{ csrf_token() }}"
                                         data-url="{{route('admin.refacturation.destroy',$item->uuid)}}"
@@ -86,7 +77,7 @@
                                         data-route="{{route('admin.refacturation.destroy',$item->uuid)}}"><i
                                             class='bx bxs-trash' style="cursor: pointer"></i>
                                     </a>
-                                
+
                                 </a>
                                 </div>
                             </td>

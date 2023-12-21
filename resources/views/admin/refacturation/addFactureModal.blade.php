@@ -176,14 +176,14 @@
                                             aria-labelledby="stepper1trigger3">
 
                                             <div class="row g-3">
-                                                <div id="prestations">
-                                                    <div class="prestation mb-2">
+                                                <div id="prestationsb">
+                                                    <div class="prestationb mb-2">
                                                         <div class="form-row row">
-                                                            <div class="col-2">
+                                                            <!--<div class="col-2">
                                                                 <input type="text" name="prestation[]" class="form-control"
                                                                     placeholder="Prestation">
-                                                            </div>
-                                                            <div class="col-2">
+                                                            </div>-->
+                                                            <div class="col-3">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="">Sélect le type</option>
                                                                 <option value="prestation">PRESTATION</option>
@@ -194,7 +194,7 @@
                                                                 <input type="number" name="qty[]" class="form-control"
                                                                     placeholder="0">
                                                             </div>
-                                                            <div class="col-2">
+                                                            <div class="col-3">
                                                                 <input type="text" name="description[]" class="form-control"
                                                                     placeholder="Description">
                                                             </div>
@@ -208,13 +208,13 @@
                                                             </div>
                                                             <div class="col-auto">
 
-                                                                <button type="button" class="btn btn-danger remove-btn px-2 text-center"><i class='bx bxs-trash remove-btn'></i></button>
+                                                                <button type="button" class="btn btn-danger remove-btnb px-2 text-center"><i class='bx bxs-trash remove-btnb'></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                 </div>
-                                                <button type="button" id="add-btn" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
+                                                <button type="button" id="add-btnb" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
 
                                                 <hr>
                                                 <div class="col-12 mt-4">
@@ -291,24 +291,24 @@
 </div>
 <script>
     function clonePrestation() {
-      const prestation = document.querySelector('.prestation');
+      const prestation = document.querySelector('.prestationb');
       // Clone le bloc de prestation
       const newPrestation = prestation.cloneNode(true);
       // Réinitialise les valeurs des champs de saisie
       newPrestation.querySelectorAll('input').forEach(input => input.value = '');
-      document.querySelector('#prestations').appendChild(newPrestation);
+      document.querySelector('#prestationsb').appendChild(newPrestation);
     }
-    document.querySelector('#add-btn').addEventListener('click', clonePrestation);
+    document.querySelector('#add-btnb').addEventListener('click', clonePrestation);
 
     document.addEventListener('click', event => {
-      if (event.target && event.target.classList.contains('remove-btn')) {
-        event.target.closest('.prestation').remove();
+      if (event.target && event.target.classList.contains('remove-btnb')) {
+        event.target.closest('.prestationb').remove();
       }
     });
 
     document.addEventListener('input', event => {
       if (event.target && event.target.name === 'qty[]' || event.target.name === 'prixunitaire[]') {
-        const prestation = event.target.closest('.prestation');
+        const prestation = event.target.closest('.prestationb');
         const qty = prestation.querySelector('[name="qty[]"]').value;
         const prixunitaire = prestation.querySelector('[name="prixunitaire[]"]').value;
         const total = prestation.querySelector('[name="total[]"]');

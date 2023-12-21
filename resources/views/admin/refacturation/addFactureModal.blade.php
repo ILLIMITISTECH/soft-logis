@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div id="stepper1" class="bs-stepper">
-                    <div class="card">  
+                    <div class="card">
 
                         <div class="card-header">
                             <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between"
@@ -275,9 +275,6 @@
                                         </div>
                                     </form>
                                 </div>
-
-
-
                         </div>
                     </div>
                 </div>

@@ -39,7 +39,6 @@
                             <th>Statut</th>
                             <th>Total</th>
                             <th>Date Echeance</th>
-                            
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -55,7 +54,7 @@
                                         <h6 class="mb-0 font-14">#{{ $item->num_facture ?? 'N/A'}}</h6>
                                     </div>
                                 </div>
-                            </td> 
+                            </td>
                             <td>{{ $item->refClient ?? 'N/A' }}</td>
                             <td>
                                 <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i class='bx bxs-circle me-1'></i>{{ $item->statut ?? 'N/A'}}</div>
@@ -67,10 +66,9 @@
                                     <a href="{{ route('admin.refacturation.show', $item->uuid) }}"
                                         style="cursor: pointer"><i class="lni lni-eye"></i>
                                     </a>
-                                    <a href="javascript:;" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $item->uuid }}"><i class='bx bxs-edit'></i></a>
-                                    
-                                    <a href="javascript:;" class="ms-3">
-                                    <a class="ms-3 deleteConfirmation" data-uuid="{{$item->uuid}}"
+                                    <a href="javascript:;" class="mx-3" data-bs-toggle="modal" data-bs-target="#editFacture{{ $item->uuid }}"><i class='bx bxs-edit'></i></a>
+
+                                    <a class="deleteConfirmation" data-uuid="{{$item->uuid}}"
                                         data-type="confirmation_redirect" data-placement="top"
                                         data-token="{{ csrf_token() }}"
                                         data-url="{{route('admin.refacturation.destroy',$item->uuid)}}"
@@ -79,7 +77,7 @@
                                         data-route="{{route('admin.refacturation.destroy',$item->uuid)}}"><i
                                             class='bx bxs-trash' style="cursor: pointer"></i>
                                     </a>
-                                
+
                                 </a>
                                 </div>
                             </td>

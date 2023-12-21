@@ -26,7 +26,6 @@ class FactProformaController extends Controller
         $porteChars = PorteChar::where('etat', 'actif')->get();
 
         $factureProformas = FactProforma::where('etat', 'actif')->get();
-    
 
         $grilleTarifs = GrilleTarif::all();
 //
@@ -38,7 +37,8 @@ class FactProformaController extends Controller
      */
     public function create()
     {
-        $transports = Company::where('etat', 'actif')->get();
+
+        $transports = Company::where(['etat' => 'actif', 'type' => 'transporteur'])->get();
         $destinations = Destination::where('etat', 'actif')->get();
         $porteChars = PorteChar::where('etat', 'actif')->get();
 

@@ -64,6 +64,7 @@ class CollaborateurController extends Controller
             ])->save();
 
             if ($saving) {
+                $user = User::where(['uuid'=>$saving->uuid])->first();
                 $role = Role::find($request->id_role);
                 $user->assignRole($role);
 

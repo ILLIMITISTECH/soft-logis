@@ -10,7 +10,7 @@ class FacturePrestation extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'uuid',
         'facture_uuid',
         'prestation',
@@ -18,6 +18,7 @@ class FacturePrestation extends Model
         'description',
         'prixunitaire',
         'total',
+        'etat',
     ];
 
     public function facture()

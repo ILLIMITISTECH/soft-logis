@@ -60,64 +60,49 @@
 
                             <td>
                                 <div class="d-flex order-actions">
-                                    <a data-bs-toggle="modal" data-bs-target="#editCategoryModal"  class="" style="cursor: pointer"><i class='bx bxs-edit'></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#editRoleModal{{ $item->id }}"  class="" style="cursor: pointer"><i class='bx bxs-edit'></i></a>
 
+                                    <form action="{{ route('admin.role.destroy', $item->id) }}" method="post" class="submitForm">
+                                        @csrf
+                                        <button type="submit" class="mx-3 bg-light px-2 rounded"><i class='bx bxs-trash'></i> </button>
+                                    </form>
 
-                                    {{-- <a href="javascript:;" class="ms-3"><i class='bx bxs-trash'></i></a> --}}
-
-                                    <a class="ms-3 deleteConfirmation" data-uuid=""
-                                        data-type="confirmation_redirect" data-placement="top"
-                                        data-token="{{ csrf_token() }}"
-                                        data-url=""
-                                        data-title="Vous êtes sur le point de supprimer  "
-                                        data-id="" data-param="0"
-                                        data-route=""><i
-                                            class='bx bxs-trash' style="cursor: pointer"></i>
-                                    </a>
-
-                                    <a href="{{ route('admin.permission', $item->id) }}"  class="ms-3" style="cursor: pointer"><i class="lni lni-key"></i></a>
+                                    <a href="{{ route('admin.permission', $item->id) }}"  class="" style="cursor: pointer"><i class="lni lni-key"></i></a>
                                 </div>
                             </td>
                         </tr>
 
                         {{-- Modal edit category --}}
-                        <!-- Modal -->
-                        {{-- <div class="modal fade" id="addRoleModal{{ $categorie->uuid }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                       <div class="modal fade" id="editRoleModal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modifier categorie</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="{{ route('admin.category.update', $categorie->uuid) }}" method="post" class="submitForm">
+
+                                    <form action="{{ route('admin.role.edit', $item->id) }}" method="post" class="submitForm">
+                                        @csrf
                                         <div class="modal-body my-4">
-                                            @csrf
                                             <div class="row">
                                                 <div class="form-group col">
-                                                    <label for="">Libelle</label>
-                                                    <input class="form-control" type="text" name="libelle" value="{{ $categorie->libelle }}">
-                                                </div>
-                                                <div class="form-group col">
-                                                    <label for="">Couleur</label>
-                                                    <input class="form-control" type="color" name="color" value="{{ $categorie->color }}">
+                                                    <label for="">Libelle <span><span class="text-danger">*</span></span></label>
+                                                    <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ old('name', $item->name) }}" name="name" required>
+                                                    @error('name')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                    @if ($errors->has('name') && $errors->first('name') == 'The name has already been taken.')
+                                                        <div class="invalid-feedback">Le nom existe déjà dans la table des rôles.</div>
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-3">
-                                                <label for="description">Description <span class="text-muted">(facultatif)</span></label>
-                                                <textarea class="form-control" name="description"  cols="30" rows="2" value="{{ $categorie->description }}">{{ $categorie->description }}</textarea>
-                                            </div>
-                                            <hr>
 
                                             <div class="modal-footer mt-2">
                                                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-outline-info">Modifier</button>
+                                                <button type="submit" class="btn btn-outline-success">Modifier</button>
                                             </div>
                                         </div>
                                     </form>
 
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         @empty
 
                             <center><span>Aucun role</span></center>

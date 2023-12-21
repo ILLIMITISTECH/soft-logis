@@ -325,15 +325,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 
-
-
-
-
-
-
         // Role Permission
         Route::get('/role', [RoleController::class, 'index'])->name('role');
         Route::post('/role-create', [RoleController::class, 'store'])->name('role.store');
+        Route::post('/role-edit/{id}', [RoleController::class, 'update'])->name('role.edit');
+        Route::post('/role-destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
         Route::get('/permission/{id}', [RoleController::class, 'permission'])->name('permission');
         Route::post('/permission-create', [RoleController::class, 'permissionStore'])->name('permission.store');
         Route::post('/group-create', [RoleController::class, 'groupStore'])->name('group.store');

@@ -221,16 +221,54 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
+   {
         //
-    }
+   }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        {
+            $request->validate([
+                'name' => 'required|unique:roles,name'
+            ]);
+
+            DB::beginTransaction();
+            try {
+                $roles = Role::whereId($id)->update(['name' => $request->name,]);
+            if ($roles) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+        } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+        }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+
+        }
     }
 
     /**
@@ -238,6 +276,23 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $roles = Role::whereId($id)->delete();
+        if ($roles) {
+            $dataResponse =[
+                'type'=>'success',
+                'urlback'=>"back",
+                'message'=>"Supprimé avec succes!",
+                'code'=>200,
+            ];
+        } else {
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur lors de la suppression!",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
     }
 }

@@ -101,10 +101,9 @@
                             <th>N° BL</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
-                            <th>Total TTC(Fcfa)</th>
+                            <th>Total (XOF)</th>
                             <th>Total (Euro)</th>
-                            <th>Date</th>
-
+                            <th>Date de Facturation</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -124,11 +123,7 @@
 
                             </td>
                             <td>
-                                @if ($facture->typeFacture == 'transitaire')
-                                    {{ $facture->num_blTransit ?? 'N/A' }}
-                                @elseif ($facture->typeFacture == 'transporteur')
-                                    {{ $facture->num_blTransport ?? 'N/A' }}
-                                @endif
+                                {{ $facture->num_bl ?? 'N/A' }}
                             </td>
                             <td>
                                 @if ($facture->typeFacture == 'transitaire')
@@ -159,19 +154,13 @@
                                     </div>
                                 @endif
                             </td>
-                            @if ($facture->typeFacture == 'transitaire')
-                            <td>{{ number_format($facture->montantTotalTtcTransit, 0, ',', ' ') }} </td>
-                            @endif
-                            @if ($facture->typeFacture == 'transporteur')
-                            <td>{{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} </td>
-                            @endif
-                            <td>
-                                @if($facture->typeFacture == 'transitaire')
-                                {{ number_format($facture->totalEurosTransit, 0, ',', ' ') }}
-                                @elseif($facture->typeFacture == 'transporteur')
-                                    {{ number_format($facture->totalEuros, 0, ',', ' ') }}
-                                @endif
-                            </td>
+                            <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }} </td>
+                            @php
+                                $valeurEnEuros = $facture->prestationLines->sum('totalLigne') /  655.900;
+                                $valeurEnEurosFormattee = number_format($valeurEnEuros, 0, ',', ' ');
+                            @endphp
+
+                            <td>{{ $valeurEnEurosFormattee }}</td>
                             <td>{{ $facture->created_at->diffForHumans() }}</td>
 
                             <td>

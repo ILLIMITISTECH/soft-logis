@@ -18,48 +18,23 @@ class Facturation extends Model
         'etat',
         'statut',
         'numFacture',
-        'date_paiement',
+        'date_echeance',
         'typeFacture',
         'transitaire_uuid',
-        'montantHtDouane',
-        'tvaDouane',
-        'montantTtcDouane',
-        'montantHtAmat',
-        'tvaAmat',
-        'montantTtcAmat',
-        'montantHtAccor',
-        'tvaAccor',
-        'montantTtcAccor',
-        'montantHtPres',
-        'tvaPres',
-        'montantTtcPres',
-        'montantHtAutre',
-        'tvaAutre',
-        'montantTtcAutre',
-
         'transporteur_uuid',
-        'montantHtTpPres',
-        'tvaTpPres',
-        'montantTtcTpPres',
-        'montantHtTpAutr',
-        'tvaTpAutr',
-        'montantTtcTpAutr',
-
-        'montantTotalHtTransit',
-        'montantTotalTtcTransit',
-        'TotalTvaTransit',
-
-        'montantTotalHtTransport',
-        'montantTotalTtcTransport',
-        'TotalTvaTransport',
+        'num_bl',
+        'file_Bl',
 
         'facture_original',
         'note',
         'user_create',
+
         'user_payed',
+        'date_paiement',
     ];
 
-    protected $dates = ['date_paiement'];
+
+    protected $dates = ['date_paiement', 'date_echeance'];
 
     public function transporteur()
     {
@@ -79,6 +54,10 @@ class Facturation extends Model
     public function payed_by()
     {
         return $this->belongsTo(User::class, 'user_payed');
+    }
+    public function prestationLines()
+    {
+        return $this->hasMany(PrestationLine::class, 'facture_uuid', 'uuid');
     }
 
 }

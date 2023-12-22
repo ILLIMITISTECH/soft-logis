@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Facturation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PrestationLine;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -69,31 +70,13 @@ class FacturationController extends Controller
                 'numFacture' => 'required|string|max:255',
             ]);
 
-            $totalHtTransit = $request->montantHtDouane + $request->montantHtAmat + $request->montantHtAccor + $request->montantHtPres + $request->montantHtAutre;
-
-            $montantTotalTtcTransit = $request->montantTtcDouane + $request->montantTtcAmat + $request->montantTtcAccor + $request->montantTtcPres + $request->montantTtcAutre;
-
-            $tvaGlobal = $montantTotalTtcTransit - $totalHtTransit;
-            $tauxTvaGlobal = 0;
-            if ($totalHtTransit != null) {
-                $tauxTvaGlobal = ($tvaGlobal / $totalHtTransit) * 100;
-            }
-
-            $totalHtTransport = $request->montantHtTpPres + $request->montantHtTpAutr;
-            $totalTtcTransport = $request->montantTtcTpPres + $request->montantTtcTpAutr;
-            $tvaGlobalTransport = $totalTtcTransport - $totalHtTransport;
-
-            $tauxTvaGlobalTransport = 0;
-            if ($totalHtTransport != null) {
-                $tauxTvaGlobalTransport = ($tvaGlobalTransport / $totalHtTransport) * 100;
-            }
 
             DB::beginTransaction();
             try {
 
                 $image= $request->facture_original ?? "";
                 if($image == null) {
-                 $image= 'default_logo.jpg';
+                 $image= 'default_fact.pdf';
                 }else{
                     $file = $request->file('facture_original');
                  //    dd($image);
@@ -101,81 +84,50 @@ class FacturationController extends Controller
                     $file->move('files/',$image);
                 }
 
-                $doc_blTransit = $request->file_BlTransit ?? "";
-                if($doc_blTransit == null) {
-                 $file= 'default.pdf';
-                }else{
-                    $file = $request->file('file_BlTransit');
-                 //    dd($image);
-                    $doc_blTransit = Str::uuid().'.'.$file->getClientOriginalExtension();
-                    $file->move('files/',$doc_blTransit);
-                }
-
-                $doc_blTransport = $request->file_BlTransport ?? "";
-                if($doc_blTransport == null) {
-                 $file= 'default.pdf';
-                }else{
-                    $file = $request->file('file_BlTransport');
-                 //    dd($image);
-                    $doc_blTransport = Str::uuid().'.'.$file->getClientOriginalExtension();
-                    $file->move('files/',$doc_blTransport);
-                }
                 $user = auth()->user();
 
                 $saving= Facturation::create([
-                    'uuid'=>Str::uuid(),
+                    'uuid'=> Str::uuid(),
                     'code' => Refgenerate(Facturation::class, 'Fa', 'code'),
                     'statut' => 'reccording',
 
                     'numFacture' => $request->numFacture,
-                    'date_paiement' => $request->date_paiement,
+                    'date_echeance' => $request->date_echeance,
                     'typeFacture' => $request->typeFacture,
 
                     'transitaire_uuid' => $request->transitaire_uuid,
-                    'montantHtDouane' => $request->montantHtDouane,
-                    'tvaDouane' => $request->tvaDouane,
-                    'montantTtcDouane' => $request->montantTtcDouane,
-                    'montantHtAmat' => $request->montantHtAmat,
-                    'tvaAmat' => $request->tvaAmat,
-                    'montantTtcAmat' => $request->montantTtcAmat,
-                    'montantHtAccor' => $request->montantHtAccor,
-                    'tvaAccor' => $request->tvaAccor,
-                    'montantTtcAccor' => $request->montantTtcAccor,
-                    'montantHtPres' => $request->montantHtPres,
-                    'tvaPres' => $request->tvaPres,
-                    'montantTtcPres' => $request->montantTtcPres,
-                    'montantHtAutre' => $request->montantHtAutre,
-                    'tvaAutre' => $request->tvaAutre,
-                    'montantTtcAutre' => $request->montantTtcAutre,
-
                     'transporteur_uuid' => $request->transporteur_uuid,
-                    'montantHtTpPres' => $request->montantHtTpPres,
-                    'tvaTpPres' => $request->tvaTpPres,
-                    'montantTtcTpPres' => $request->montantTtcTpPres,
-                    'montantHtTpAutr' => $request->montantHtTpAutr,
-                    'tvaTpAutr' => $request->tvaTpAutr,
-                    'montantTtcTpAutr' => $request->montantTtcTpAutr,
 
-                    'montantTotalHtTransit' => $totalHtTransit,
-                    'montantTotalTtcTransit' => $montantTotalTtcTransit,
-                    'TotalTvaTransit' => $tauxTvaGlobal,
-
-                    'montantTotalHtTransport' => $totalHtTransport,
-                    'montantTotalTtcTransport' => $totalTtcTransport,
-                    'TotalTvaTransport' => $tauxTvaGlobalTransport,
-
-                    'num_blTransit' => $request->num_blTransit,
-                    'file_BlTransit' => $doc_blTransit,
-
-                    'num_blTransport' => $request->num_blTransport,
-                    'file_BlTransport' => $doc_blTransport,
+                    'num_bl' => $request->num_bl,
+                    'file_Bl' => $request->file_Bl,
 
                     'facture_original' => $image,
                     'note' => $request->note,
+                    'date_paiement' => $request->date_paiement,
                     'user_create' => Auth::id(),
 
                     'etat' => 'actif',
                 ])->save();
+                // dd($saving->id);
+                $facture_uuid = Facturation::OrderBy('id', 'desc')->first();
+
+                $rubriques = $request->input('rubrique');
+                $prixUnitaires = $request->input('prixUnitaire');
+                $qtys = $request->input('qty');
+                $totalLignes = $request->input('totalLigne');
+
+                foreach ($rubriques as $index => $rubrique) {
+                $FacturePrestation = PrestationLine::create([
+                    'uuid' => Str::uuid(),
+                    'facture_uuid' => $facture_uuid->uuid,
+                    'etat' => 'actif',
+                    'rubrique' => $rubrique,
+                    'prixUnitaire' => $prixUnitaires[$index],
+                    'qty' => $qtys[$index],
+                    'totalLigne' => $totalLignes[$index],
+                ]);
+                }
+
 
                 if ($saving) {
 
@@ -217,6 +169,7 @@ class FacturationController extends Controller
 
 
         $facture = Facturation::where('uuid', $id)->first();
+        
         return view('admin.facturation.show', compact('facture'));
     }
 

@@ -142,157 +142,45 @@
                                     <div class="date">Date d'echeance: {{ $facture->date_paiement }}</div>
                                 </div>
                             </div>
-                            {{-- <table class="w-100">
-                                <thead>
-                                    <tr class="row">
-                                        <th class="col-3">#</th>
-                                        <th class="text-right col-3">Montant Global HT</th>
-                                        <th class="text-right col-3">TAXE</th>
-                                        <th class="text-right col-3">MONTANT Global TTC</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="row">
-                                        <td class="no col-3 size_12">{{ $facture->numFacture }}</td>
-                                        <td class="unit col-3">{{ number_format($facture->montantTotalHt, 0, ',', ' ') }} Fcfa</td>
-                                        <td class="qty col-3">{{ $facture->tvaAmat }} %</td>
-                                        <td class="total col-3">{{ number_format($facture->montantTotalHt, 0, ',', ' ') }} Fcfa</td>
-                                    </tr>
-                                </tbody>
 
-                            </table> --}}
                             <table>
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th class="text-left">RUBRIQUE</th>
-                                        <th class="text-right">MONTANT HT (Fcfa)</th>
-                                        <th class="text-right">TVA (%)</th>
-                                        <th class="text-right">MONTANT TTC (Fcfa)</th>
+                                        <th class="text-right">Prix Unitaire (Fcfa)</th>
+                                        <th class="text-right">Quantité</th>
+                                        <th class="text-right">Total ligne (Fcfa)</th>
+                                        <th class="text-right">Total ligne (Euro)</th>
                                     </tr>
                                 </thead>
-                                @if ($facture->typeFacture == 'transitaire')
+
                                 <tbody class="size_12">
+                                    @foreach ($facture->prestationLines as $prestationLine)
                                     <tr>
-                                        <td class="no">01</td>
-                                        <td class="text-left">
-                                            <h3>
-                                                <a target="_blank" href="javascript:;">
-                                                    DOUANE
-                                                </a>
-                                            </h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtDouane, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaDouane }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcDouane, 0, ',', ' ') }}</td>
+                                        <td class="no">{{ $loop->iteration }}</td>
+                                        <td class="text-left">{{ $prestationLine->rubrique ?? 'N/A' }}</td>
+                                        <td class="unit">{{ number_format($prestationLine->prixUnitaire, 0, ',', ' ') ?? 'N/A' }}</td>
+                                        <td class="qty">{{ $prestationLine->qty ?? 'N/A' }}</td>
+                                        <td class="total">{{ number_format($prestationLine->totalLigne, 0, ',', ' ') ?? 'N/A' }}</td>
+                                        <td class="total">{{ number_format($prestationLine->totalLigne / 655.900, 0, ',', ' ') ?? 'N/A' }}</td>
                                     </tr>
-                                    <tr>
-                                        <td class="no">02</td>
-                                        <td class="text-left">
-                                            <h3>
-                                                AMATEUR
-                                            </h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtAmat, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaAmat }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcAmat, 0, ',', ' ') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">03</td>
-                                        <td class="text-left">
-                                            <h3>ACCONIER</h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtAccor, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaAccor }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcAccor, 0, ',', ' ') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">04</td>
-                                        <td class="text-left">
-                                            <h3>PRESTATION</h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtPres, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaPres }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcPres, 0, ',', ' ') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">05</td>
-                                        <td class="text-left">
-                                            <h3>AUTRES</h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtAutre, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaAutre }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcAutre, 0, ',', ' ') }}</td>
-                                    </tr>
+
+                                    @endforeach
+
                                 </tbody>
                                 <tfoot class="text-end w-25">
+                                    @php
+                                        $valeurEnEuros = $facture->prestationLines->sum('totalLigne') /  655.900;
+                                        $valeurEnEurosFormattee = number_format($valeurEnEuros, 0, ',', ' ');
+                                    @endphp
                                     <tr>
                                         <td colspan="2"></td>
-                                        <td colspan="2">TOTAL HT</td>
-                                        <td>{{ number_format($facture->montantTotalHtTransit, 0, ',', ' ') }} <span>  Fcfa</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">TAXE</td>
-                                        <td>{{ $facture->TotalTvaTransit }} <span>%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">GRAND TOTAL TTC</td>
-                                        <td>{{ number_format($facture->montantTotalTtcTransit, 0, ',', ' ') }} <span class="st-icon-pandora"> Fcfa</span></td>
+                                        <td colspan="2">TOTAL</td>
+                                        <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }} <span>  Fcfa</span></td>
+                                        <td>{{ $valeurEnEurosFormattee}} <span class="st-icon-pandora"> Euro</span></td>
                                     </tr>
                                 </tfoot>
-                                @endif
-                                @if ($facture->typeFacture == 'transporteur')
-                                <tbody class="size_12">
-                                    <tr>
-                                        <td class="no">01</td>
-                                        <td class="text-left">
-                                            <h3>
-                                                <a target="_blank" href="javascript:;">
-                                                    PRESTATION
-                                                </a>
-                                            </h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtTpPres, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaTpPres }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcTpPres, 0, ',', ' ') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="no">02</td>
-                                        <td class="text-left">
-                                            <h3>
-                                                AUTRES
-                                            </h3>
-                                        </td>
-                                        <td class="unit">{{ number_format($facture->montantHtTpAutr, 0, ',', ' ') }}</td>
-                                        <td class="qty">{{ $facture->tvaTpAutr }}</td>
-                                        <td class="total">{{ number_format($facture->montantTtcTpAutr, 0, ',', ' ') }}</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot class="text-end w-25">
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">TOTAL HT</td>
-                                        <td>{{ number_format($facture->montantTotalHtTransport, 0, ',', ' ') }} <span>  Fcfa</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">TAXE</td>
-                                        <td>{{ $facture->TotalTvaTransport }} <span>%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">GRAND TOTAL TTC</td>
-                                        <td>{{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} <span class="st-icon-pandora"> Fcfa</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td colspan="2">GRAND TOTAL TTC (Euro)</td>
-                                        <td>{{ number_format($facture->totalEuros, 0, ',', ' ') }} <span class="st-icon-pandora"> €</span></td>
-                                    </tr>
-                                </tfoot>
-                                @endif
 
 
                             </table>

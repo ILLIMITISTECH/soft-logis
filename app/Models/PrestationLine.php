@@ -16,4 +16,6 @@ class PrestationLine extends Model
     {
         return $this->belongsTo(Facturation::class, 'facture_uuid', 'uuid');
     }
+
+    
 }

@@ -117,7 +117,7 @@
             </div>
         </div>
     </div>
-    @include('admin.facturation.proforma.addModal')
+    {{-- @include('admin.facturation.proforma.addModal') --}}
 </div>
 
 @endsection

@@ -1,25 +1,27 @@
-<div class="modal fade" id="docModal{{$facture->uuid}}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+@extends('admin.layouts.admin')
+@section('section')
 
-            <div class="modal-body">
-                @php $facture_original = "files/"; $var = $facture->facture_original; $cum = $facture_original.$var; @endphp
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
-                @if($cum)
-                <iframe src='{{ asset($cum) }}' width="100%" height="600"></iframe>
-                @else
+        <div class="modal-body">
+            @php $facture_original = "files/"; $var = $facture->facture_original; $cum = $facture_original.$var; @endphp
 
-                @endif
+            @if($cum)
+            <iframe src='{{ asset($cum) }}' width="100%" height="600"></iframe>
+            @else
 
-                <div id="pdfContainer">
+            @endif
 
-                </div>
+            <div id="pdfContainer">
+
             </div>
         </div>
     </div>
-</div>
+
+
+@endsection

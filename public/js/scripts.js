@@ -1,7 +1,7 @@
 $(".wrapper").on('click', '.deleteConfirmation', function () {
     var type = $(this).data('type');
     var title = $(this).data('title');
-    var message = $(this).data('message'); 
+    var message = $(this).data('message');
     var id = $(this).data('id');
     var uuid = $(this).data('uuid');
     var token = $(this).data('token');
@@ -919,6 +919,7 @@ function tggleFilterBlock(view) {
         document.getElementById('blockFamille').style.display = 'none';
     }
 }
+
 function toggleFilterBoc(view) {
     if (view === 'blockMarque') {
         document.getElementById('blockmarque').style.display = 'block';
@@ -926,6 +927,7 @@ function toggleFilterBoc(view) {
         document.getElementById('blockFamille').style.display = 'none';
     }
 }
+
 function toggleFilteBloc(view) {
     if (view === 'blockFamille') {
         document.getElementById('blockFamille').style.display = 'block';
@@ -935,6 +937,55 @@ function toggleFilteBloc(view) {
 }
 
 
+function cloneBlock() {
+    let blockToClone = document.querySelector('.row.mt-2');
+    let clonedBlock = blockToClone.cloneNode(true);
+
+    // Vider les valeurs des inputs clonés
+    let inputs = clonedBlock.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
+
+    document.addEventListener('input', event => {
+        if (event.target && (event.target.name === 'prixUnitaire[]' || event.target.name === 'qty[]')) {
+            const prestation = event.target.closest('.row.mt-2');
+            const prixUnitaire = prestation.querySelector('[name="prixUnitaire[]"]').value;
+            const qty = prestation.querySelector('[name="qty[]"]').value;
+            const total = prestation.querySelector('[name="totalLigne[]"]');
+            total.value = (prixUnitaire * qty);
+        }
+    });
+
+
+    let deleteButton = clonedBlock.querySelector('.delete-btn');
+    deleteButton.addEventListener('click', function () {
+        clonedBlock.remove();
+    });
+
+    let container = document.getElementById('container');
+    container.appendChild(clonedBlock);
+
+
+}
+
+function cloneBlockDoc() {
+    let blockToClone = document.querySelector('.docBlock');
+    let clonedBlockDoc = blockToClone.cloneNode(true);
+
+    // Vider les valeurs des inputs clonés
+    let inputs = clonedBlockDoc.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
 
 
 
+    let container = document.getElementById('contentBlockDoc');
+    container.appendChild(clonedBlockDoc);
+    let deleteButton = clonedBlockDoc.querySelector('.delete-btn-doc');
+    deleteButton.addEventListener('click', function () {
+        clonedBlockDoc.remove();
+    });
+
+}

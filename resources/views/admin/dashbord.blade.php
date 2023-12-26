@@ -1456,7 +1456,13 @@
 
                                             </td>
                                             <td>{{ $facture->created_at->format('d/m/Y') }}</td>
-                                            <td>{{ $facture->create_by->name.' '.$facture->create_by->lastname }}</td>
+                                            <td>
+                                                @if (!empty($facture->create_by->name) && !empty($facture->create_by->lastname))
+                                                    {{ $facture->create_by->name . ' ' . $facture->create_by->lastname }}
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                         </tr>
                                         @empty
 

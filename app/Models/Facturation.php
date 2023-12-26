@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\FactureDoc;
 use App\Models\PrestationLine;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,6 +59,11 @@ class Facturation extends Model
     public function prestationLines()
     {
         return $this->hasMany(PrestationLine::class, 'facture_uuid', 'uuid');
+    }
+
+    public function factureDoc()
+    {
+        return $this->hasMany(FactureDoc::class, 'facture_uuid', 'uuid');
     }
 
 }

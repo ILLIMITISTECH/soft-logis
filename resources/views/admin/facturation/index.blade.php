@@ -27,8 +27,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Total factures</p>
-                            <h4 class="my-1">{{ number_format($total, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-success"><i class="bx bxs-up-arrow align-middle"></i>{{ $total_count }} Factures</p>
+                            <h4 class="my-1">{{ number_format($totalGlobalLine, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-success"><i class="bx bxs-up-arrow align-middle"></i>{{ $facturesCount }} Factures</p>
                         </div>
                         <div class="widgets-icons bg-light-success text-success ms-auto"><i class="bx bxs-wallet"></i>
                         </div>
@@ -42,8 +42,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Bon à Payé</p>
-                            <h4 class="my-1">{{ number_format($total_bon_payer, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-info"><i class='bx bxs-up-arrow align-middle'></i>{{ $total_bon_count }} Factures</p>
+                            <h4 class="my-1">{{ number_format($valeur_bon_a_payer, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-info"><i class='bx bxs-up-arrow align-middle'></i>{{ $facture_bon_a_payer_count }} Factures</p>
                         </div>
                         <div class="widgets-icons bg-light-info text-danger ms-auto"><i class='bx bxs-group'></i>
                         </div>
@@ -57,8 +57,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Facture payé</p>
-                            <h4 class="my-1">{{ number_format($total_payed, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-success"><i class='bx bxs-down-arrow align-middle'></i>{{ $total_payed_count }} factures</p>
+                            <h4 class="my-1">{{ number_format($valeur_payer, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-success"><i class='bx bxs-down-arrow align-middle'></i>{{ $facture_payer_count }} factures</p>
                         </div>
                         <div class="widgets-icons bg-light-danger text-info ms-auto"><i class='bx bxs-binoculars'></i>
                         </div>
@@ -72,8 +72,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Facture Rejeter</p>
-                            <h4 class="my-1">{{ number_format($total_cancel, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ $total_cancel_count }} factures</p>
+                            <h4 class="my-1">{{ number_format($valeur_canceled, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>{{ $facture_canceled_count }} factures</p>
                         </div>
                         <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
                         </div>
@@ -169,7 +169,8 @@
                                     <a href="{{ route('admin.facturation.show', $facture->uuid) }}" class="bg-transparent"><i class='bx bxs-show'></i></a>
 
                                     @can('Edit Facture')
-                                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $facture->uuid }}"><i class='bx bxs-edit'></i></a>
+                                    {{-- <a type="button" class="" data-bs-toggle="modal" data-bs-target="#editFacture{{ $facture->uuid }}"><i class='bx bxs-edit'></i></a> --}}
+                                    <a href="{{ route('admin.facturation.edit', $facture->uuid) }}" class="bg-transparent"><i class='bx bxs-edit'></i></a>
                                     @endcan
                                     {{-- <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addFacture"><i class="bx bxs-plus-square"></i>Nouveau Facture</button> --}}
                                     @can('Delette Facture')
@@ -187,7 +188,7 @@
                             </td>
                         </tr>
                             {{-- @if ($facture->transitaire) --}}
-                                @include('admin.facturation.editModal')
+                                {{-- @include('admin.facturation.editModal') --}}
                             {{-- @endif --}}
                         @empty
 
@@ -198,6 +199,8 @@
         </div>
     </div>
     @include('admin.facturation.addModal')
+
 </div>
+
 
 @endsection

@@ -1,244 +1,176 @@
-<div class="modal fade" id="editFacture{{ $facture->uuid }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase size_16">Enregistrement d'une nouvelle facture</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+@extends('admin.layouts.admin')
+@section('section')
+<div class="page-content">
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div href="{{ route('admin.facturation') }}" class="breadcrumb-title pe-3">Facturation</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Modification</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="ms-auto">
+            <div class="btn-group">
+
             </div>
-            <div class="bs-stepper-content mt-3 p-3 modal-dialog-scrollable overflow-x scroll" style="max-height: auto;">
-                <form action="{{ route('admin.facturation.update', $facture->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data" >
-                    @csrf
-                    <div id="" class="bs-stepp-pane content">
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div id="stepper1" class="bs-stepper">
+        <div class="card">
 
-                        @if ($facture->typeFacture == 'transitaire')
+            <div class="card-body">
 
-                            {{-- @if ($facture->transitaire->type == 'transitaire') --}}
+                <div class="bs-stent">
+                    <form class="submitForm" action="{{ route('admin.facturation.update', $facture->uuid) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div>
 
-                            <div class="row">
+                            <div class="row g-3">
                                 <div class="col-12 col-lg-6">
-                                    <label for="numFacture" class="form-label">Numero de Facture</label>
-                                    <input type="text" class="form-control" value="{{ $facture->numFacture }}" id="numFacture" placeholder="{{ $facture->numFacture }}" name="numFacture">
-                                </div>
-
-                                <div class="col-12 col-lg-6">
-                                    <label for="date_paiement" class="form-label">Date Limite de paiement</label>
-                                    <input type="date" value="{{ $facture->date_paiement ?? '' }}" class="form-control" id="date_paiement" name="date_paiement">
-                                </div>
-                            </div>
-                            <div class="content row d-flex flex-row py-4 col-12">
-                                @if ($facture->transitaire)
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <label for="input47" class="form-label">Transitaire</label>
-                                    <select class="form-select" id="input47" name="transitaire_uuid">
-                                        <option selected value="{{ $facture->transitaire->uuid }}">{{ $facture->transitaire->raison_sociale }}</option>
-                                        @foreach ($prestatairesTransits as $prestatairesTransit)
-                                            <option value="{{ $prestatairesTransit->uuid }}" class="transitaire-option">{{ $prestatairesTransit->raison_sociale }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                @endif
-                                <div class="col-6 col-md-6 col-lg-6 row">
-                                    <div class="col-8">
-                                        <label for="num_blTransit" class="form-label">N° BL</label>
-                                        <input type="text" class="form-control" id="num_blTransit" name="num_blTransit"
-                                        value="{{ $facture->num_blTransit }}">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="file_BlTransit" class="form-label">Doc BL</label>
-                                        <input type="file" class="form-control" id="file_BlTransit" name="file_BlTransit" value="{{ $facture->file_BlTransit }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group mt-4">
-                                    <hr>
-                                    <div class="col-12 my-2 row text-start size_12 d-flex justify-content-between bold">
-                                        <div class="col-3">RUBRIQUE</div>
-                                        <div class="col-3">MONTANT HT (Fcfa)</div>
-                                        <div class="col-2">TAXES (%)</div>
-                                        <div class="col-3">MONTANT TTC (Fcfa)</div>
-                                    </div>
-                                    <hr>
-                                    <!-- rubriqueDouane -->
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="DOUANE">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtDouane" name="montantHtDouane" value="{{ $facture->montantHtDouane }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaDouane" name="tvaDouane" value="{{ $facture->tvaDouane }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcDouane" name="montantTtcDouane" value="{{ $facture->montantTtcDouane }}">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="AMATEUR">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtAmat" name="montantHtAmat" value="{{ $facture->montantHtAmat }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaAmat" name="tvaAmat" value="{{ $facture->tvaAmat }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcAmat" name="montantTtcAmat" value="{{ $facture->montantTtcAmat }}">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="ACCONIER">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtAccor" name="montantHtAccor" value="{{ $facture->montantHtAccor }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaAccor" name="tvaAccor" value="{{ $facture->tvaAccor }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcAccor" name="montantTtcAccor" value="{{ $facture->montantTtcAccor }}">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="PRESTATION">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtPres" name="montantHtPres" value="{{ $facture->montantHtPres }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaPres" name="tvaPres" value="{{ $facture->tvaPres }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcPres" name="montantTtcPres" value="{{ $facture->montantTtcPres }}">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="AUTRES">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtAutre" name="montantHtAutre" value="{{ $facture->montantHtAutre }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaAutre" name="tvaAutre" value="{{ $facture->tvaAutre }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcAutre" name="montantTtcAutre" value="{{ $facture->montantTtcAutre }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-12">
-                                    <label for="InputCountry" class="form-label">Facture Original</label>
-                                    <input type="file" class="form-control" id="facture_original" name="facture_original" value="{{ $facture->facture_original }}">
-                                </div>
-                                <div class="mb-3">
-                                    <div class="col-sm-12 col-lg-12">
-                                        <textarea class="form-control" id="input47" name="note" rows="3" placeholder="Saisir une note">{{ $facture->note }}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- @endif --}}
-
-                        @endif
-
-                        @if ($facture->typeFacture == 'transporteur')
-
-                            @if ($facture->transporteur == 'transporteur')
-
-                            <div class="row">
-                                <div class="col-12 col-lg-6">
-                                    <label for="numFacture" class="form-label">Numero de Facture</label>
-                                    <input type="text" value="{{ $facture->numFacture }}" placeholder="{{ $facture->numFacture }}" class="form-control" id="numFacture" name="numFacture">
+                                    <label for="numFacture" class="form-label">Numero de Facture <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{ $facture->numFacture ?? 'N/A' }}" id="numFacture" name="numFacture" required>
+                                    @error('records.*.numFacture')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 col-lg-6">
                                     <label for="date_paiement" class="form-label">Date Limite de paiement</label>
-                                    <input type="date" value="{{ $facture->date_paiement }}" class="form-control" id="date_paiement" name="date_paiement">
+                                    <input type="date" value="{{ $facture->date_paiement ?? 'N/A' }}" class="form-control" id="date_paiement" name="date_paiement">
                                 </div>
+
+                                <div class="col-6 col-md-6 col-lg-6">
+                                    <label for="num_bl" class="form-label">N° BL</label>
+                                    <input type="text" value="{{ $facture->num_bl ?? 'N/A' }}" class="form-control" id="num_bl" name="num_bl">
+                                </div>
+
+                                <div class="col-6 col-md-6 col-lg-6">
+                                    <label for="file_Bl" class="form-label">Document BL</label>
+                                    <input type="file" value="{{ $facture->file_bl ?? 'N/A' }}" class="form-control" id="file_Bl" name="file_bl">
+                                </div>
+
+                              
                             </div>
+                            <!---end row-->
 
-                            <div class="content row d-flex flex-row py-4 col-12" data-type="transporteur">
+                            <div class="row g-3 mt-3">
 
-                                <input type="hidden" id="prestataireUuid" name="transporteur_uuid" value="">
-
-                                <div class="col-6 col-lg-6">
-                                    <label for="InputLanguage" class="form-label">Bénéficiaire</label>
-                                    <select class="form-select" id="input46" name="transporteur_uuid">
-                                        <option selected value="{{ $facture->transporteur->uuid }}">{{ $facture->transporteur->raison_sociale }}</option>
-
-                                        @foreach ($prestatairesTransports as $prestatairesTransport)
-                                            <option value="{{ $prestatairesTransport->uuid }}" class="transporteur-option">{{ $prestatairesTransport->raison_sociale }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-6 col-md-6 col-lg-6 row">
-                                    <div class="col-8">
-                                        <label for="num_blTransport" class="form-label">N° BL</label>
-                                        <input type="text" class="form-control" id="num_blTransport" name="num_blTransport" value="{{ $facture->num_blTransport }}">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="file_BlTransport" class="form-label">Doc BL</label>
-                                        <input type="file" class="form-control" id="file_BlTransport" name="file_BlTransport" value="{{ $facture->file_BlTransport }}">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group mt-4">
-                                    <hr>
-                                    <div class="col-12 my-2 row text-start size_12 d-flex justify-content-between bold">
-                                        <div class="col-3">RUBRIQUE</div>
-                                        <div class="col-3">MONTANT HT (Fcfa)</div>
-                                        <div class="col-2">TAXES (%)</div>
-                                        <div class="col-3">MONTANT TTC (Fcfa)</div>
+                                <div class="form-group mt-4 col-12">
+                                    <button class="btn btn-sm btn-primary my-2" type="button" onclick="cloneBlock()" style="width: 200px">Ajouter une ligne</button>
+                                    <div class="col-12 my-2 row text-start size_12 d-flex justify-content-around bold">
+                                        <div class="col-4">RUBRIQUE</div>
+                                        <div class="col-3">PRIX UNITAIRE (Fcfa)</div>
+                                        <div class="col-2">Qty</div>
+                                        <div class="col-3">TOTAL LIGNE (Fcfa)</div>
                                     </div>
                                     <hr>
+                                </div>
+
+                                <div >
+                                    @foreach($facture->prestationLines as $key => $lignes)
+                                    @if ($lignes->etat === "actif")
+                                        <div class="row mb-4 d-flex justify-content-between align-items-center align-self-center py-auto">
+                                            <div class="col-4">
+                                                <input class="form-control form-control-sm rubrique" placeholder="{{   Str::limit($lignes->rubrique, 25, '...') }}" type="text" disabled>
+                                            </div>
+                                            <div class="col-3">
+                                                <input type="number" class="form-control form-control-sm" id="prixUnitaire" placeholder="{{ $lignes->prixUnitaire }}" disabled>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="number" class="form-control form-control-sm" id="qty" placeholder="{{ $lignes->qty }}" disabled>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="number" class="form-control form-control-sm muted" id="totalLigne" placeholder="{{ $lignes->totalLigne }}" disabled>
+                                            </div>
+                                            <div class="col-1">
+                                                {{-- <button class="btn btn-sm btn-danger delete-btn" type="button">
+                                                    <i class='bx bx-trash'></i>
+                                                </button> --}}
+                                                 <form action="{{ route('admin.destroyPrestationLines', $lignes->uuid) }}" method="post" class="submitForm">
+                                                    @csrf
+
+                                                    <button type="submit" class="btn btn-sm btn-danger delete-btn"><i class='bx bx-trash'></i> </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endif
+                                        
+                                    @endforeach
+
+
+                                <div id="container" class="mb-3">
                                     <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="PRESTATION">
+                                        <div class="col-4">
+                                            <input class="form-control form-control-sm rubrique" placeholder="rubrique" name="rubrique[]">
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtTpPres" name="montantHtTpPres" value="{{ $facture->montantHtTpPres }}">
+                                        <div class="col-3">
+                                            <input type="number" class="form-control form-control-sm" id="prixUnitaire" name="prixUnitaire[]" placeholder="0">
                                         </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaTpPres" name="tvaTpPres" value="{{ $facture->tvaTpPres }}">
+                                        <div class="col-2">
+                                            <input type="number" class="form-control form-control-sm" id="qty" name="qty[]" placeholder="0">
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcTpPres" name="montantTtcTpPres" value="{{ $facture->montantTtcTpPres }}">
+                                        <div class="col-2">
+                                            <input type="number" class="form-control form-control-sm muted" id="totalLigne" name="totalLigne[]" readonly placeholder="" value="">
                                         </div>
-                                    </div>
-                                    <div class="row mt-2 d-flex justify-content-between align-items-center align-self-center py-auto">
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" disabled placeholder="AUTRES">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantHtTpAutr" name="montantHtTpAutr" value="{{ $facture->montantHtTpAutr }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="number" class="form-control form-control-sm" id="tvaTpAutr" name="tvaTpAutr" value="{{ $facture->tvaTpAutr }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="number" class="form-control form-control-sm" id="montantTtcTpAutr" name="montantTtcTpAutr" value="{{ $facture->montantTtcTpAutr }}">
+                                        <div class="col-1">
+                                            <button class="btn btn-sm btn-danger delete-btn" type="button">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
+                               
                             </div>
+                            <div class="row g-3 mt-3">
 
-                            @endif
+                                <button class="btn btn-sm btn-primary mt-2" type="button" onclick="cloneBlockDoc()" style ="width: 200px">Ajouter une ligne</button>
+                                <label for="InputCountry" class="form-label">Facture Original</label>
+                             
+                               <div class="container mb-3 mt-1" id="contentBlockDoc">
+                                   <div class="docBlock row d-flex justify-content-between align-items-center align-self-center">
+                                       <div class="col-11 col-lg-11">
+                                           <input type="file" class="form-control" id="facture_original" name="facture_original[]">
+                                       </div>
+                                       <div class="col-1 mx-0 mt-2">
+                                           <button class="btn btn-sm btn-danger delete-btn-doc" type="button">
+                                               <i class='bx bx-trash'></i>
+                                           </button>
+                                       </div>
+                                   </div>
+                               </div>
 
-                        @endif
+                               <div class="mb-3">
 
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <button type="submit" class="btn btn-primary px-4">Modifier<i
-                                class='bx bx-right-arrow-alt ms-2'></i></button>
-                    </div>
-                </form>
+                                   <div class="col-sm-12 col-lg-12">
+                                       <textarea class="form-control" id="input47" name="note" rows="3">{{ $facture->note }}</textarea>
+                                   </div>
+                               </div>
+                               <div class="col-12">
+                                   <div class="d-flex align-items-center gap-3">
+                                           <button class="btn btn-primary px-4" type="submit">Enregistrer<i
+                                               class='bx bx-right-arrow-alt ms-2'></i></button>
+                                   </div>
+                               </div>
+                           </div>
+                           <!---end row-->
+
+                        </div>
+
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+@endsection
 

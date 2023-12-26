@@ -286,8 +286,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/facturation-index', [FacturationController::class, 'index'])->name('facturation');
         Route::post('/store/facturation', [FacturationController::class, 'store'])->name('facturation.store');
         Route::get('/show/facturation/{uuid}', [FacturationController::class, 'show'])->name('facturation.show');
+        Route::get('/edit/facturation/{uuid}', [FacturationController::class, 'edit'])->name('facturation.edit');
         Route::post('/update/facturation/{uuid}', [FacturationController::class, 'update'])->name('facturation.update');
         Route::post('/destroy/facturation/{uuid}', [FacturationController::class, 'destroy'])->name('facturation.destroy');
+        Route::post('/destroy/prestationLines/{uuid}', [FacturationController::class, 'destroyPrestationLines'])->name('destroyPrestationLines');
+
 
         Route::post('/marck_to_good_pay/{uuid}', [FacturationController::class, 'marck_to_good_pay'])->name('marck_to_good_pay');
         Route::post('/marck_payed/{uuid}', [FacturationController::class, 'marck_payed'])->name('marck_payed');
@@ -371,6 +374,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/article/stocked', [Stock::class, 'stocked'])->name('stocked');
         Route::get('/article/expEnCours', [Stock::class, 'expEnCours'])->name('expEnCours');
         Route::get('/article/delivered', [Stock::class, 'delivered'])->name('delivered');
+
     });
 });
 

@@ -75,7 +75,35 @@
                         </div>
                         @endif
                         <div class="size_14 text-uppercase btn text-center">
-                            <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#docModal{{ $facture->uuid }}"><i class='bx bxs-file-pdf text-white me-2 font-24' ></i>Facture Original</button>
+                            {{-- <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#docModal{{ $facture->uuid }}"><i class='bx bxs-file-pdf text-white me-2 font-24' ></i>Facture Original</button> --}}
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#factureListModal{{ $facture->uuid }}"><i class='bx bxs-file-pdf text-white me-2 font-24' ></i>Facture Original <sup class="badge rounded-pill bg-info text-white"> @if ($facture->factureDoc->count() > 0) {{ $facture->factureDoc->count() }} @endif</sup></button>
+                        </div>
+                        <div class="modal fade" id="factureListModal{{ $facture->uuid }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Facture Chargée</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        @foreach ($facture->factureDoc as $item)
+                                        <div class="row mt-2 align-items-center">
+                                            <div class="col-2"><span class="no">{{ $loop->iteration }}</span></div>
+                                            <div class="col-10 d-flex align-items-center">
+                                                <button class="me-2">
+                                                    <a href="{{ asset('files/' . $item->file_path) }}" target="_blank"><i class='bx bxs-download text-white size_12 mx-2'></i> Télécharger</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                        <hr style="width: 100%;" class="my-2">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr />
@@ -145,7 +173,7 @@
 
                             <table>
                                 <thead>
-                                    <tr>
+                                    <tr class="text-end">
                                         <th>#</th>
                                         <th class="text-left">RUBRIQUE</th>
                                         <th class="text-right">Prix Unitaire (Fcfa)</th>
@@ -156,7 +184,7 @@
                                 </thead>
 
                                 <tbody class="size_12">
-                                    @foreach ($facture->prestationLines as $prestationLine)
+                                    @foreach ($facture->prestationLines->where('etat', 'actif') as $prestationLine)
                                     <tr>
                                         <td class="no">{{ $loop->iteration }}</td>
                                         <td class="text-left">{{ $prestationLine->rubrique ?? 'N/A' }}</td>
@@ -177,7 +205,7 @@
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">TOTAL</td>
-                                        <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }} <span>  Fcfa</span></td>
+                                        <td>{{ number_format($facture->prestationLines->where('etat', 'actif')->sum('totalLigne'), 0, ',', ' ') }} <span>  Fcfa</span></td>
                                         <td>{{ $valeurEnEurosFormattee}} <span class="st-icon-pandora"> Euro</span></td>
                                     </tr>
                                 </tfoot>
@@ -198,6 +226,6 @@
             </div>
         </div>
     </div>
-    @include('admin.facturation.viewFactOrigin')
+
 </div>
 @endsection

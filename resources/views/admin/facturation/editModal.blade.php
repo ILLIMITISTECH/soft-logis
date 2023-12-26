@@ -65,7 +65,7 @@
                             <div class="row g-3 mt-3">
 
                                 <div class="form-group mt-4 col-12">
-                                    <button class="btn btn-sm btn-primary my-2" type="button" onclick="cloneBlock()" style="width: 200px">Ajouter une ligne</button>
+                                    <button class="btn btn-sm btn-primary my-2" type="button" onclick="cloneBlockEdit()" style="width: 200px">Ajouter une ligne</button>
                                     <div class="col-12 my-2 row text-start size_12 d-flex justify-content-around bold">
                                         <div class="col-4">RUBRIQUE</div>
                                         <div class="col-3">PRIX UNITAIRE (Fcfa)</div>
@@ -172,5 +172,38 @@
         </div>
     </div>
 </div>
+<script>
+    function cloneBlockEdit() {
+    let blockToClone = document.querySelector('.row.mt-2');
+    let clonedBlock = blockToClone.cloneNode(true);
+
+    // Vider les valeurs des inputs clonés
+    let inputs = clonedBlock.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = '';
+    });
+
+    document.addEventListener('input', event => {
+        if (event.target && (event.target.name === 'prixUnitaire[]' || event.target.name === 'qty[]')) {
+            const prestation = event.target.closest('.row.mt-2');
+            const prixUnitaire = prestation.querySelector('[name="prixUnitaire[]"]').value;
+            const qty = prestation.querySelector('[name="qty[]"]').value;
+            const total = prestation.querySelector('[name="totalLigne[]"]');
+            total.value = (prixUnitaire * qty);
+        }
+    });
+
+
+    let deleteButton = clonedBlock.querySelector('.delete-btn');
+    deleteButton.addEventListener('click', function () {
+        clonedBlock.remove();
+    });
+
+    let container = document.getElementById('container');
+    container.appendChild(clonedBlock);
+
+
+}
+</script>
 @endsection
 

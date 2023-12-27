@@ -503,6 +503,25 @@ class GrilleTarifController extends Controller
 
         return response()->json(['grillesTarifaires' => $grillesTarifaires]);
     }
+    public function updateUuidTransit(Request $request)
+    {
+        $selectedTransitUuid = $request->input('transitaireUuid');
+        $selectedHadUuid = $request->input('hadUuid');
+
+        session(['transitaire_uuid' => $selectedTransitUuid]);
+        session(['had_uuid' => $selectedHadUuid]);
+
+        $transitaireUuid = session('transitaire_uuid', '');
+        $hadUuid = session('had_uuid', '');
+
+        $grillesTaransit = \App\Models\GrilleTransit::with(['transitaire', 'had'])->where('transitaire_uuid', $transitaireUuid)
+            ->when($hadUuid, function ($query) use ($hadUuid) {
+                return $query->where('had_uuid', $hadUuid);
+            })->get();
+
+
+        return response()->json(['grillesTaransit' => $grillesTaransit]);
+    }
 
 
 

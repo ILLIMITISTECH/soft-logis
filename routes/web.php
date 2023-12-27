@@ -78,6 +78,7 @@ All Admin Routes List
 
         // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::post('/update-transporteur-uuid', [GrilleTarifController::class, 'updateUuid']);
+    Route::post('/update-transitaire-uuid', [GrilleTarifController::class, 'updateUuidTransit']);
 
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware('guest', 'PreventBackHistory')->group(function(){
@@ -312,6 +313,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Fact Proforma
         Route::get('/proforma-index', [FactProformaController::class, 'index'])->name('proforma');
         Route::get('/proforma-create', [FactProformaController::class, 'create'])->name('proforma.create');
+        Route::get('/proforma-create-transit', [FactProformaController::class, 'createTransit'])->name('proforma.createEdit');
         Route::post('/proforma-store', [FactProformaController::class, 'store'])->name('proforma.store');
 
         Route::get('/facture_proforma-index', [FactureProformaController::class, 'index'])->name('facture_proforma.index');
@@ -374,6 +376,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/article/stocked', [Stock::class, 'stocked'])->name('stocked');
         Route::get('/article/expEnCours', [Stock::class, 'expEnCours'])->name('expEnCours');
         Route::get('/article/delivered', [Stock::class, 'delivered'])->name('delivered');
+        Route::get('/article/allProduction', [Stock::class, 'allProduction'])->name('allProduction');
 
     });
 });

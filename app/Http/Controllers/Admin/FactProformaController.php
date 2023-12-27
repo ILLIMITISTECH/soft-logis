@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Company;
+use App\Models\GrilleHad;
 use App\Models\PorteChar;
 use App\Models\Destination;
 use App\Models\GrilleTarif;
 use Illuminate\Support\Str;
 use App\Models\FactProforma;
 use Illuminate\Http\Request;
+use App\Models\GrilleTransit;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -28,8 +30,9 @@ class FactProformaController extends Controller
         $factureProformas = FactProforma::where('etat', 'actif')->get();
 
         $grilleTarifs = GrilleTarif::all();
+        $grilleTransits = GrilleTransit::all();
 //
-        return view('admin.facturation.proforma.index', compact('transports', 'destinations', 'porteChars', 'factureProformas', 'grilleTarifs'));
+        return view('admin.facturation.proforma.index', compact('transports', 'destinations', 'porteChars', 'factureProformas', 'grilleTarifs', 'grilleTransits'));
     }
 
     /**
@@ -44,6 +47,15 @@ class FactProformaController extends Controller
 
         $grilleTarifaires = GrilleTarif::where(['etat'=>'actif'])->get();
         return view('admin.facturation.proforma.create', compact('transports', 'destinations', 'porteChars', 'grilleTarifaires',));
+    }
+    public function createTransit()
+    {
+
+        $transports = Company::where(['etat' => 'actif', 'type' => 'transitaire'])->get();
+        $destinations = GrilleHad::where('etat', 'actif')->get();
+
+        $grilleTarifaires = GrilleTransit::where(['etat'=>'actif'])->get();
+        return view('admin.facturation.proforma.create', compact('transports', 'destinations', 'grilleTarifaires',));
     }
 
 

@@ -147,8 +147,17 @@
 
                     <div class="row row-cols-1 row-cols-md-3 row-cols-xl-3 g-0 row-group text-center border-top">
                         <div class="col">
-                            <div class="p-3">
-                                <h5 class="mb-0">{{ $stockGlobals->count() }}</h5>
+                            <div class="p-3 " style="position: relative;">
+                                <div class="col-12 row">
+                                    <div class="col-4"></div>
+                                    <div class="col-4"><h5 class="mb-0">{{ $stockGlobals->count() }}</h5></div>
+                                    <div class="col-4 text-end mt-0 m-0 px-0">
+                                        <a href="{{ route('admin.allProduction') }}">
+                                            <img src="{{ asset('icone/voir.png') }}" alt="" style="max-width: 20px">
+                                        </a>
+                                    </div>
+                                </div>
+
                                 <small class="mb-0">Quantité sur chaine de production</small>
                                     <p>
                                         <i class="bx bx-up-arrow-alt align-middle"></i>

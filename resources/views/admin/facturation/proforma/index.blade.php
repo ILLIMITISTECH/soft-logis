@@ -23,60 +23,136 @@
 
     <div class="card">
         <div class="card-body">
+            <ul class="nav nav-tabs nav-success" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#successhome" role="tab" aria-selected="true">
+                        <div class="d-flex align-items-center">
+                            <div class="tab-icon"><i class='bx bx-home font-18 me-1'></i>
+                            </div>
+                            <div class="tab-title">Transporteur</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-bs-toggle="tab" href="#successprofile" role="tab" aria-selected="false">
+                        <div class="d-flex align-items-center">
+                            <div class="tab-icon"><i class='bx bx-user-pin font-18 me-1'></i>
+                            </div>
+                            <div class="tab-title">Transitaire</div>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+            <div class="tab-content py-3">
+                <div class="tab-pane fade show active" id="successhome" role="tabpanel">
+                    <div class="d-lg-flex align-items-center mb-4 gap-3">
+
+                        <div class="ms-auto">
+                          @can('Create Facture')
+                          <a href="{{ route('admin.proforma.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0" ><i class="bx bxs-plus-square"></i>{{ __('Voir Offres') }}</a>
+                          @endcan
+                        </div>
+                    </div>
+
+                      <div class="table-responsive">
+                          <table id="example2" class="table table-striped table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>Transporteur</th>
+                                      <th>Destination</th>
+                                      <th>PorteChar</th>
+                                      <th>Montant</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach ($grilleTarifs->groupBy('destination.libelle') as $libelle => $items)
+                                      <tr>
+                                          <td>{{ $items[0]->transporteur->raison_sociale }}</td>
+                                          <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                          <td>{{ $items[0]->porteChar->libelle }}</td>
+                                          <td>{{ $items[0]->cout }}</td>
+                                      </tr>
+                                      @for ($i = 1; $i < count($items); $i++)
+                                          <tr>
+                                              <td>{{ $items[0]->transporteur->raison_sociale }}</td>
+                                              <td>{{ $items[$i]->porteChar->libelle }}</td>
+                                              <td>{{ $items[$i]->cout }}</td>
+                                          </tr>
+                                      @endfor
+                                  @endforeach
+                              </tbody>
+
+                              <tfoot>
+                                  <tr>
+                                      <th>Transporteur</th>
+                                      <th>Destination</th>
+                                      <th>PorteChar</th>
+                                      <th>Montant</th>
+                                  </tr>
+                              </tfoot>
+                          </table>
+                      </div>
+                </div>
+                <div class="tab-pane fade" id="successprofile" role="tabpanel">
+                    <div class="ms-auto">
+                        @can('Create Facture')
+                        <a href="{{ route('admin.proforma.createEdit') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0" ><i class="bx bxs-plus-square"></i>{{ __('Voir Offres') }}</a>
+                        @endcan
+                      </div>
+                    </div>
+                    <div class="table-responsive mt-4">
+                        <table id="exam2" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Transitaire</th>
+                                    <th>HAD</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($grilleTransits->groupBy('had.libelle') as $libelle => $items)
+                                    <tr>
+                                        <td>{{ $items[0]->transitaire->raison_sociale ?? 'N/A' }}</td>
+                                        <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                        <td>{{ $items[0]->cout ?? 'N/A' }}</td>
+                                    </tr>
+                                    @for ($i = 1; $i < count($items); $i++)
+                                        <tr>
+                                            <td>{{ $items[0]->transitaire->raison_sociale ?? 'N/A' }}</td>
+                                            <td>{{ $items[$i]->cout ?? 'N/A' }}</td>
+                                        </tr>
+                                    @endfor
+                                @endforeach
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Transitaire</th>
+                                    <th>Had</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card d-none">
+        <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
 
               <div class="ms-auto">
                 @can('Create Facture')
                 {{-- <button type="button" class="btn btn-primary radius-30 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addFactureProforma"><i class="bx bxs-plus-square"></i>Nouvelle Facture</button> --}}
-                <a href="{{ route('admin.proforma.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0" ><i class="bx bxs-plus-square"></i>{{ __('Nouvelle Proforma') }}</a>
+                <a href="{{ route('admin.proforma.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0" ><i class="bx bxs-plus-square"></i>{{ __('Voir Offres') }}</a>
                 @endcan
               </div>
             </div>
-            {{-- <div class="table-responsive">
-                <table id="example2" class="table table-striped table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>N° Facture</th>
-                            <th>Beneficiaire</th>
-                            <th>Total TTC(Fcfa)</th>
-                            <th>Date</th>
-                            <th>Voir Detail</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        @forelse ($factureProformas as $facture)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <input class="form-check-input me-3" type="checkbox" value="" aria-label="...">
-                                    </div>
-                                    <div class="ms-2">
-                                        <h6 class="mb-0 font-14">#{{ $facture->code ?? 'N/A' }}</h6>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                               {{   $facture->transporteur->raison_sociale ?? 'N/A' }}
-                            </td>
-                            <td>{{ number_format($facture->cout_prestation, 0, ',', ' ') }}</td>
-                            <td>{{ $facture->created_at->format('d-m-Y') ?? 'N/A' }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm radius-30 px-4 text-white"><a href="" class="text-white"   >Detail</a></button>
-                            </td>
-                            <td>
-
-                            </td>
-                        </tr>
-
-                        @empty
-
-                        @endforelse
-                    </tbody>
-                </table>
-            </div> --}}
             <div class="table-responsive">
                 <table id="example2" class="table table-striped table-bordered">
                     <thead>
@@ -110,6 +186,41 @@
                             <th>Transporteur</th>
                             <th>Destination</th>
                             <th>PorteChar</th>
+                            <th>Montant</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <hr class="my-4">
+            <div class="table-responsive mt-4">
+                <table id="example2" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Transitaire</th>
+                            <th>HAD</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($grilleTransits->groupBy('had.libelle') as $libelle => $items)
+                            <tr>
+                                <td>{{ $items[0]->transitaire->raison_sociale ?? 'N/A' }}</td>
+                                <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                <td>{{ $items[0]->cout ?? 'N/A' }}</td>
+                            </tr>
+                            @for ($i = 1; $i < count($items); $i++)
+                                <tr>
+                                    <td>{{ $items[0]->transitaire->raison_sociale ?? 'N/A' }}</td>
+                                    <td>{{ $items[$i]->cout ?? 'N/A' }}</td>
+                                </tr>
+                            @endfor
+                        @endforeach
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>Transitaire</th>
+                            <th>Had</th>
                             <th>Montant</th>
                         </tr>
                     </tfoot>

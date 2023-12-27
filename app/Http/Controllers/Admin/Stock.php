@@ -469,6 +469,63 @@ class Stock extends Controller
 
         return view('admin.niveauStock.delivered', compact('delivered', 'categories', 'selectedCategory','brands', 'selectedBrand', 'families', 'selectedFamily'));
     }
+    public function allProduction(Request $request)
+    {
+            $deliveredQuery = Article::where(['etat' => 'actif']);
+
+        // Obtenez les catégories associées aux articles sur ligne de production
+        $categories = Article::join('categories', 'articles.categorie_uuid', '=', 'categories.uuid')
+                ->select('categories.uuid', 'categories.libelle')
+                ->distinct()
+                ->get()
+                ->pluck('libelle', 'uuid');
+
+            $selectedCategory = $request->input('category');
+
+        if ($selectedCategory) {
+            // Filtrez par catégorie si une catégorie est sélectionnée
+            $deliveredQuery->whereHas('category', function ($query) use ($selectedCategory) {
+                $query->where('libelle', $selectedCategory);
+            });
+        }
+
+        // Obtenez les marques associées aux articles en fabrication
+        $brands = Article::join('marques', 'articles.marque_uuid', '=', 'marques.uuid')
+            ->select('marques.uuid', 'marques.libelle')
+            ->distinct()
+            ->get()
+            ->pluck('libelle', 'uuid');
+
+        $selectedBrand = $request->input('brand');
+
+        if ($selectedBrand) {
+            // Filtrez par marque si une marque est sélectionnée
+            $deliveredQuery->whereHas('marque', function ($query) use ($selectedBrand) {
+                $query->where('libelle', $selectedBrand);
+            });
+        }
+
+        $families = Article::join('article_families', 'articles.famille_uuid', '=', 'article_families.uuid')
+            ->select('article_families.uuid', 'article_families.libelle')
+            ->distinct()
+            ->get()
+            ->pluck('libelle', 'uuid');
+
+        $selectedFamily = $request->input('family');
+
+        if ($selectedFamily) {
+            // Filtrez par famille si une famille est sélectionnée
+            $deliveredQuery->whereHas('familly', function ($query) use ($selectedFamily) {
+                $query->where('libelle', $selectedFamily);
+            });
+        }
+
+        // Récupérez les articles en fabrication
+        $delivered = $deliveredQuery->get();
+
+
+        return view('admin.niveauStock.allStateModal', compact('delivered', 'categories', 'selectedCategory','brands', 'selectedBrand', 'families', 'selectedFamily'));
+    }
 
 
 

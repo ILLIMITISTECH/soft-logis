@@ -184,15 +184,15 @@
                                     <tbody>
                                         @foreach ($grilleTarifaires->groupBy('destination.libelle') as $libelle => $items)
                                             <tr>
-                                                <td>{{ $items[0]->transporteur->raison_sociale }}</td>
-                                                <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
-                                                <td>{{ $items[0]->porteChar->libelle }}</td>
+                                                <td>{{ $items[0]->transporteur->raison_sociale ?? '--' }}</td>
+                                                <td rowspan="{{ count($items) }}">{{ $libelle ?? '--' }}</td>
+                                                <td>{{ $items[0]->porteChar->libelle ?? '--' }}</td>
                                                 <td>{{ $items[0]->cout }}</td>
                                             </tr>
                                             @for ($i = 1; $i < count($items); $i++)
                                                 <tr>
-                                                    <td>{{ $items[0]->transporteur->raison_sociale }}</td>
-                                                    <td>{{ $items[$i]->porteChar->libelle }}</td>
+                                                    <td>{{ $items[0]->transporteur->raison_sociale ?? '--' }}</td>
+                                                    <td>{{ $items[$i]->porteChar->libelle ?? '--'}}</td>
                                                     <td>{{ $items[$i]->cout }}</td>
                                                 </tr>
                                             @endfor

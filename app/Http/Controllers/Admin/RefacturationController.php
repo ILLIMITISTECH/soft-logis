@@ -10,8 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Facture;
 use Mail;
-
 use PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
 
 class RefacturationController extends Controller
 {
@@ -218,8 +218,6 @@ class RefacturationController extends Controller
                 'code'=>500,
             ];
        }
-
-
 
 
         return back()->with(['success']);

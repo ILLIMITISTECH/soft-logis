@@ -157,6 +157,11 @@
                                                     <input type="text" class="form-control" id="volume" placeholder="volume"
                                                         name="volume">
                                                 </div>
+                                                <div class="col-12 col-lg-6">
+                                                    <label for="tva" class="form-label">tva (%)</label>
+                                                    <input type="text" class="form-control" id="tva" placeholder="% TVA"
+                                                        name="tva">
+                                                </div>
                                                 <div class="col-12">
                                                     <div class="d-flex align-items-center gap-3">
                                                         <button class="btn btn-outline-secondary px-4"

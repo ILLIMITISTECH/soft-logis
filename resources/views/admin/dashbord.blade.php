@@ -126,7 +126,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                        </div>
+                        <div class="col-12 row ">
+                            <div class="col-5">
                                 <div class="card radius-10">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" onclick="redirectTodelivered()">
@@ -134,11 +136,17 @@
                                                 <p class="mb-0 text-secondary text-uppercase size_12">Livré</p>
                                                 <h4 class="my-1">{{ $liverExpedite->count() }} </h4>
                                                 <p class="mb-0 font-13 text-success"><i class="bx bxs-up-arrow align-middle"></i>{{ number_format($liverExpedite->sum('price_unitaire')), 0, ',', ' ' }} <span>Fcfa</span></p>
-
                                             </div>
                                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class="bx bxs-wallet"></i>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div class="card">
+                                    <div class="card-body">
+
                                     </div>
                                 </div>
                             </div>

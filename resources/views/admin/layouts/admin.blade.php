@@ -90,7 +90,7 @@
 
 	<script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/bs-stepper/js/main.js') }}"></script>
-    
+
     {{-- <script src="{{ asset('pdfjs/build/pdf.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
 
@@ -106,7 +106,7 @@
 
                 language: {
                 search: "Recherche :",
-                lengthMenu: "Afficher MENU éléments par page",
+                // lengthMenu: "Afficher MENU éléments par page",
                 // Autres paramètres...
             },
 

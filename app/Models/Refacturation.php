@@ -44,6 +44,9 @@ class Refacturation extends Model
         'date_echeance',
         'condition_paiement',
 
+        //
+        'tva',
+
         //log
         'date_sendToClient',
         'user_sendToClient',
@@ -57,7 +60,7 @@ class Refacturation extends Model
     {
         return $this->belongsTo(User::class, 'facturier_uuid', 'uuid');
     }
-    public function prestation() 
+    public function prestation()
     {
         return $this->hasMany(FacturePrestation::class, 'prestation_uuid');
     }

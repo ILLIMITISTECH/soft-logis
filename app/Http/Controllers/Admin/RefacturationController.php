@@ -65,6 +65,7 @@ class RefacturationController extends Controller
                 'num_Dossier' => $request->num_Dossier,
                 'num_Ot' => $request->num_Ot,
                 'volume' => $request->volume,
+                'tva' => $request->tva,
 
                 // info facturier
                 'facturier_uuid' => Auth::user()->uuid,
@@ -152,12 +153,18 @@ class RefacturationController extends Controller
         $com = 1.95;
         $comm_debours = $prestations_totals_debours * $com;
         $comm_sous_debours = ($comm_debours / 100);
+
+        $tvaPerCent = $refacturation->tva;
+
         $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+
         $prestations_totals = $prestations_totalsS + $comm_sous_debours;
 
         $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
         $total_ht = ($prestations_totals + $prestations_totals_debours);
-        $tva = "21175";
+        // $tva = "21175";
+
+        $tva = ($prestations_totalsS * $tvaPerCent) / 100;
         $total_xof = ($total_ht + $tva);
 
 
@@ -186,7 +193,8 @@ class RefacturationController extends Controller
 
         $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
         $total_ht = ($prestations_totals + $prestations_totals_debours);
-        $tva = "21175";
+        $tvaPerCent = $refacturation->tva;
+        $tva = ($prestations_totalsS * $tvaPerCent) / 100;
         $total_xof = ($total_ht + $tva);
 
         //$transporteurName = "fallou.g@illimitis.com";
@@ -238,7 +246,8 @@ class RefacturationController extends Controller
 
                 $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
                 $total_ht = ($prestations_totals + $prestations_totals_debours);
-                $tva = "21175";
+                $tvaPerCent = $refacturation->tva;
+                $tva = ($prestations_totalsS * $tvaPerCent) / 100;
                 $total_xof = ($total_ht + $tva);
 
                 $pdf = PDF::loadView('admin.refacturation.facture', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));

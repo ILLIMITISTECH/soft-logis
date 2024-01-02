@@ -336,56 +336,59 @@
                                             </thead>
                                             <tbody>
                                                 @forelse ($expedition->products as $ExpProduct)
-                                                    @if ($ExpProduct != null)
-                                                        <tr>
-                                                            <td>{{ $ExpProduct->product->numero_serie ?? '--' }}</td>
-                                                            <td>{{ $ExpProduct->product->familly->libelle ?? '--' }}</td>
-                                                            <td>
-                                                                <img src="{{ asset('files/' . $ExpProduct->product->image) }}" alt="image du produit" style="max-width: 80px; max-height: 50px">
-                                                            </td>
-                                                            <td>
-                                                                @php
-                                                                    $productConformityout = App\Models\stockUpdate::where(['mouvement' => 'Out', 'product_id' => $ExpProduct->product->id])->first();
-                                                                    if ($productConformityout) {
-                                                                        $result = $productConformityout->conformityOut;
-                                                                    }
-                                                                @endphp
+                                                <tr>
+                                                    <td>{{ $ExpProduct->product->numero_serie ?? '--' }}</td>
+                                                    <td>{{ $ExpProduct->product->familly->libelle ?? '--' }}</td>
+                                                    @if ($ExpProduct->product->image)
+                                                    <td>
+                                                        <img src="{{ asset('files/' . $ExpProduct->product->image) }}" alt="image du produit" style="max-width: 80px; max-height: 50px">
+                                                    </td>
+                                                    @else
+                                                    <td><img src="" alt="img-not-found" height="50" width="50"></td>
 
-                                                                @if ($productConformityout !== null)
-                                                                    @if ($result === 'on')
-                                                                    <span class="badge badge-success text-white bg-success">
-                                                                        Conforme
-                                                                    </span>
-                                                                    @endif
-                                                                    @if ($result === 'off')
-                                                                        <span class="badge badge-danger p-2 bg-danger">
-                                                                            Non conforme
-                                                                        </span>
-                                                                    @endif
-
-                                                                @else
-                                                                    {{-- @if ($result === 'null') --}}
-                                                                    <span class="badge badge-warning p-2 bg-warning">
-                                                                        Pas encore destocké
-                                                                    </span>
-                                                                    {{-- @endif --}}
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if ($ExpProduct->product->status == 'stocked')
-                                                                    <span class="badge bg-primary py-2 rounded">En Stock</span>
-                                                                @endif
-                                                                @if ($ExpProduct->product->status == 'expEnCours')
-                                                                    <span class="badge bg-warning py-2 rounded">En cours d'expedition</span>
-                                                                @endif
-                                                                @if ($ExpProduct->product->status == 'delivered')
-                                                                    <span class="badge bg-info py-2 rounded">Livrer</span>
-                                                                @endif
-
-                                                            </td>
-                                                            <td> <button class="btn btn-primary py-1"><a href="{{ route('admin.article.show', $ExpProduct->product->uuid) }}" class="text-white">Detail</a></button></td>
-                                                        </tr>
                                                     @endif
+                                                    <td>
+                                                        @php
+                                                            $productConformityout = App\Models\stockUpdate::where(['mouvement' => 'Out', 'product_id' => $ExpProduct->product->id])->first();
+                                                            if ($productConformityout) {
+                                                                $result = $productConformityout->conformityOut;
+                                                            }
+                                                        @endphp
+
+                                                        @if ($productConformityout !== null)
+                                                            @if ($result === 'on')
+                                                            <span class="badge badge-success text-white bg-success">
+                                                                Conforme
+                                                            </span>
+                                                            @endif
+                                                            @if ($result === 'off')
+                                                                <span class="badge badge-danger p-2 bg-danger">
+                                                                    Non conforme
+                                                                </span>
+                                                            @endif
+
+                                                        @else
+                                                            {{-- @if ($result === 'null') --}}
+                                                            <span class="badge badge-warning p-2 bg-warning">
+                                                                Pas encore destocké
+                                                            </span>
+                                                            {{-- @endif --}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($ExpProduct->product->status == 'stocked')
+                                                            <span class="badge bg-primary py-2 rounded">En Stock</span>
+                                                        @endif
+                                                        @if ($ExpProduct->product->status == 'expEnCours')
+                                                            <span class="badge bg-warning py-2 rounded">En cours d'expedition</span>
+                                                        @endif
+                                                        @if ($ExpProduct->product->status == 'delivered')
+                                                            <span class="badge bg-info py-2 rounded">Livrer</span>
+                                                        @endif
+
+                                                    </td>
+                                                    <td> <button class="btn btn-primary py-1"><a href="{{ route('admin.article.show', $ExpProduct->product->uuid) }}" class="text-white">Detail</a></button></td>
+                                                </tr>
                                                 @empty
                                                     <tr>Aucune marchandise</tr>
                                                 @endforelse

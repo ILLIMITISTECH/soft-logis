@@ -15,7 +15,7 @@
                 </nav>
             </div>
             <div class="ms-auto">
-                <div class="btn-group ">
+                <div class="btn-group">
                     @if ($expedition->statut == 'draft')
                     <form action="{{ route('admin.expedition.ToStarted', ['uuid' => $expedition->uuid]) }}" method="POST" class="submitForm">
                         @csrf
@@ -167,9 +167,9 @@
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="{{ asset('files/' . $expedition->client->logo) }}" class="rounded-circle') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3 gy-3">
-                                        <h4>{{ $expedition->client->raison_sociale }}</h4>
-                                        <p class="text-secondary mt-2">{{ $expedition->client->type }}</p>
-                                        <p class="text-muted font-size-sm my-2">{{ $expedition->client->email }}</p>
+                                        <h4>{{ $expedition->client->raison_sociale ?? 'N/A' }}</h4>
+                                        <p class="text-secondary mt-2">{{ $expedition->client->type ?? 'N/A' }}</p>
+                                        <p class="text-muted font-size-sm my-2">{{ $expedition->client->email ?? 'N/A' }}</p>
                                         <button class="btn btn-primary text-light"><a href="{{ route('admin.company.show', $expedition->client->uuid) }}" class="text-white rounded">Detail du client</a></button>
                                     </div>
                                 </div>
@@ -337,8 +337,8 @@
                                             <tbody>
                                                 @forelse ($expedition->products as $ExpProduct)
                                                 <tr>
-                                                    <td>{{ $ExpProduct->product->numero_serie }}</td>
-                                                    <td>{{ $ExpProduct->product->familly->libelle }}</td>
+                                                    <td>{{ $ExpProduct->product->numero_serie ?? '--' }}</td>
+                                                    <td>{{ $ExpProduct->product->familly->libelle ?? '--' }}</td>
                                                     <td>
                                                         <img src="{{ asset('files/' . $ExpProduct->product->image) }}" alt="image du produit" style="max-width: 80px; max-height: 50px">
                                                     </td>

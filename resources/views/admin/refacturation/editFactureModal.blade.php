@@ -169,6 +169,11 @@
                                                     <input type="text" class="form-control" id="volume" placeholder="volume" value="{{ $item->volume ?? 'N/A'  }}"
                                                         name="volume">
                                                 </div>
+                                                <div class="col-12 col-lg-6">
+                                                    <label for="tva" class="form-label">tva (%)</label>
+                                                    <input type="text" class="form-control" id="tva" placeholder="% TVA"
+                                                        name="tva">
+                                                </div>
                                                <!--<div class="col-12">
                                                     <div class="d-flex align-items-center gap-3">
                                                         <button class="btn btn-outline-secondary px-4"
@@ -200,7 +205,7 @@
                                                             @php  $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get(); @endphp
                                                             @forelse ($prestations as $prestation )
                                                             @if($prestation)
-                                                            
+
                                                             <div class="col-3">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="{{ $prestation->type_prestation ?? 'N/A'  }}">{{ $prestation->type_prestation ?? 'N/A'  }}</option>
@@ -224,7 +229,7 @@
                                                                 <input type="number" name="total[]" value="{{ $prestation->total ?? 'N/A'  }}" class="form-control"
                                                                     placeholder="Total" readonly>
                                                             </div>
-                                                           
+
                                                             @endif
                                                             @empty
                                                             <div>Aucune Facture enregistré</div>
@@ -235,7 +240,7 @@
                                                 <div id="prestations">
                                                     <div class="prestation mb-2">
                                                         <div class="form-row row">
-                                                            
+
                                                             <div class="col-3">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="">Sélect le type</option>
@@ -263,7 +268,7 @@
 
                                                                 <button type="button" class="btn btn-danger remove-btn px-2 text-center"><i class='bx bxs-trash remove-btn'></i></button>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -328,7 +333,7 @@
                                                         <button type="submit" class="btn btn-success px-4"
                                                             >Enregistrer</button>
                                                     </div>
-                                                </div> 
+                                                </div>
                                             </div>
                                             <!---end row-->
 

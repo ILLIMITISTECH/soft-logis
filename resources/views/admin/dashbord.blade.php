@@ -126,10 +126,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 row ">
-                            <div class="col-5">
-                                <div class="card radius-10">
+                            <div class="col">
+                                <div class="card radius-10 ">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center cursor-pointer" onclick="redirectTodelivered()">
                                             <div>
@@ -140,17 +138,12 @@
                                             <div class="widgets-icons bg-light-success text-success ms-auto"><i class="bx bxs-wallet"></i>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="card">
-                                    <div class="card-body">
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row row-cols-1 row-cols-md-3 row-cols-xl-3 g-0 row-group text-center border-top">
@@ -182,7 +175,7 @@
                         </div>
                         <div class="col">
                             <div class="p-3">
-                                <small>Prochaines arrivé de marchandise</small>
+                                <small>Prochaine arrivée de marchandise</small>
                                 @if ($firstNextArrivage !== null)
                                 <h6 class="mb-0">{{ Carbon\Carbon::parse($firstNextArrivage->date_arriver)->format('d/m/Y') }}</h6>
                                 @else
@@ -227,7 +220,7 @@
 
                             <div class="mb-0 bottom-0 card-footer h-25">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">Total Entré <span class="badge bg-info rounded-pill">{{ $InStock->count() }}</span>
+                                    <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">Total Des Entrées<span class="badge bg-info rounded-pill">{{ $InStock->count() }}</span>
                                     </li>
                                     <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Conforme <span class="badge bg-success rounded-pill">{{ $conformInStock->count() }}</span>
                                     </li>

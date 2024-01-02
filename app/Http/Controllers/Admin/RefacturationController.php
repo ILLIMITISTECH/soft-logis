@@ -294,6 +294,7 @@ class RefacturationController extends Controller
                 'num_Dossier' => $request->num_Dossier,
                 'num_Ot' => $request->num_Ot,
                 'volume' => $request->volume,
+                'tva' => $request->tva,
 
                 // info facturier
                 'facturier_uuid' => Auth::user()->uuid,

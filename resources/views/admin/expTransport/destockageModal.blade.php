@@ -25,43 +25,42 @@
                                 <tbody>
                                     @foreach ($expedition->products as $product)
 
-                                        @if ($product->product->status == 'stocked')
+                                        @if (!empty($product) && $product->product->status == 'stocked')
                                         <form action="{{ route('admin.export.destockage') }}" method="POST" enctype="multipart/form-data" class=" submitForm row">
                                             @csrf
-
-                                        <tr>
-                                            <td class="col-1">
-                                                <img src="{{ asset('files/' . $product->product->image) }}" alt="Product img"  class="img-fluid" style="max-width: 60px; max-height: 50px">
-                                            </td>
-                                            <td class="col-3">{{ $product->product->familly->libelle ?? ''}}</td>
-                                            <td class="col-2">{{ $product->product->numero_serie ?? ''}}</td>
-
-                                            @if ($product->product->is_destock === 'false')
-
-                                                <input type="hidden" name="product_id" value="{{ $product->product->id }}">
-                                                <input type="hidden" name="expedition_uuid" value="{{ $expedition->uuid }}">
-                                                <td class="col-3">
-                                                    <div class="row">
-                                                        <input type="radio" name="conformityOut" value="on" class="btn-check" id="conforme{{$loop->index}}" autocomplete="off">
-                                                        <label class="btn btn-outline-success col" for="conforme{{$loop->index}}">Oui</label>
-
-                                                        <input type="radio" name="conformityOut" value="off" class="btn-check" id="non-conforme{{$loop->index}}" autocomplete="off">
-                                                        <label class="btn btn-outline-danger col" for="non-conforme{{$loop->index}}">Non</label>
-                                                    </div>
+                                            <tr>
+                                                <td class="col-1">
+                                                    <img src="{{ asset('files/' . $product->product->image) }}" alt="Product img"  class="img-fluid" style="max-width: 60px; max-height: 50px">
                                                 </td>
-                                                <td class="col-2">
-                                                    <input type="file" class="form-control" name="file">
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-sm btn-primary">Destockage</button>
-                                                    <td class="col-1">
-                                                </td>
-                                            @else
-                                                <td class="col-3 text-info text-center align-self-center align-middle">Produit destocké </td>
-                                            @endif
+                                                <td class="col-3">{{ $product->product->familly->libelle ?? ''}}</td>
+                                                <td class="col-2">{{ $product->product->numero_serie ?? ''}}</td>
 
-                                            {{-- @include('admin.expTransport.outConform') --}}
-                                        </tr>
+                                                @if ($product->product->is_destock === 'false')
+
+                                                    <input type="hidden" name="product_id" value="{{ $product->product->id }}">
+                                                    <input type="hidden" name="expedition_uuid" value="{{ $expedition->uuid }}">
+                                                    <td class="col-3">
+                                                        <div class="row">
+                                                            <input type="radio" name="conformityOut" value="on" class="btn-check" id="conforme{{$loop->index}}" autocomplete="off">
+                                                            <label class="btn btn-outline-success col" for="conforme{{$loop->index}}">Oui</label>
+
+                                                            <input type="radio" name="conformityOut" value="off" class="btn-check" id="non-conforme{{$loop->index}}" autocomplete="off">
+                                                            <label class="btn btn-outline-danger col" for="non-conforme{{$loop->index}}">Non</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="col-2">
+                                                        <input type="file" class="form-control" name="file">
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Destockage</button>
+                                                        <td class="col-1">
+                                                    </td>
+                                                @else
+                                                    <td class="col-3 text-info text-center align-self-center align-middle">Produit destocké </td>
+                                                @endif
+
+                                                {{-- @include('admin.expTransport.outConform') --}}
+                                            </tr>
                                         </form>
                                         @endif
                                     @endforeach

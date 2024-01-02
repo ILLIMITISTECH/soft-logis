@@ -339,13 +339,12 @@
                                                 <tr>
                                                     <td>{{ $ExpProduct->product->numero_serie ?? '--' }}</td>
                                                     <td>{{ $ExpProduct->product->familly->libelle ?? '--' }}</td>
-                                                    @if ($ExpProduct->product->image)
+                                                    @if ($ExpProduct->product)
                                                     <td>
                                                         <img src="{{ asset('files/' . $ExpProduct->product->image) }}" alt="image du produit" style="max-width: 80px; max-height: 50px">
                                                     </td>
                                                     @else
                                                     <td><img src="" alt="img-not-found" height="50" width="50"></td>
-
                                                     @endif
                                                     <td>
                                                         @php

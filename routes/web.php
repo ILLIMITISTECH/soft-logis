@@ -250,7 +250,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/store/odre_expedition', [OdreExpeditionController::class, 'store'])->name('odre_expedition.store');
         Route::get('/show/odre_expedition/{uuid}', [OdreExpeditionController::class, 'show'])->name('odre_expedition.show');
         Route::post('/update/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.update');
-        Route::post('/destroy/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.destroy');
+        Route::post('/destroy/odre_expedition/{uuid}', [OdreExpeditionController::class, 'destroy'])->name('odre_expedition.destroy');
 
         Route::post('/mark-to-factured/{uuid}', [OdreExpeditionController::class, 'marckToFactured'])->name('expedition.marckToFactured');
             Route::post('/destroy/exp-file/{uuid}', [OdreExpeditionController::class, 'destroy_file'])->name('expedition.fil.destroy');
@@ -322,8 +322,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
         // endPoint Pour les filtre
         Route::get('/destinations/{transporteurUuid}/{porteCharUuid?}', [GrilleTarifController::class, 'getDestinations'])->name('destinations');
-
-
 
         // Exemple dans votre fichier web.php
 

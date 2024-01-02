@@ -24,7 +24,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($expedition->products as $product)
-                                    @if (!empty($product))
+                                    {{-- @if (!empty($product)) --}}
                                         @if ($product->product->status == 'stocked')
                                             <form action="{{ route('admin.export.destockage') }}" method="POST" enctype="multipart/form-data" class=" submitForm row">
                                                 @csrf
@@ -63,7 +63,7 @@
                                                 </tr>
                                             </form>
                                         @endif
-                                    @endif
+                                    {{-- @endif --}}
                                     @endforeach
 
                                 </tbody>

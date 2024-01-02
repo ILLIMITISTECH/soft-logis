@@ -102,7 +102,7 @@
                             <tbody>
                                 @forelse ($expeditions as $expedition)
                                 <tr>
-                                    <td>{{ $expedition->code }}</td>
+                                    <td>{{ $expedition->code ?? 'N/A' }}</td>
                                     <td>
                                         <div class="font-weight-bold text-info">{{ $expedition->client->raison_sociale ?? 'N/A' }}</div>
                                     </td>
@@ -136,8 +136,8 @@
                                         @endif
                                     </td>
 
-                                    <td>{{ $expedition->date_liv }}</td>
-                                    <td>{{ $expedition->created_at->diffForHumans() }}</td>
+                                    <td>{{ $expedition->date_liv ?? 'N/A' }}</td>
+                                    <td>{{ $expedition->created_at->diffForHumans() ?? 'N/A'}}</td>
                                     <td>
                                         <div class="d-flex order-actions">
                                             <a href="{{ route('admin.odre_expedition.show', $expedition->uuid) }}" class="">
@@ -149,15 +149,19 @@
                                             @endcan
 
                                             @can('Delette Expedition')
-                                            <a class="deleteConfirmation" data-uuid="{{$expedition->uuid}}"
+                                            <a class="deleteConfirmation"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                data-uuid="{{$expedition->uuid}}"
                                                 data-type="confirmation_redirect" data-placement="top"
                                                 data-token="{{ csrf_token() }}"
                                                 data-url="{{route('admin.odre_expedition.destroy',$expedition->uuid)}}"
                                                 data-title="Vous êtes sur le point de supprimer {{$expedition->code}}"
                                                 data-id="{{$expedition->uuid}}" data-param="0"
-                                                data-route="{{route('admin.odre_expedition.destroy',$expedition->uuid)}}"><i
-                                                    class='bx bxs-trash' style="cursor: pointer"></i>
+                                                data-route="{{route('admin.odre_expedition.destroy',$expedition->uuid)}}">
+                                                <i class='bx bxs-trash' style="cursor: pointer"></i>
                                             </a>
+
                                             @endcan
                                         </div>
                                     </td>

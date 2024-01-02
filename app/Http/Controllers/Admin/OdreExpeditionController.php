@@ -234,44 +234,42 @@ class OdreExpeditionController extends Controller
     public function destroy(string $id)
     {
 
-        {
+        DB::beginTransaction();
+        try {
 
-            DB::beginTransaction();
-            try {
+            $saving= Expedition::where(['uuid'=> $id])->update([
+                'etat' => 'inactif',
+            ]);
 
-                $saving= Expedition::where(['uuid'=>$request->id])->update(['etat'=>"inactif"]);
+            if ($saving) {
 
-                if ($saving) {
-
-                    $dataResponse =[
-                        'type'=>'success',
-                        'urlback'=>"back",
-                        'message'=>"Supprimé avec succes!",
-                        'code'=>200,
-                    ];
-                    DB::commit();
-                } else {
-                    DB::rollback();
-                    $dataResponse =[
-                        'type'=>'error',
-                        'urlback'=>'',
-                        'message'=>"Erreur lors de la suppression!",
-                        'code'=>500,
-                    ];
-                }
-
-            } catch (\Throwable $th) {
-                DB::rollBack();
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Supprimé avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+            } else {
+                DB::rollback();
                 $dataResponse =[
                     'type'=>'error',
                     'urlback'=>'',
-                    'message'=>"Erreur systeme! $th",
+                    'message'=>"Erreur lors de la suppression!",
                     'code'=>500,
                 ];
             }
-            return response()->json($dataResponse);
-        }
 
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
     }
 
     public function destroy_file(string $id)

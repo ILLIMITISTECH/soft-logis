@@ -14,8 +14,10 @@
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <label for="client_uuid" class="form-label">Clients</label>
                                     <select class="form-select" id="client_uuid" name="client_uuid" aria-label="Default select example">
-                                        @if ($expedition->client != null)
+                                        @if ($expedition->client)
                                         <option value="{{ $expedition->client->uuid}}" selected>{{ $expedition->client->raison_sociale ?? 'N/A'}}</option>
+                                        @else
+                                            <option selected>Selectionné un client</option>
                                         @endif
                                         @foreach ($clients as $client)
                                             <option value="{{ $client->uuid }}">{{ $client->raison_sociale }}</option>

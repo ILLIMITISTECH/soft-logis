@@ -31,7 +31,7 @@ class OdreExpeditionController extends Controller
 
         $families = ArticleFamily::where('etat', 'actif')->get();
 
-        $expeditions = Expedition::where('etat', 'actif')->get();
+        $expeditions = Expedition::where('etat', 'actif')->orderBy('created_at', 'desc')->get();
 
         $entrepots = Entrepot::where('etat', 'actif')->get();
         return view('admin.expedition.index', compact('products','clients','expeditions', 'families', 'entrepots'));

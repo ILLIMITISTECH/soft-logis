@@ -165,12 +165,20 @@
 
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="{{ asset('files/' . $expedition->client->logo) }}" class="rounded-circle') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    @if (!empty($expedition->client))
+                                    <img src="{{ asset('files/' . $expedition->client->logo) }}" class="rounded-circle') }}" alt="logo" class="rounded-circle p-1 bg-primary" width="110">
+                                    @else
+                                        <img src="https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png" alt="logo" class="rounded-circle p-1 bg-primary" width="110">
+                                    @endif
                                     <div class="mt-3 gy-3">
                                         <h4>{{ $expedition->client->raison_sociale ?? 'N/A' }}</h4>
                                         <p class="text-secondary mt-2">{{ $expedition->client->type ?? 'N/A' }}</p>
                                         <p class="text-muted font-size-sm my-2">{{ $expedition->client->email ?? 'N/A' }}</p>
-                                        <button class="btn btn-primary text-light"><a href="{{ route('admin.company.show', $expedition->client->uuid) }}" class="text-white rounded">Detail du client</a></button>
+                                        @if (!empty($expedition->client))
+                                            <button class="btn btn-primary text-light">
+                                                <a href="{{ route('admin.company.show', $expedition->client->uuid) }}" class="text-white rounded">Detail du client</a>
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr class="my-4" />
@@ -214,8 +222,8 @@
                                                             @endif
 														</div>
 														<div class="font-weight-bold text-primary col-7">
-                                                            {{ $ExpFile->name }}
-                                                            <p class="size_12 text-muted">{{ $ExpFile->created_at->diffForHumans() }}</p>
+                                                            {{ $ExpFile->name ?? 'N/A' }}
+                                                            <p class="size_12 text-muted">{{ $ExpFile->created_at->diffForHumans() ?? 'N/A' }}</p>
                                                         </div>
 
 													</div>
@@ -278,13 +286,13 @@
                                                     <div class="mb-3">
                                                         <p class="bold">Numero d'expedition :</p>
                                                         <div class="text-muted text-start">
-                                                            {{ $expedition->num_exp }}
+                                                            {{ $expedition->num_exp ?? 'N/A' }}
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
                                                         <p class="bold me-2">Date de livraison :</p>
                                                         <div class="text-muted text-start">
-                                                            {{ Carbon\Carbon::parse($expedition->date_liv)->format('d/m/y') }}
+                                                            {{ Carbon\Carbon::parse($expedition->date_liv)->format('d/m/y') ?? 'N/A' }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -292,7 +300,7 @@
                                                     <div class="mb-3">
                                                         <p class="bold me-2">Date d'initialisation :</p>
                                                         <div class="text-muted text-start">
-                                                            {{ $expedition->created_at->diffForHumans() }}
+                                                            {{ $expedition->created_at->diffForHumans() ?? 'N/A' }}
                                                         </div>
 
                                                     </div>
@@ -308,7 +316,7 @@
                                                 <p class="bold">Incoterm</p>
                                                 <div class="mt-3 p-4 bg-light">
                                                     <p>
-                                                        {{ $expedition->incoterm }}
+                                                        {{ $expedition->incoterm ?? 'N/A' }}
                                                     </p>
                                                 </div>
                                             </div>

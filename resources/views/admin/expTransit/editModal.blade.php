@@ -13,10 +13,16 @@
                         <div class="col-12">
                             <label for="transitaire_uuid" class="form-label text-uppercase">Transitaire Export</label>
                             <select name="transitaire_uuid" class="form-control" id="transitaire_uuid">
-                                <option value="{{ $transit->transitaire->uuid ?? "" }}" selected>{{ $transit->transitaire->raison_sociale ?? "N/A" }}</option>
+                                @if ($transit->transitaire)
+                                <option value="{{ $transit->transitaire->uuid}}" selected>{{ $transit->transitaire->raison_sociale ?? "N/A" }}</option>
+                                @else
+                                <option value="" disabled selected>Selectionnez un transitaire</option>
+                                @endif
                                 @foreach ($transitaires as $transitaire)
-                                    @if ($transitaire->uuid !== $transit->transitaire->uuid)
-                                    <option value="{{ $transitaire->uuid }}">{{ $transitaire->raison_sociale }}</option>
+                                    @if ($transit->transitaire)
+                                        @if ($transitaire->uuid !== $transit->transitaire->uuid)
+                                        <option value="{{ $transitaire->uuid }}">{{ $transitaire->raison_sociale }}</option>
+                                        @endif
                                     @endif
                                 @endforeach
                             </select>

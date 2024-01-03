@@ -15,16 +15,7 @@
         </nav>
     </div>
     <div class="ms-auto">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary">Settings</button>
-            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                <a class="dropdown-item" href="javascript:;">Another action</a>
-                <a class="dropdown-item" href="javascript:;">Something else here</a>
-                <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-            </div>
-        </div>
+
     </div>
 </div>
 <!--end breadcrumb-->
@@ -64,7 +55,7 @@
                                             aria-label="...">
                                     </div>
                                     <div class="ms-2">
-                                        <h6 class="mb-0 font-14">{{ $transit->code }}</h6>
+                                        <h6 class="mb-0 font-14">{{ $transit->code ?? '--' }}</h6>
                                     </div>
                                 </div>
                             </td>
@@ -73,9 +64,9 @@
                             </td>
 
                             <td>{{ $transit->files->count() }}</td>
-                            <td>{{ $transit->created_at->diffForHumans() }}</td>
+                            <td>{{ $transit->created_at->diffForHumans()  ?? '--'}}</td>
                             <td class="h-100">
-                                <span>{{ $transit->user_uuid }}</span>
+                                <span>{{ $transit->user_uuid ?? '--'}}</span>
                             </td>
                             <td style="max-width: 100px">
                                 <div class="d-flex order-actions text-end justify-content-between">

@@ -24,11 +24,11 @@
 								<tbody>
                                     @foreach ( $nbrExpeditionExpedier as $item )
 									<tr>
-                                        <td>{{ $item->num_exp }}</td>
-										<td>{{ Carbon\Carbon::parse($item->date_liv)->format('d/m/Y') }}</td>
-										<td>{{ $item->lieu_liv }}</td>
-										<td>{{ $item->client->raison_sociale }}</td>
-										<td>{{ $item->products->count() }}</td>
+                                        <td>{{ $item->num_exp ?? '--'}}</td>
+										<td>{{ Carbon\Carbon::parse($item->date_liv)->format('d/m/Y') ?? '--'}}</td>
+										<td>{{ $item->lieu_liv ?? '--'}}</td>
+										<td>{{ $item->client->raison_sociale ?? '--'}}</td>
+										<td>{{ $item->products->count() ?? '--'}}</td>
                                         <td>
                                             <a href="{{ route('admin.odre_expedition.show', $item->uuid) }}" class="text-decoration-none">Detail</div>
                                         </td>

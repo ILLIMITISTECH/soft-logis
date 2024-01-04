@@ -417,4 +417,119 @@ class RefacturationController extends Controller
             return response()->json($dataResponse);
         }
     }
+
+    public function marckToSend(string $id)
+    {
+
+        DB::beginTransaction();
+        try {
+            $sending = Refacturation::where(['uuid'=>$id])->update(['statut' => 'sendToClient']);
+
+
+            if ($sending) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Facture envoyée avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+            } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de la suppression!",
+                    'code'=>500,
+                ];
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+    public function marckToPayed(string $id)
+    {
+
+        DB::beginTransaction();
+        try {
+            $sending = Refacturation::where(['uuid'=>$id])->update(['statut' => 'payed']);
+
+
+            if ($sending) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Facture Marqué comme payé avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+            } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de la suppression!",
+                    'code'=>500,
+                ];
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
+    public function marckToConceled(string $id)
+    {
+
+        DB::beginTransaction();
+        try {
+            $sending = Refacturation::where(['uuid'=>$id])->update(['statut' => 'canceled']);
+
+
+            if ($sending) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Facture Marqué comme annullé avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+            } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de la suppression!",
+                    'code'=>500,
+                ];
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
+    }
 }

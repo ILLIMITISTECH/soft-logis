@@ -15,14 +15,7 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">Settings</button>
-                <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -69,11 +62,25 @@
                             <td>
                                 <div class="d-flex order-actions">
                                     <a href="{{ route('admin.stock_entrepot.show', $entrepot->uuid) }}" class=""><i class="lni lni-eye"></i></a>
-                                    <a href="javascript:;" class="mx-3"><i class='bx bxs-edit'></i></a>
-                                    <a href="javascript:;" class=""><i class='bx bxs-trash'></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#editEntrepotModal{{ $entrepot->uuid }}" class="mx-3">
+                                        <i class='bx bxs-edit'></i>
+                                    </a>
+
+                                    {{-- <a href="javascript:;" class=""><i class='bx bxs-trash'></i></a> --}}
+
+                                    <a class="deleteConfirmation" data-uuid="{{$entrepot->uuid}}"
+                                        data-type="confirmation_redirect" data-placement="top"
+                                        data-token="{{ csrf_token() }}"
+                                        data-url="{{route('admin.stock_entrepot.destroy',$entrepot->uuid)}}"
+                                        data-title="Vous êtes sur le point de supprimer {{$entrepot->nom}} "
+                                        data-id="{{$entrepot->uuid}}" data-param="0"
+                                        data-route="{{route('admin.stock_entrepot.destroy',$entrepot->uuid)}}"><i
+                                            class='bx bxs-trash' style="cursor: pointer"></i>
+                                        </a>
                                 </div>
                             </td>
                         </tr>
+                            @include('admin.entrepot.editModal', ['entrepot' => $entrepot])
                         @empty
 
                         @endforelse

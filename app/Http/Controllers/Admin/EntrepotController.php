@@ -36,124 +36,56 @@ class EntrepotController extends Controller
      */
     public function store(Request $request)
     {
-        {
-            // Valider les données du formulaire (libelle, color, etc.)
-            $request->validate([
-                'nom' => 'required|string|max:255',
-                'emplacement' => 'required|string|max:255',
-            ]);
+        // Valider les données du formulaire (libelle, color, etc.)
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'emplacement' => 'required|string|max:255',
+        ]);
 
-            DB::beginTransaction();
-            try {
+        DB::beginTransaction();
+        try {
 
-                $saving= Entrepot::create([
-                    'uuid'=>Str::uuid(),
-                    'nom' => $request->nom,
-                    'emplacement' => $request->emplacement,
-                    'capacity' => $request->capacity,
-                    'color' => $request->color,
-                    'description' => $request->description,
-                    'etat' => 'actif',
-                    'code' => Refgenerate(Entrepot::class, 'ENT', 'code'),
-                ])->save();
+            $saving= Entrepot::create([
+                'uuid'=>Str::uuid(),
+                'nom' => $request->nom,
+                'emplacement' => $request->emplacement,
+                'capacity' => $request->capacity,
+                'color' => $request->color,
+                'description' => $request->description,
+                'etat' => 'actif',
+                'code' => Refgenerate(Entrepot::class, 'ENT', 'code'),
+            ])->save();
 
-                if ($saving) {
+            if ($saving) {
 
-                    $dataResponse =[
-                        'type'=>'success',
-                        'urlback'=>"back",
-                        'message'=>"Enregistré avec succes!",
-                        'code'=>200,
-                    ];
-                    DB::commit();
-               } else {
-                    DB::rollback();
-                    $dataResponse =[
-                        'type'=>'error',
-                        'urlback'=>'',
-                        'message'=>"Erreur lors de l'enregistrement!",
-                        'code'=>500,
-                    ];
-               }
-
-            } catch (\Throwable $th) {
-                DB::rollBack();
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
                 $dataResponse =[
                     'type'=>'error',
                     'urlback'=>'',
-                    'message'=>"Erreur systeme! $th",
+                    'message'=>"Erreur lors de l'enregistrement!",
                     'code'=>500,
                 ];
-            }
-            return response()->json($dataResponse);
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
         }
+        return response()->json($dataResponse);
     }
-
-
-    // public function show(string $id)
-    // {
-    //     $entrepot = Entrepot::where('uuid', $id)->first();
-
-    //     if (!$entrepot) {
-    //         return redirect()->route('admin.entrepot.show');
-    //     }
-
-    //     $productData = [];
-    //     $valeurTotale = 0; // Initialisez la valeur totale à zéro
-
-    //     $stockUpdates = stockUpdate::where('entrepot_uuid', $entrepot->uuid)
-    //         ->with('product')
-    //         ->get();
-
-    //     // Créez un tableau pour suivre la dernière mise à jour de stock pour chaque produit
-    //     $latestUpdates = [];
-
-    //     foreach ($stockUpdates as $update) {
-    //         if ($update->product) {
-    //             $productId = $update->product->id;
-
-    //             // Vérifiez si c'est la dernière mise à jour pour ce produit
-    //             if (!isset($latestUpdates[$productId]) || $update->id > $latestUpdates[$productId]->id) {
-    //                 $quantity_initial = $update->product->quantity_initial;
-    //                 $latestUpdate = $update;
-    //                 $quantityAdded = $latestUpdate->quantity_added;
-    //                 $updateDate = $latestUpdate->created_at->diffForHumans();
-    //                 $prix = $update->product->price_unitaire; // Prix du produit
-
-    //                 $quantity_removed = $latestUpdate->quantity_removed;
-    //                 $mouvement = $latestUpdate->mouvement;
-
-    //                 if (!isset($productData[$productId])) {
-    //                     $productData[$productId] = [
-    //                         'libelle' => $update->product->libelle,
-    //                         'image' => $update->product->image,
-    //                         'sale_model' => $update->product->sale_model,
-    //                         'quantity_initial' => $quantity_initial,
-    //                         'quantity_added' => $quantityAdded,
-    //                         'update_date' => $updateDate,
-    //                         'price_unitaire' => $prix,
-    //                         'quantity_removed' => $quantity_removed,
-    //                         'mouvement' => $mouvement,
-    //                     ];
-    //                 } else {
-    //                     $productData[$productId]['quantity_added'] += $quantityAdded;
-    //                     $productData[$productId]['update_date'] = $updateDate;
-    //                 }
-
-    //                 $valeurArticle = $quantity_initial * $prix;
-
-    //                 $valeurTotale += $valeurArticle;
-
-    //                 // Mettez à jour la dernière mise à jour de stock pour ce produit
-    //                 $latestUpdates[$productId] = $latestUpdate;
-    //             }
-    //         }
-    //     }
-
-    //     $totalProducts = count($productData);
-
-    //     return view('admin.entrepot.show', compact('entrepot', 'productData', 'totalProducts', 'valeurTotale', 'stockUpdates'));
-    // }
     public function show(string $id)
     {
 
@@ -201,7 +133,52 @@ class EntrepotController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Valider les données du formulaire (libelle, color, etc.)
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'emplacement' => 'required|string|max:255',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $saving= Entrepot::where('uuid', $id)->update([
+                'nom' => $request->nom,
+                'emplacement' => $request->emplacement,
+                'capacity' => $request->capacity,
+                'color' => $request->color,
+                'description' => $request->description,
+            ]);
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
     }
 
     /**
@@ -209,6 +186,42 @@ class EntrepotController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        DB::beginTransaction();
+        try {
+
+            $saving= Entrepot::where('uuid', $id)->update([
+                'etat' => 'inactif'
+            ]);
+
+            if ($saving) {
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            $dataResponse =[
+                'type'=>'error',
+                'urlback'=>'',
+                'message'=>"Erreur systeme! $th",
+                'code'=>500,
+            ];
+        }
+        return response()->json($dataResponse);
     }
 }

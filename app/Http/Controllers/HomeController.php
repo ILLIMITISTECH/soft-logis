@@ -12,6 +12,8 @@ use App\Models\Facturation;
 use App\Models\OdLivraison;
 use App\Models\stockUpdate;
 use Illuminate\Http\Request;
+use App\Models\Refacturation;
+use App\Models\FacturePrestation;
 
 class HomeController extends Controller
 {
@@ -463,12 +465,41 @@ class HomeController extends Controller
     $total_cancel = $factureCancelTransport + $factureCancelTransit;
     $total_cancel_count = $facture_cancel->count();
 
+    // Block Finance refacturation
 
+    $allRefacturations = Refacturation::where('etat', 'actif')->get();
+
+    $lastFacts = Refacturation::where('etat', 'actif')->limit(10)->get();
+
+    $lastFactsUUIDs = $allRefacturations->pluck('uuid')->toArray();
+    $factureByPres = FacturePrestation::whereIn('facture_uuid', $lastFactsUUIDs)->get();
+    $valeurTotals = $factureByPres->sum('total');
+    $totalRefacturcount = $allRefacturations->count();
+
+    // Send to paye
+    $refacturation_send = Refacturation::where(['etat' => 'actif', 'statut' => 'sendToClient'])->get();
+    $lastSendFactsUUIDs = $refacturation_send->pluck('uuid')->toArray();
+    $factureByPresSend = FacturePrestation::whereIn('facture_uuid', $lastSendFactsUUIDs)->get();
+    $valeurTotalsSending = $factureByPresSend->sum('total');
+    $totalSendingCount = $refacturation_send->count();
+
+    // facture payer
+    $refacturation_payer = Refacturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
+    $lastPayedFactsUUIDs = $refacturation_payer->pluck('uuid')->toArray();
+    $factureByPresPayed = FacturePrestation::whereIn('facture_uuid', $lastPayedFactsUUIDs)->get();
+    $valeurTotalsPayed = $factureByPresPayed->sum('total');
+    $totalPayedCount = $refacturation_payer->count();
+    // facture rejeter
+    $refacturation_rejeter = Refacturation::where(['etat' => 'actif', 'statut' => 'canceled'])->get();
+    $lastRejetedFactsUUIDs = $refacturation_rejeter->pluck('uuid')->toArray();
+    $factureByPresRejeter = FacturePrestation::whereIn('facture_uuid', $lastRejetedFactsUUIDs)->get();
+    $valeurTotalsRejeter = $factureByPresRejeter->sum('total');
+    $totalRejetedCount = $refacturation_rejeter->count();
 
 
 
         return view('admin.dashbord',
-        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly'));
+        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount'));
         // return view('adminHome');
     }
 

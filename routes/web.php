@@ -241,6 +241,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
             // stock Entrepot route
             Route::get('/stock/entrepot', [EntrepotController::class, 'index'])->name('stock.entrepot');
             Route::post('/store/stock_entrepot', [EntrepotController::class, 'store'])->name('stock_entrepot.store');
+            Route::post('/update/stock_entrepot/{uuid}', [EntrepotController::class, 'update'])->name('stock_entrepot.update');
+            Route::post('/destroy/stock_entrepot/{uuid}', [EntrepotController::class, 'destroy'])->name('stock_entrepot.destroy');
             Route::get('/stock/entrepot/show/{uuid}', [EntrepotController::class, 'show'])->name('stock_entrepot.show');
 
 
@@ -303,6 +305,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/show/refacturation/{uuid}', [RefacturationController::class, 'show'])->name('refacturation.show');
         Route::post('/destroy/refacturation/{uuid}', [RefacturationController::class, 'destroy'])->name('refacturation.destroy');
         Route::post('/update/refacturation/{uuid}', [RefacturationController::class, 'update'])->name('refacturation.update');
+            // change state refacturation
+            Route::post('/marckToSend/refacturation/{uuid}', [RefacturationController::class, 'marckToSend'])->name('refacturation.marckToSend');
+
+            Route::post('/marckToConceled/refacturation/{uuid}', [RefacturationController::class, 'marckToConceled'])->name('refacturation.marckToConceled');
+            
+            Route::post('/marckToPayed/refacturation/{uuid}', [RefacturationController::class, 'marckToPayed'])->name('refacturation.marckToPayed');
 
         // Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
         // Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');

@@ -60,9 +60,9 @@ class Refacturation extends Model
     {
         return $this->belongsTo(User::class, 'facturier_uuid', 'uuid');
     }
-    public function prestation()
+    public function prestations()
     {
-        return $this->hasMany(FacturePrestation::class, 'prestation_uuid');
+        return $this->hasMany(FacturePrestation::class, 'facture_uuid', 'uuid');
     }
 
 }

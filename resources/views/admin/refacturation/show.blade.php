@@ -6,29 +6,70 @@
 <!--start page wrapper -->
 <div class="page-content">
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Applications</div>
+        <div class="breadcrumb-title pe-3 text-uppercase">Refacturation</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                    <li class="breadcrumb-item"><a href="/admin/home"><i class="bx bx-home-alt"></i></a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Facture Fournisseur</li>
                 </ol>
             </nav>
         </div>
         <div class="ms-auto">
-            <button type="button" class="btn btn-primary btn-sm rounded my-auto text-white">
-                <a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}"
-                    class="text-center text-decoration-none text-white"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
-            </button>
+            
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm rounded my-auto text-white">
+                    <a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}"
+                        class="text-center text-decoration-none text-white"><i class="bx bxs-file-pdf"></i> Export PDF</a>
+                </button>
+                <form action="{{route('admin.refacturation.marckToSend', $refacturation->uuid)}}" method="post" class="submitForm">
+                    @csrf
+                        <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" type="submit"><i class="bx bxs-envelope"></i>Marqué comme Envoyé</button>
+                </form>
+                <form action="{{route('admin.refacturation.marckToPayed', $refacturation->uuid)}}" method="post" class="submitForm">
+                    @csrf
+                        <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" type="submit"><i class='bx bxs-wallet'></i>Marqué comme Payé</button>
+                </form>
+                <form action="{{route('admin.refacturation.marckToConceled', $refacturation->uuid)}}" method="post" class="submitForm">
+                    @csrf
+                    <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" type="submit"><i class='bx bxs-x-circle'></i>Marqué comme Annulé</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
             <div id="invoice">
-
+                
                 <div class="invoice overflow-auto">
                     <div style="min-width: auto ;">
+                        <div>
+                            <h3>
+                                @if ($refacturation->statut == 'draft')
+                                <div class="badge size_12 rounded-pill text-light bg-primary text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Brouillon
+                                </div>
+                                @endif
+                                @if ($refacturation->statut == 'sendToClient')
+                                <div class="badge size_12 rounded-pill text-light bg-danger text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i>Envoyé
+                                </div>
+                                @endif
+                                @if ($refacturation->statut == 'payed')
+                                <div
+                                    class="badge size_12 rounded-pill text-light bg-gradient-quepal text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Payé
+                                </div>
+                                @endif
+                                @if ($refacturation->statut == 'canceled')
+                                <div
+                                    class="badge size_12 rounded-pill text-light bg-gradient-blooker text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Rejeter
+                                </div>
+                                @endif
+                            </h3>
+                        </div>
                         <header>
                             <div class="row">
                                 <div class="col">

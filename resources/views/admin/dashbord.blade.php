@@ -1546,7 +1546,7 @@
         <div class="card-body">
             <div class="fm-search">
                 <div class="mb-0">
-                    <strong>Finance</strong>
+                    <strong class="text-uppercase">Facture Prestataire</strong>
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
@@ -1556,8 +1556,8 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-secondary">Total des Factures</p>
-                                    <h4 class="my-1 text-info">{{ number_format($total, 0, ',', ' ') }} Fcfa</h4>
-                                    <p class="mb-0 font-13">{{ $total_count }} @if ($total_count > 0)
+                                    <h4 class="my-1 text-info">{{ number_format($valeurallFactByPrestationActif, 0, ',', ' ') }} Fcfa</h4>
+                                    <p class="mb-0 font-13">{{ $totalallFactByPrestationActifCount }} @if ($totalallFactByPrestationActifCount > 0)
                                         Factures
                                         @else
                                         Facture
@@ -1576,9 +1576,9 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-secondary">Bon à Payer</p>
-                                    <h4 class="my-1 text-danger">{{ number_format($total_bon_payer, 0, ',', ' ') }} Fcfa
+                                    <h4 class="my-1 text-danger">{{ number_format($valeur_bon_a_payer, 0, ',', ' ') }} Fcfa
                                     </h4>
-                                    <p class="mb-0 font-13">{{ $total_bon_count }} Facture</p>
+                                    <p class="mb-0 font-13">{{ $facture_bon_a_payer_count }} Facture</p>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i
                                         class='bx bxs-wallet'></i>
@@ -1591,11 +1591,12 @@
                     <div class="card radius-10 border-start border-0 border-4 border-success">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
+
                                 <div>
                                     <p class="mb-0 text-secondary">Payée</p>
-                                    <h4 class="my-1 text-success">{{ number_format($total_payed, 0, ',', ' ') }} Fcfa
+                                    <h4 class="my-1 text-success">{{ number_format($valeur_payer, 0, ',', ' ') }} Fcfa
                                     </h4>
-                                    <p class="mb-0 font-13">{{ $total_payed_count }} Facture</p>
+                                    <p class="mb-0 font-13">{{ $facture_payer_count }} Facture</p>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
                                     <i class='bx bxs-bar-chart-alt-2'></i>
@@ -1609,10 +1610,11 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div>
+                                    
                                     <p class="mb-0 text-secondary">Rejeter</p>
-                                    <h4 class="my-1 text-warning">{{ number_format($total_cancel, 0, ',', ' ') }} Fcfa
+                                    <h4 class="my-1 text-warning">{{ number_format($valeur_canceled, 0, ',', ' ') }} Fcfa
                                     </h4>
-                                    <p class="mb-0 font-13">{{ $total_cancel_count }} Facture @if ($total_cancel_count >
+                                    <p class="mb-0 font-13">{{ $facture_canceled_count }} Facture @if ($facture_canceled_count >
                                         0)s
                                         @endif</p>
                                 </div>
@@ -1655,10 +1657,9 @@
                             <tbody>
                                 @forelse ($factures as $facture )
                                 <tr>
-                                    <td>{{ $facture->code }}</td>
+                                    <td>{{ $facture->code ?? 'N/A'}}</td>
 
                                     <td>
-
                                         @if ($facture->typeFacture == 'transitaire')
                                         {{ $facture->transitaire->raison_sociale ?? 'N/A' }}
                                         @elseif ($facture->typeFacture == 'transporteur')
@@ -1690,14 +1691,7 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        @if ($facture->typeFacture == 'transitaire')
-                                        {{ number_format($facture->montantTotalTtcTransit, 0, ',', ' ') }} Fcfa
-                                        @elseif ($facture->typeFacture == 'transporteur')
-                                        {{ number_format($facture->montantTotalTtcTransport, 0, ',', ' ') }} Fcfa
-                                        @endif
-
-                                    </td>
+                                    <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }} Fcfa</td>
                                     <td>{{ $facture->created_at->format('d/m/Y') }}</td>
                                     <td>
                                         @if (!empty($facture->create_by->name) && !empty($facture->create_by->lastname))
@@ -1729,7 +1723,7 @@
         <div class="card-body">
             <div class="fm-search">
                 <div class="mb-0">
-                    <strong>Refacturation</strong>
+                    <strong class="text-uppercase">Facture Fournisseur</strong>
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
@@ -1742,12 +1736,12 @@
                                     <h4 class="my-1 text-info">
                                         {{ number_format($valeurTotals, 0, ',', ' ') }} Fcfa
                                     </h4>
-                                    <p class="mb-0 font-13">{{ $totalRefacturcount }} 
+                                    <p class="mb-0 font-13">{{ $totalRefacturcount }}
                                         @if ($totalRefacturcount > 1)
                                         Factures
                                         @else
                                         Facture
-                                        @endif 
+                                        @endif
                                     </p>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto"><i
@@ -1791,7 +1785,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col">
                     <div class="card radius-10 border-start border-0 border-4 border-warning">
                         <div class="card-body">

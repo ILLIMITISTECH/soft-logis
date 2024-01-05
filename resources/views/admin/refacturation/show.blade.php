@@ -2,7 +2,6 @@
 @section('section')
 
 
-
 <!--start page wrapper -->
 <div class="page-content">
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">

@@ -30,17 +30,17 @@ class SourcingController extends Controller
      */
 
     public function index(Request $request)
-{
+    {
 
-    $products = Article::where('etat', 'actif')
-                    ->whereNotIn('status', ['stocked', 'expEnCours', 'delivered'])
-                    ->where('is_AddSourcing', 'false')
-                    ->get();
-    $sourcings = Sourcing::where('etat', 'actif')->get();
-    $families = ArticleFamily::where('etat', 'actif')->get();
+        $products = Article::where('etat', 'actif')
+                        ->whereNotIn('status', ['stocked', 'expEnCours', 'delivered'])
+                        ->where('is_AddSourcing', 'false')
+                        ->get();
+        $sourcings = Sourcing::where('etat', 'actif')->get();
+        $families = ArticleFamily::where('etat', 'actif')->get();
 
-    return view('admin.sourcing.index', compact('products', 'sourcings', 'families'));
-}
+        return view('admin.sourcing.index', compact('products', 'sourcings', 'families'));
+    }
 
 
     /**

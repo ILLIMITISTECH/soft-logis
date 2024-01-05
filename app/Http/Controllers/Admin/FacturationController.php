@@ -24,7 +24,7 @@ class FacturationController extends Controller
 
         $factures = Facturation::where('etat', 'actif')->get();
         $facturesCount = $factures->count();
-        $prestationLines = prestationLine::where('etat', 'actif')->get();
+        $prestationLines = PrestationLine::where('etat', 'actif')->get();
         $totalGlobalLine = $prestationLines->sum('totalLigne');
 
         // Bon a Payer

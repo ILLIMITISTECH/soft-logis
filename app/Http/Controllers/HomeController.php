@@ -13,6 +13,7 @@ use App\Models\OdLivraison;
 use App\Models\stockUpdate;
 use Illuminate\Http\Request;
 use App\Models\Refacturation;
+use App\Models\PrestationLine;
 use App\Models\FacturePrestation;
 
 class HomeController extends Controller
@@ -439,11 +440,42 @@ class HomeController extends Controller
         $percentageExpReadyMensuel = 0;
     }
 
+
+    // block finance a jour
+        $allfacturPrestataire = Facturation::where('etat', 'actif')->get();
+        $facturPresUUIDs = $allfacturPrestataire->pluck('uuid')->toArray();
+        $allFactByPrestationActif = PrestationLine::whereIn('facture_uuid', $facturPresUUIDs)->get();
+        $valeurallFactByPrestationActif = $allFactByPrestationActif->sum('totalLigne');
+        $totalallFactByPrestationActifCount = $allfacturPrestataire->count();
+
+        $factures = Facturation::where('etat', 'actif')->get();
+
+        // Bon a Payer
+        $facture_bon_a_payer = Facturation::where(['etat' => 'actif', 'statut' => 'good_pay'])->get();
+        $facture_bon_a_payer_count = $facture_bon_a_payer->count();
+        $valeur_bon_a_payer = $facture_bon_a_payer->sum(function ($facture) {
+            return $facture->prestationLines->sum('totalLigne');
+        });
+
+        // Payers
+        $facture_payer = Facturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
+        $facture_payer_count = $facture_payer->count();
+        $valeur_payer = $facture_payer->sum(function ($facture) {
+            return $facture->prestationLines->sum('totalLigne');
+        });
+
+        // Canceled
+        $facture_cancel = Facturation::where(['etat' => 'actif', 'statut' => 'cancel'])->get();
+        $facture_canceled_count = $facture_cancel->count();
+        $valeur_canceled = $facture_cancel->sum(function ($facture) {
+            return $facture->prestationLines->sum('totalLigne');
+        });
+
     // Block Finance facture
-    $factures = Facturation::where('etat', 'actif')->get();
-    $facture_bon_a_payer = Facturation::where(['etat' => 'actif', 'statut' => 'good_pay'])->get();
-    $facture_payer = Facturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
-    $facture_cancel = Facturation::where(['etat' => 'actif', 'statut' => 'cancel'])->get();
+    // $factures = Facturation::where('etat', 'actif')->get();
+    // $facture_bon_a_payer = Facturation::where(['etat' => 'actif', 'statut' => 'good_pay'])->get();
+    // $facture_payer = Facturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
+    // $facture_cancel = Facturation::where(['etat' => 'actif', 'statut' => 'cancel'])->get();
 
     $factureTransport = $factures->sum('montantTotalTtcTransport');
     $factureTransit = $factures->sum('montantTotalTtcTransit');
@@ -499,7 +531,7 @@ class HomeController extends Controller
 
 
         return view('admin.dashbord',
-        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount'));
+        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 'InStock', 'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth', 'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount' ,    'valeurallFactByPrestationActif', 'totalallFactByPrestationActifCount' , 'valeur_bon_a_payer', 'facture_bon_a_payer_count', 'facture_payer_count', 'valeur_payer', 'facture_canceled_count', 'valeur_canceled'));
         // return view('adminHome');
     }
 

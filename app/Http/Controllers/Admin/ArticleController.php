@@ -470,6 +470,7 @@ class ArticleController extends Controller
     public function searchByNumeroSerie($input) {
         // Logique de recherche des produits en fonction du numéro de série
         $products = Article::where('numero_serie', 'LIKE', '%' . $input . '%')
+        ->whereNotIn('status', ['received', 'stocked', 'expEnCours', 'delivered'])
         ->get();
 
         return response()->json(['products' => $products]);
@@ -487,9 +488,10 @@ class ArticleController extends Controller
         return response()->json(['articles' => $articles]);
     }
     public function searchByBonCommand($input) {
-        // Logique de recherche des produits en fonction du numéro de série
+        // Logique de recherche des produits en fonction du Bon commande
         $products = Article::where('numero_bon_commande', 'LIKE', '%' . $input . '%')
         ->where('is_AddSourcing', 'false')
+        ->whereNotIn('status', ['received', 'stocked', 'expEnCours', 'delivered'])
         ->get();
 
         return response()->json(['products' => $products]);

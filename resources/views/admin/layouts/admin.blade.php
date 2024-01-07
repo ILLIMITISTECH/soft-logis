@@ -17,9 +17,9 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-	<!-- loader-->
+	{{-- <!-- loader-->
 	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet"/>
-	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
+	<script src="{{ asset('assets/js/pace.min.js') }}"></script> --}}
 	<!-- Bootstrap CSS -->
 	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
@@ -72,7 +72,7 @@
 
 	<!-- Bootstrap JS -->
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -85,8 +85,11 @@
 	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
 	<script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
-	<script src="{{ asset('assets/js/index.js') }}"></script>
+
+	<script src="{{ asset('assets/js/index.js') }}" ></script>
+	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}" ></script>
+	<script src="{{ asset('assets/js/index2.js') }}" ></script>
+	<script src="{{ asset('assets/js/index3.js') }}" ></script>
 
 	<script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/bs-stepper/js/main.js') }}"></script>
@@ -103,20 +106,14 @@
 			var table = $('#example2').DataTable( {
 				lengthChange: true,
 				buttons: [ 'copy', 'excel', 'pdf', 'print'],
-
                 language: {
                 search: "Recherche :",
-                // lengthMenu: "Afficher MENU éléments par page",
-                // Autres paramètres...
             },
-
 			} );
 
 			table.buttons().container()
 				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
 		} );
-
-
 	</script>
 
 
@@ -128,7 +125,6 @@
         new PerfectScrollbar('.email-navigation');
 		new PerfectScrollbar('.email-read-box');
     </script>
-
 
 </html>
 

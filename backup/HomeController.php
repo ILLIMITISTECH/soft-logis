@@ -48,7 +48,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-
     public function adminHome(): View
     {
         // Date actuel
@@ -152,7 +151,7 @@ class HomeController extends Controller
                 'conformity' => 'off'
             ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
-
+        
         //out
         $nbrTotalOut = $InStockWekly->count();
         $nbrTotalOutConform = $conformInStockWeekly->count();
@@ -238,7 +237,7 @@ class HomeController extends Controller
     }
 
 
-
+    
     // Calculer le pourcentage de produits conformes par rapport au total des produits reçus
     $percentageConform = ($nbrTotalInStock !== 0) ? ($nbrConformInStock / $nbrTotalInStock) * 100 : 0;
 
@@ -275,7 +274,7 @@ class HomeController extends Controller
     ->selectRaw('transitaire_uuid, count(*) as count')
     ->orderByDesc('count')
     ->first();
-
+    
 
     $allTransit = OdTransite::where(['etat' => 'actif'])->get();
     $totalDelayTransit = 0;
@@ -302,7 +301,7 @@ class HomeController extends Controller
         $averageDelayTransit = 0;
     }
 
-
+   
 
     $conformInStockGlobal = stockUpdate::where([
         'mouvement' => 'In',
@@ -537,13 +536,10 @@ class HomeController extends Controller
     $valeurTotalsRejeter = $factureByPresRejeter->sum('total');
     $totalRejetedCount = $refacturation_rejeter->count();
 
-    $nbrTotalIn = $InStock->count();
-    $nbrTotalInConform = $conformInStock->count();
-    $nbrTotalInNoConfrom = $noConformInStock->count();
 
         return view('admin.dashbord',
-        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage',
-        'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
+        compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage', 
+
         'InStock', 'conformInStockPerMonth', 'noConformInStockPerMonth','nbrTotalInPerMonth', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
          'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount' ,    'valeurallFactByPrestationActif', 'totalallFactByPrestationActifCount' , 'valeur_bon_a_payer', 'facture_bon_a_payer_count', 'facture_payer_count', 'valeur_payer', 'facture_canceled_count', 'valeur_canceled'));
         // return view('adminHome');

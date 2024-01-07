@@ -43,7 +43,8 @@ class CompanyController extends Controller
         // Valider les données du formulaire (nom, email, etc.)
         $request->validate([
             'raison_sociale' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:companies,email',
+            // 'email' => 'required|string|email|unique:companies,email',
+            'email' => 'required|string|email',
         ]);
 
         DB::beginTransaction();
@@ -144,7 +145,7 @@ class CompanyController extends Controller
         // Valider les données du formulaire (nom, email, etc.)
         $request->validate([
             'raison_sociale' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'required|string|email',
         ]);
 
         DB::beginTransaction();

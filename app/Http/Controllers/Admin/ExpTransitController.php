@@ -83,6 +83,25 @@ class ExpTransitController extends Controller
 
             if ($expTransit) {
 
+                $transitaireName = Company::where('uuid', $request->transitaire_uuid)->first();
+
+                $mailData = [
+                    'title' => 'ORDRE DE TRANSIT JALO LOGISTIQUE',
+                    'body' => 'Bonjour Chers '.$transitaireName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
+                        <strong>Date de creation : </strong>'.$expTransit->created_at.'<br>',
+                ];
+
+                $emailSubject = 'Jalo Logistique - ORDRE DE TRANSIT';
+
+                $mail = new LogisticaMail($mailData, $emailSubject);
+
+                // Attache les fichiers au message
+                foreach ($expTransit->files as $file) {
+                    $mail->attach($file->filePath);
+                }
+
+                Mail::to($transitaireName->email)->send($mail);
+
                 $dataResponse =[
                     'type'=>'success',
                     'urlback'=>"back",

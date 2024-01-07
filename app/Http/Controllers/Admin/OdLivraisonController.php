@@ -164,14 +164,23 @@ class OdLivraisonController extends Controller
 
                 $mailData = [
                     'title' => 'ORDRE DE TRANSPORT JALO LOGISTIQUE',
-                    'body' => 'Bonjour '.$transporteurName->raison_sociale.' Jalo Logistiquevous solicite pour un transport de marchandise <br><br>
+                    'body' => 'Bonjour Chers '.$transporteurName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
                      <strong>Date de livraison : </strong>'.$request->date_livraison.'
                      <br>',
                 ];
 
                 $emailSubject = 'Jalo Logistique - ORDRE DE TRANSPORT';
 
-                Mail::to($transporteurName->email)->send(new LogisticaMail($mailData,$emailSubject));
+                // Mail::to($transporteurName->email)->send(new LogisticaMail($mailData,$emailSubject));
+
+                $mail = new LogisticaMail($mailData, $emailSubject);
+
+                // Attache les fichiers au message
+                foreach ($saving->files as $file) {
+                    $mail->attach($file->filePath);
+                }
+
+                Mail::to($transporteurName->email)->send($mail);
 
                 $dataResponse =[
                     'type'=>'success',

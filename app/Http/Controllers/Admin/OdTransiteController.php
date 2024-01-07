@@ -85,7 +85,7 @@ class OdTransiteController extends Controller
 
                 $mailData = [
                     'title' => 'ORDRE DE TRANSIT JALO LOGISTIQUE',
-                    'body' => 'Bonjour Chers '.$transitaireName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif au bl  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
+                    'body' => 'Bonjour Chers '.$transitaireName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
                         <strong>Date de creation : </strong>'.$odretransite->created_at.'<br>',
                 ];
 

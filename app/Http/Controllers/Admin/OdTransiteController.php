@@ -81,37 +81,43 @@ class OdTransiteController extends Controller
             $odretransite->save();
 
             if ($odretransite) {
-
                 $transitaireName = Company::where('uuid', $request->transitaire_uuid)->first();
 
                 $mailData = [
                     'title' => 'ORDRE DE TRANSIT JALO LOGISTIQUE',
-                    'body' => 'Bonjour '.$transitaireName->raison_sociale.' Jalo Logistiquevous solicite pour un transit <br><br>
-                     <strong>Date de creation : </strong>'.$odretransite->created_at.'
-                     <br>',
+                    'body' => 'Bonjour Chers '.$transitaireName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif au bl  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
+                        <strong>Date de creation : </strong>'.$odretransite->created_at.'<br>',
                 ];
 
                 $emailSubject = 'Jalo Logistique - ORDRE DE TRANSIT';
 
-                Mail::to($transitaireName->email)->send(new LogisticaMail($mailData,$emailSubject));
+                $mail = new LogisticaMail($mailData, $emailSubject);
 
-                $dataResponse =[
-                    'type'=>'success',
-                    'urlback'=>"back",
-                    'message'=>"Enregistré avec succes!",
-                    'code'=>200,
+                // Attache les fichiers au message
+                foreach ($odretransite->files as $file) {
+                    $mail->attach($file->filePath);
+                }
+
+                Mail::to($transitaireName->email)->send($mail);
+
+                $dataResponse = [
+                    'type' => 'success',
+                    'urlback' => "back",
+                    'message' => "Enregistré avec succès!",
+                    'code' => 200,
                 ];
+
                 DB::commit();
-
-           } else {
+            } else {
                 DB::rollback();
-                $dataResponse =[
-                    'type'=>'error',
-                    'urlback'=>'',
-                    'message'=>"Erreur lors de l'enregistrement!",
-                    'code'=>500,
+                $dataResponse = [
+                    'type' => 'error',
+                    'urlback' => '',
+                    'message' => "Erreur lors de l'enregistrement!",
+                    'code' => 500,
                 ];
-           }
+            }
+
 
         } catch (\Throwable $th) {
             DB::rollBack();

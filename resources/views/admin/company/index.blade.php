@@ -44,7 +44,7 @@
                             <th>email</th>
                             <th>Télephone</th>
                             <th>Etiquette</th>
-                            <th>Etat</th>
+                            {{-- <th>Etat</th> --}}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -67,8 +67,13 @@
                             <td>{{ $company->raison_sociale }}</td>
                             <td>{{ $company->email }}</td>
                             <td>{{ $company->phone }}</td>
-                            <td class="text-capitalize">{{ $company->type }}</td>
-                            <td>
+                            <td class="text-capitalize">
+                                {{ $company->type }}
+                                @if ($company->type === 'transporteur')
+                                    <p class="size_12 text-muted"> {{ $company->voie_transport }}</p>
+                                @endif
+                            </td>
+                            {{-- <td>
 
                                 @if ($company->isActive === 'true')
                                 <span class="badge bg-success p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Actif</span>
@@ -76,7 +81,7 @@
                                 <span class="badge bg-danger p-2 text-light-danger p-2"><i class='bx bxs-circle me-1'></i>Inactif</span>
                                 @endif
 
-                            </td>
+                            </td> --}}
 
                             <td>
                                 <div class="d-flex order-actions text-center justify-content-center align-items-center">
@@ -301,7 +306,7 @@
                     </div>
 
 
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="form-group">
                             <label for="email" class="col-form-label">E-mail de l'entreprise <span class="text-danger">*</span>:</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="exemple@example.com" name="email" required>
@@ -310,8 +315,8 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col">
-                            <label for="phone" class="col-form-label">Télephone Entreprise:</label>
+                        <div class="form-group col my-2">
+                            <label for="phone" class="col-form-label">Télephone Entreprise: <span class="text-danger">*</span></label>
                             <input type="phone" class="form-control" id="phone" placeholder="+123456789" name="phone" required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>

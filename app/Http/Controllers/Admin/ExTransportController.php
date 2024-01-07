@@ -89,6 +89,26 @@ class ExTransportController extends Controller
             $transport->save();
 
             if ($transport) {
+
+                $transporteurName = Company::where('uuid', $request->transporteur_uuid)->first();
+
+                $mailData = [
+                    'title' => 'ORDRE DE TRANSPORT JALO LOGISTIQUE',
+                    'body' => 'Bonjour Chers '.$transporteurName->raison_sociale.' Je vous transmet en P.J l\'ensemble des documents relatif  <br><br> En attente de votre retour , je reste disponible au besoin <br><br>
+                        <strong>Date de creation : </strong>'.$transport->created_at.'<br>',
+                ];
+
+                $emailSubject = 'Jalo Logistique - ORDRE DE TRANSPORT';
+
+                $mail = new LogisticaMail($mailData, $emailSubject);
+
+                // Attache les fichiers au message
+                foreach ($transport->files as $file) {
+                    $mail->attach($file->filePath);
+                }
+
+                Mail::to($transporteurName->email)->send($mail);
+
                 $dataResponse =[
                     'type'=>'success',
                     'urlback'=>"back",

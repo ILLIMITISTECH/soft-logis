@@ -328,6 +328,11 @@
                                             <h5 class="mb-0">Marchandise a expedié</h5>
                                         </div>
                                         <div class="ms-auto">
+                                            <div class=" col ms-auto float-end d-flex justify-content-end text-align-end align-items-center align-self-center">
+                                                <a href="" data-bs-toggle="modal" data-bs-target="#productListModal{{ $expedition->uuid }}">
+                                                    <img src="{{ asset('icone/choix.gif') }}" alt="Modifier" class="img-fluid" style="width: 40px; height: 30px">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="table-responsive mt-3">
@@ -414,6 +419,7 @@
         @include('admin.expTransit.addModal')
         @include('admin.expTransport.addModal')
         @include('admin.expTransport.destockageModal')
+        @include('admin.expedition.updateProduct')
 
     </div>
 

@@ -36,30 +36,6 @@
 
                                 <hr class="my-2">
 
-                                {{-- <div class="div">
-                                    <div class="col my-1">
-                                        <button type="button" class="btn btn-outline-secondary" onclick="addNewRowExp()"><i class="bx bxs-plus-square"></i>Ajouter une ligne produit</button>
-                                    </div>
-                                    <div class="content row gy-2 mb-2 col-12" id="clone_ligne_prodt">
-                                        <div class="col-7 text-uppercase">
-                                            <select class="form-control" name="product_id[]">
-                                                <option value="" disabled selected>Selectionnez un produit</option>
-                                                @forelse ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->libelle }}</option>
-                                                @empty
-                                                    <center>Aucun produit</center>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                        <div class="col-4">
-                                            <input type="number" name="qty[]" class="form-control" placeholder="0.0">
-                                        </div>
-                                        <div class="col-1 d-flex text-center justify-content-center text-align-center">
-                                            <button class="delete-button  w-75 h-75 my-auto" type="button" onclick="deleteRow(this)"><i class="fadeIn animated bx bx-x"></i></button>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                                 <div>
                                     <div class="col my-2">
                                         <button type="button" class="btn btn-outline-primary" onclick="addNewRowExp()"><i class="bx bxs-plus-square"></i>Ajouter une ligne produit</button>
@@ -135,4 +111,6 @@
             }
         });
     });
+
 </script>
+

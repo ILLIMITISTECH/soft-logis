@@ -254,6 +254,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/update/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.update');
         Route::post('/destroy/odre_expedition/{uuid}', [OdreExpeditionController::class, 'destroy'])->name('odre_expedition.destroy');
 
+        Route::post('/update/odre_expedition/product/{uuid}', [OdreExpeditionController::class, 'updateProductExpedition'])->name('expedition.deletteproduct');
+
+        Route::post('/add-new-product-exp/{uuid}', [OdreExpeditionController::class, 'editProductExpedition'])->name('expedition.editProduct');
+
         Route::post('/mark-to-factured/{uuid}', [OdreExpeditionController::class, 'marckToFactured'])->name('expedition.marckToFactured');
             Route::post('/destroy/exp-file/{uuid}', [OdreExpeditionController::class, 'destroy_file'])->name('expedition.fil.destroy');
             Route::post('/add/exp_document/{uuid}', [OdreExpeditionController::class, 'addExpDoc'])->name('expedition.add');
@@ -309,7 +313,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
             Route::post('/marckToSend/refacturation/{uuid}', [RefacturationController::class, 'marckToSend'])->name('refacturation.marckToSend');
 
             Route::post('/marckToConceled/refacturation/{uuid}', [RefacturationController::class, 'marckToConceled'])->name('refacturation.marckToConceled');
-            
+
             Route::post('/marckToPayed/refacturation/{uuid}', [RefacturationController::class, 'marckToPayed'])->name('refacturation.marckToPayed');
 
         // Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');

@@ -149,11 +149,18 @@ class OdreExpeditionController extends Controller
         $transit = ExTransit::where('expedition_uuid', $expedition->uuid)->first();
         $transport = ExpTransport::where('expedition_uuid', $expedition->uuid)->first();
 
+        $products = Article::where(['etat' => 'actif', 'status' => 'stocked'])->get();
+        $clients = Company::where(['etat' => 'actif', 'type' => 'client'])->get();
+
+        $families = ArticleFamily::where('etat', 'actif')->get();
+
+        $expeditions = Expedition::where('etat', 'actif')->orderBy('created_at', 'desc')->get();
+
         // dd($transit);
 
         $entrepots = Entrepot::where(['etat' => 'actif'])->get();
 
-        return view('admin.expedition.show', compact('expedition', 'transitaires', 'transporteurs','transpormarines', 'transit', 'transport'));
+        return view('admin.expedition.show', compact('expedition', 'transitaires', 'transporteurs','transpormarines', 'transit', 'transport', 'products', 'families'));
     }
 
     /**
@@ -179,22 +186,6 @@ class OdreExpeditionController extends Controller
                 'client_uuid' => $request->client_uuid,
                 'incoterm'=> $request->incoterm,
             ]);
-
-            $productIds = $request->input('product_id');
-
-            $expeditionId = $request->input('expedition_id');
-            foreach ($productIds as $key => $productId) {
-                $product = Article::find($productId);
-
-                if ($product) {
-                    $expeditions= Expedition_product::create([
-                        'uuid' => Str::uuid(),
-                        'expedition_id' => $expeditionId,
-                        'famille_uuid' => $product->famille_uuid,
-                        'product_id' => $productId,
-                    ]);
-                }
-            }
 
             if ($expeditions) {
 
@@ -306,6 +297,52 @@ class OdreExpeditionController extends Controller
             ];
         }
         return response()->json($dataResponse);
+    }
+
+    public function updateProductExpedition(Request $request, string $id)
+    {
+        $expeditionProduct = Expedition_product::where([
+            'expedition_id' => $request->expedition_id,
+            'product_id' => $request->product_id
+        ])->first();
+
+        if ($expeditionProduct) {
+            $expeditionProduct->delete();
+
+            return response()->json([
+                'type' => 'success',
+                'urlback' => 'back',
+                'message' => 'Produit supprimé avec succes',
+            ]);
+        }
+    }
+    public function editProductExpedition(Request $request, string $id)
+    {
+
+        $expedition = Expedition::where('uuid', $request->expedition_uuid)->first();
+
+        $productIds = $request->input('product_id');
+
+
+        foreach ($productIds as $key => $productId) {
+            $product = Article::find($productId);
+
+            if ($product) {
+                $expeditions= Expedition_product::create([
+                    'uuid' => Str::uuid(),
+                    'expedition_id' => $expedition->id,
+                    'famille_uuid' => $product->famille_uuid,
+                    'product_id' => $productId,
+                ]);
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'urlback' => 'back',
+            'message' => 'Produit aouter avec succes',
+        ]);
+
     }
 
     // public function addExpDoc(Request $request)
@@ -649,7 +686,6 @@ class OdreExpeditionController extends Controller
         }
         return response()->json($dataResponse);
     }
-
 
     function marckToFactured(Request $request, string $id)
     {

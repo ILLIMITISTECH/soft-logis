@@ -1703,7 +1703,7 @@
                                     <td>{{ $item->date_echeance ?? 'N/A' }}</td>
 
                                     @if (!empty($item->facturier_uuid))
-                                    <td>{{ $item->facturier->name }} {{ $item->facturier->lastname }}</td>
+                                    <td>{{ $item->facturier->name ?? 'N/A' }} {{ $item->facturier->lastname ?? 'N/A'}}</td>
                                     @endif
                                     <td>{{ $item->created_at->format('d/m/Y') ?? '--'}}</td>
 

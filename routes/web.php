@@ -254,9 +254,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/update/odre_expedition/{uuid}', [OdreExpeditionController::class, 'update'])->name('odre_expedition.update');
         Route::post('/destroy/odre_expedition/{uuid}', [OdreExpeditionController::class, 'destroy'])->name('odre_expedition.destroy');
 
-        Route::post('/update/odre_expedition/product/{uuid}', [OdreExpeditionController::class, 'updateProductExpedition'])->name('expedition.deletteproduct');
+            Route::post('/update/odre_expedition/product/{uuid}', [OdreExpeditionController::class, 'updateProductExpedition'])->name('expedition.deletteproduct');
 
-        Route::post('/add-new-product-exp/{uuid}', [OdreExpeditionController::class, 'editProductExpedition'])->name('expedition.editProduct');
+            Route::post('/add-new-product-exp/{uuid}', [OdreExpeditionController::class, 'editProductExpedition'])->name('expedition.editProduct');
 
         Route::post('/mark-to-factured/{uuid}', [OdreExpeditionController::class, 'marckToFactured'])->name('expedition.marckToFactured');
             Route::post('/destroy/exp-file/{uuid}', [OdreExpeditionController::class, 'destroy_file'])->name('expedition.fil.destroy');

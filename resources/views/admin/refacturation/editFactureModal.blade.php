@@ -201,36 +201,45 @@
                                             <div class="row g-3">
                                                 <div id="prestationss">
                                                     <div class="prestationss mb-2">
-                                                        <div class="form-row row">
-                                                            @php  $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get(); @endphp
+                                                        <div class="">
+                                                            @php
+                                                                $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get();
+                                                            @endphp
                                                             @forelse ($prestations as $prestation )
-                                                            @if($prestation)
+                                                                @if($prestation)
 
-                                                            <div class="col-3">
-                                                                <select name="type_prestation[]" class="form-control">
-                                                                <option value="{{ $prestation->type_prestation ?? 'N/A'  }}">{{ $prestation->type_prestation ?? 'N/A'  }}</option>
-                                                                <option value="prestation">PRESTATION</option>
-                                                                <option value="debours">DEBOURS</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <input type="number" name="qty[]" value="{{ $prestation->qty ?? 'N/A'  }}" class="form-control"
-                                                                    placeholder="0">
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <input type="text" name="description[]" value="{{ $prestation->description ?? 'N/A'  }}" class="form-control"
-                                                                    placeholder="Description">
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <input type="number" name="prixunitaire[]" value="{{ $prestation->prixunitaire ?? 'N/A'  }}"
-                                                                    class="form-control" placeholder="Prix unitaire">
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <input type="number" name="total[]" value="{{ $prestation->total ?? 'N/A'  }}" class="form-control"
-                                                                    placeholder="Total" readonly>
-                                                            </div>
+                                                                <div class="col my-3 row flex-row">
 
-                                                            @endif
+                                                                    <div class="col-3">
+                                                                        <select name="type_prestation[]" class="form-control">
+                                                                        <option value="{{ $prestation->type_prestation ?? 'N/A'  }}">{{ $prestation->type_prestation ?? 'N/A'  }}</option>
+                                                                        <option value="prestation">PRESTATION</option>
+                                                                        <option value="debours">DEBOURS</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <input type="number" name="qty[]" value="{{ $prestation->qty ?? 'N/A'  }}" class="form-control"
+                                                                            placeholder="0">
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <input type="text" name="description[]" value="{{ $prestation->description ?? 'N/A'  }}" class="form-control"
+                                                                            placeholder="Description">
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <input type="number" name="prixunitaire[]" value="{{ $prestation->prixunitaire ?? 'N/A'  }}"
+                                                                            class="form-control" placeholder="Prix unitaire">
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <input type="number" name="total[]" value="{{ $prestation->total ?? 'N/A'  }}" class="form-control"
+                                                                            placeholder="Total" readonly>
+                                                                    </div>
+                                                                    <div class="col-auto">
+
+                                                                        <button type="button" class="btn btn-danger remove-btnb px-2 text-center"><i class='bx bxs-trash remove-btnb'></i></button>
+                                                                    </div>
+                                                                </div>
+
+                                                                @endif
                                                             @empty
                                                             <div>Aucune Facture enregistré</div>
                                                             @endforelse
@@ -272,7 +281,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" id="add-btn" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
+                                                <button type="button" id="add-btnEdit" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
 
                                                 <hr>
                                             </div>
@@ -354,7 +363,8 @@
       newPrestation.querySelectorAll('input').forEach(input => input.value = '');
       document.querySelector('#prestations').appendChild(newPrestation);
     }
-    document.querySelector('#add-btn').addEventListener('click', clonePrestation);
+    document.querySelector('#add-btnEdit').addEventListener('click', clonePrestation);
+
 
     document.addEventListener('click', event => {
       if (event.target && event.target.classList.contains('remove-btn')) {

@@ -385,12 +385,12 @@ class HomeController extends Controller
 
     if ($latestExpedition) {
         $date = Carbon::parse($latestExpedition->date_liv)->diffInDays();
-        // $date = Carbon::parse($latestExpedition->date_liv)->diffForHumans();
+        $firstLatestExpedition = Carbon::parse($latestExpedition->date_liv);
     } else {
         $date = 0;
     }
 
-    $firstLatestExpedition = Carbon::parse($latestExpedition->date_liv);
+
 
     // Construire un libellé personnalisé
     $customLabel = sprintf(

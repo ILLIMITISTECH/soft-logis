@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Facture;
-use Mail;
+// use Mail;
 use PDF;
+use App\Mail\LogisticaMail;
+use Illuminate\Support\Facades\Mail;
+
 // use Barryvdh\DomPDF\Facade as PDF;
 
 class RefacturationController extends Controller
@@ -22,7 +25,6 @@ class RefacturationController extends Controller
 
     public function index()
     {
-
         $refacturations = Refacturation::where('etat', 'actif')->get();
         return view('admin.refacturation.index', compact('refacturations'));
     }
@@ -173,87 +175,111 @@ class RefacturationController extends Controller
 
     }
 
-    public function send_facture($id)
+
+
+    public function sendInvoiceEmail(Request $request, $id)
     {
-       //the facturation
-       //DB::beginTransaction();
+        DB::beginTransaction();
 
-      // try {
+        try {
 
-        $refacturation = Refacturation::find($id);
+            $refacturation = Refacturation::find($id);
+            $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
+            $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
+            $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+            $com = 1.95;
+            $comm_debours = $prestations_totals_debours * $com;
+            $comm_sous_debours = ($comm_debours / 100);
+            $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+            $prestations_totals = $prestations_totalsS + $comm_sous_debours;
 
-        $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
-        $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
-        $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
-        $com = 1.95;
-        $comm_debours = $prestations_totals_debours * $com;
-        $comm_sous_debours = ($comm_debours / 100);
-        $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
-        $prestations_totals = $prestations_totalsS + $comm_sous_debours;
+            $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
+            $total_ht = ($prestations_totals + $prestations_totals_debours);
+            $tvaPerCent = $refacturation->tva;
+            $tva = ($prestations_totalsS * $tvaPerCent) / 100;
+            $total_xof = ($total_ht + $tva);
 
-        $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
-        $total_ht = ($prestations_totals + $prestations_totals_debours);
-        $tvaPerCent = $refacturation->tva;
-        $tva = ($prestations_totalsS * $tvaPerCent) / 100;
-        $total_xof = ($total_ht + $tva);
+            $pdf = PDF::loadView('admin.refacturation.facture', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
 
-        //$transporteurName = "fallou.g@illimitis.com";
-        //$email = $request->get('email');
-       // dd($refacturation->email);
-        if($refacturation->email)
-        {
-            Mail::to($refacturation->email)->send(new Facture($comm_sous_debours,$refacturation,$prestations,$prestations_debours,
-            $prestations_totals,$prestations_totals_debours,$user,$total_ht,$tva,$total_xof));
-            dd("ok");
-        }
 
-        if ($refacturation->email) {
+            $pdfContent = $pdf->output();
 
-            $dataResponse =[
-                'type'=>'success',
-                'urlback'=>"back",
-                'message'=>"Enregistré avec succes!",
-                'code'=>200,
+            $recipientEmail = $request->input('destinataire');
+            $emailSubject = $request->input('objet');
+            $message = $request->input('message');
+
+            $mailData = [
+                'title' => $emailSubject,
+                'body' => $message,
             ];
-            DB::commit();
 
-       } else {
-            DB::rollback();
+            $mail = new LogisticaMail($mailData, $emailSubject);
+            $mail->attachData($pdfContent, 'refacturation.pdf', ['mime' => 'application/pdf']);
+
+            $mailSending = Mail::to($recipientEmail)->send($mail);
+
+            if ($mailSending) {
+
+                Refacturation::where(['id'=>$id])->update(['statut' => 'sendToClient']);
+
+                $dataResponse =[
+                    'type'=>'success',
+                    'urlback'=>"back",
+                    'message'=>"Enregistré avec succes!",
+                    'code'=>200,
+                ];
+                DB::commit();
+
+           } else {
+                DB::rollback();
+                $dataResponse =[
+                    'type'=>'error',
+                    'urlback'=>'',
+                    'message'=>"Erreur lors de l'enregistrement!",
+                    'code'=>500,
+                ];
+           }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
             $dataResponse =[
                 'type'=>'error',
                 'urlback'=>'',
-                'message'=>"Erreur lors de l'enregistrement!",
+                'message'=>"Erreur systeme! $th",
                 'code'=>500,
             ];
-       }
+        }
+        return response()->json($dataResponse);
 
-
-        return back()->with(['success']);
     }
 
 
-        public function downloadPDF($id) {
 
-                $refacturation = Refacturation::find($id);
-                $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
-                $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
-                $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
-                $com = 1.95;
-                $comm_debours = $prestations_totals_debours * $com;
-                $comm_sous_debours = ($comm_debours / 100);
-                $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
-                $prestations_totals = $prestations_totalsS + $comm_sous_debours;
 
-                $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
-                $total_ht = ($prestations_totals + $prestations_totals_debours);
-                $tvaPerCent = $refacturation->tva;
-                $tva = ($prestations_totalsS * $tvaPerCent) / 100;
-                $total_xof = ($total_ht + $tva);
+    public function downloadPDF($id) {
 
-                $pdf = PDF::loadView('admin.refacturation.facture', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
+            $refacturation = Refacturation::find($id);
+            $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->get();
+            $prestations_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->get();
+            $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+            $com = 1.95;
+            $comm_debours = $prestations_totals_debours * $com;
+            $comm_sous_debours = ($comm_debours / 100);
+            $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+            $prestations_totals = $prestations_totalsS + $comm_sous_debours;
 
-                return $pdf->download('refacturation.pdf');
-        }
+            $user = DB::table('users')->where(['uuid'=>$refacturation->facturier_uuid])->first();
+            $total_ht = ($prestations_totals + $prestations_totals_debours);
+            $tvaPerCent = $refacturation->tva;
+            $tva = ($prestations_totalsS * $tvaPerCent) / 100;
+            $total_xof = ($total_ht + $tva);
+
+            $pdf = PDF::loadView('admin.refacturation.facture', compact('comm_sous_debours','total_ht','tva','total_xof','refacturation', 'prestations', 'prestations_totals', 'user', 'prestations_debours','prestations_totals_debours'));
+
+            return $pdf->download('refacturation.pdf');
+
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -305,21 +331,21 @@ class RefacturationController extends Controller
 
                // 'etat' => 'actif',
                // 'code' => Refgenerate(Refacturation::class, 'Facture', 'code'),
-            ]);
+                ]);
 
 
-            $refacturation_FAC = Refacturation::orderBy('updated_at', 'desc')->first();
+                $refacturation_FAC = Refacturation::orderBy('updated_at', 'desc')->first();
 
 
-            DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation_FAC->uuid])->update(['etat'=>"inactif"]);
+                DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation_FAC->uuid])->update(['etat'=>"inactif"]);
 
 
-           // $prestation = $request->input('prestation');
-            $type_prestation = $request->input('type_prestation');
-            $qty = $request->input('qty');
-            $description = $request->input('description');
-            $prixunitaire = $request->input('prixunitaire');
-            $total = $request->input('total');
+                // $prestation = $request->input('prestation');
+                    $type_prestation = $request->input('type_prestation');
+                    $qty = $request->input('qty');
+                    $description = $request->input('description');
+                    $prixunitaire = $request->input('prixunitaire');
+                    $total = $request->input('total');
 
                     for($i=0; $i < count($type_prestation); $i++){
                     $prestations = [

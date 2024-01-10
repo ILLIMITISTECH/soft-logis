@@ -16,16 +16,20 @@
             </nav>
         </div>
         <div class="ms-auto">
-            
+
             <div class="btn-group">
                 <button type="button" class="btn btn-primary btn-sm rounded my-auto text-white">
                     <a href="{{route('admin.refacturation.downloadPDF', $refacturation->id)}}"
                         class="text-center text-decoration-none text-white"><i class="bx bxs-file-pdf"></i> Export PDF</a>
                 </button>
-                <form action="{{route('admin.refacturation.marckToSend', $refacturation->uuid)}}" method="post" class="submitForm">
+                {{-- <form action="{{route('admin.refacturation.marckToSend', $refacturation->uuid)}}" method="post" class="submitForm">
                     @csrf
                         <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" type="submit"><i class="bx bxs-envelope"></i>Marqué comme Envoyé</button>
-                </form>
+                </form> --}}
+
+                <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" data-bs-toggle="modal" data-bs-target="#addSendMail{{ $refacturation->id }}"><i class="bx bxs-envelope"></i>Envoyer</button>
+
+
                 <form action="{{route('admin.refacturation.marckToPayed', $refacturation->uuid)}}" method="post" class="submitForm">
                     @csrf
                         <button class="btn btn-primary btn-sm rounded  ms-2 my-auto text-white" type="submit"><i class='bx bxs-wallet'></i>Marqué comme Payé</button>
@@ -40,7 +44,7 @@
     <div class="card">
         <div class="card-body">
             <div id="invoice">
-                
+
                 <div class="invoice overflow-auto">
                     <div style="min-width: auto ;">
                         <div>
@@ -101,7 +105,7 @@
                                             <dt class="col-sm-8 text-end">N° CC :</dt>
                                             <dd class="col-sm-4 text-start">{{ $refacturation->num_cc ?? 'N/A' }}</dd>
                                         </dl>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +113,7 @@
                         <main>
                             <div class="row contacts">
                                 <div class="col invoice-to">
-                                   
+
                                     <dl class="row col-12 text-gray-light">
                                         <dt class="col-sm-8 text-end">DÉSIGNATION :</dt>
                                         <dd class="col-sm-4 text-start">{{ $refacturation->designation ?? 'N/A' }}</dd>
@@ -146,7 +150,7 @@
                                         <dd class="col-sm-4 text-start">{{ $refacturation->volume ?? 'N/A' }}</dd>
                                     </dl>
                                 </div>
-                                    
+
                                 <div class="col invoice-details">
                                     <dl class="row col-12">
                                         <dt class="col-sm-8 text-end">POL:</dt>
@@ -160,26 +164,26 @@
                                         <dt class="col-sm-8 text-end">RÉGIME:</dt>
                                         <dd class="col-sm-4 text-start">{{ $refacturation->regime ?? 'N/A' }}</dd>
                                     </dl>
-                                    
+
                                 </div>
                             </div>
                             <br>
                             <table>
                                 <thead class
                                 ="bg-dark">
-                                    <tr class="bg-dark text-black">
+                                    <tr class="bg-dark text-black text-center">
                                         <th>ID FACTURIER</th>
-                                        <th class="text-left">POSTE</th>
-                                        <th class="text-right">CONDITION DE PAIEMENT</th>
-                                        <th class="text-right">DATE D'ECHEANCE</th>
+                                        <th class="text-center">POSTE</th>
+                                        <th class="text-center">CONDITION DE PAIEMENT</th>
+                                        <th class="text-center">DATE D'ECHEANCE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="size_12">
+                                    <tr class="size_12 text-center">
                                         <td class="">{{ $user->name.' '.$user->lastname }}</td>
                                         <td class="text-dark">{{ $refacturation->poste_occuper ?? 'N/A'}}
                                         </td>
-                                        <td class="unit">{{ $refacturation->condition_paiement ?? 'N/A' }}</td>
+                                        <td class="text-center">{{ $refacturation->condition_paiement ?? 'N/A' }}</td>
                                         <td class="">{{ $refacturation->date_echeance ?? 'N/A' }}</td>
                                     </tr>
                                 </tbody>
@@ -189,10 +193,10 @@
                                     <tr>
                                         <th>#</th>
                                         <th class="text-left">DESCRIPTION</th>
-                                        <th class="text-right">PRIX UNITAIRE</th>
-                                        <th class="text-right">QTE</th>
-                                        <th>Total (XOF)</th>
-                                        <th>Total (€)</th>
+                                        <th class="text-right text-end">PRIX UNITAIRE</th>
+                                        <th class="text-right text-end">QTE</th>
+                                        <th class="text-right text-end">Total (XOF)</th>
+                                        <th class="text-right text-end">Total (€)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -210,8 +214,8 @@
                                         </td>
                                         <td class="unit">{{ $prestations_debour->prixunitaire ?? 'N/A' }}</td>
                                         <td class="qty">{{ $prestations_debour->qty ?? 'N/A' }}</td>
-                                        <td class="total">{{ $prestations_debour->total ?? 'N/A' }}</td>
-                                        <td class="total">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
+                                        <td class="total">{{ $prestations_debour->total ?? 'N/A' }} XOF</td>
+                                        <td class="total">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }} €</td>
                                     </tr>
                                     @empty
                                     <tr>Aucune prestation enregistré</tr>
@@ -223,16 +227,25 @@
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">SOUS TOTAL DEBOURS</td>
-                                        <td>{{ number_format($prestations_totals_debours)}}</td>
-                                        <td>{{ number_format($prestations_totals_debours * $exchangeRate)}}</td>
+                                        <td>{{ number_format($prestations_totals_debours)}} XOF</td>
+                                        <td>{{ number_format($prestations_totals_debours * $exchangeRate)}} €</td>
                                     </tr>
 
-
+                                    <tr class="">
+                                        <td class="no"></td>
+                                        <td class="text-left">
+                                            COMMISSION SUR DEBOURS
+                                        </td>
+                                        <td class="unit">1,95%</td>
+                                        <td class="qty">1</td>
+                                        <td class="total">{{ $comm_sous_debours ?? 'N/A' }} XOF</td>
+                                        <td class="total">{{ $comm_sous_debours * $exchangeRate ?? 'N/A' }} €</td>
+                                    </tr>
 
                                     @forelse ($prestations as $item )
                                     <tr>
                                         <td class="no">{{ $loop->iteration}}</td>
-                                        <td class="text-left">
+                                        <td class="text-start">
                                             <h3>
                                                 <a target="_blank" href="javascript:;">
                                                     {{ $item->type_prestation ?? 'N/A'}}
@@ -242,28 +255,19 @@
                                         </td>
                                         <td class="unit">{{ $item->prixunitaire ?? 'N/A' }}</td>
                                         <td class="qty">{{ $item->qty ?? 'N/A' }}</td>
-                                        <td class="total">{{ $item->total ?? 'N/A' }}</td>
-                                        <td class="total">{{ $item->total * $exchangeRate ?? 'N/A' }}</td>
+                                        <td class="total">{{ $item->total ?? 'N/A' }} XOF</td>
+                                        <td class="total">{{ $item->total * $exchangeRate ?? 'N/A' }} €</td>
                                     </tr>
                                     @empty
                                     <tr>Aucune prestation enregistré</tr>
                                     @endforelse
-                                    <tr>
-                                        <td class="no"></td>
-                                        <td class="text-left">
-                                            COMMISSION SUR DEBOURS
-                                        </td>
-                                        <td class="unit">1,95%</td>
-                                        <td class="qty">1</td>
-                                        <td class="total">{{ $comm_sous_debours ?? 'N/A' }}</td>
-                                        <td class="total">{{ $comm_sous_debours * $exchangeRate ?? 'N/A' }}</td>
-                                    </tr>
+
 
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">SOUS TOTAL DE PRESTATION</td>
-                                        <td>{{ number_format($prestations_totals)}}</td>
-                                        <td>{{ number_format($prestations_totals * $exchangeRate)}}</td>
+                                        <td>{{ number_format($prestations_totals)}} XOF</td>
+                                        <td>{{ number_format($prestations_totals * $exchangeRate)}} €</td>
                                     </tr>
 
                                     {{-- <tr>
@@ -287,14 +291,14 @@
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">TOTAL HT</td>
-                                        <td>{{ number_format($total_ht)}}</td>
-                                        <td>{{ number_format($total_ht * $exchangeRate)}}</td>
+                                        <td>{{ number_format($total_ht)}} XOF</td>
+                                        <td>{{ number_format($total_ht * $exchangeRate)}} €</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
                                         <td colspan="2">TOTAL</td>
-                                        <td>{{ number_format($total_xof)}}</td>
-                                        <td>{{ number_format($total_xof * $exchangeRate)}}</td>
+                                        <td>{{ number_format($total_xof)}} XOF</td>
+                                        <td>{{ number_format($total_xof * $exchangeRate)}} €</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -302,7 +306,7 @@
                             <hr>
                             <br>
                             <div class="notices">
-                                <div class="notice" style="text-align : center;">OIBP 8169 ABIDJAN, COCODY Deux Plateaux
+                                <div class="notice size_12" style="text-align : center;">OIBP 8169 ABIDJAN, COCODY Deux Plateaux
                                     Rue des Jardins, Côte d'Ivoire. SAS au Capital de 200 000 000 FCFA Régime
                                     d'imposition : Réel Normal Direction Des Grandes Entreprises (DGE), RCCM N°
                                     CI-ABJ-03-2023-B16-00087 COFINA N° CI93 CI201 01001 109046290985 21 ECOBANK CI93
@@ -317,7 +321,7 @@
             </div>
         </div>
     </div>
-
+    @include('admin.refacturation.sendMail', ['refacturation' => $refacturation])
 </div>
 <!--end page wrapper -->
 

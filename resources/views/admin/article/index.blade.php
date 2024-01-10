@@ -43,7 +43,7 @@
                                 <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
                                     <div class="col">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-white">Filtrer par Famille</button>
+                                            <button type="button" class="btn btn-white">Filtrer par Designation</button>
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop1" type="button"
                                                         class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
@@ -56,7 +56,7 @@
                                                             @csrf
                                                             <div class="form-group mx-0 px-2 w-100">
                                                                 <select name="famille_id" id="famille_id" class="form-control mr-2">
-                                                                    <option value="all">Toutes les familles</option>
+                                                                    <option value="all">Toutes les Designation</option>
                                                                     @foreach($articleFamilys as $articleFamily)
                                                                         <option value="{{ $articleFamily->uuid }}">{{ Str::limit($articleFamily->libelle, 25, '...') }}</option>
                                                                     @endforeach
@@ -70,7 +70,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col">
+                                    {{-- <div class="col">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-white">Filtré par Model</button>
                                             <div class="btn-group" role="group">
@@ -98,7 +98,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </form>
                         </div>
@@ -141,7 +141,10 @@
                             <p class="text-muted col-6 mb-0" style="font-size: 11px">Marque</p>
                         </div>
                         <div class="row py-0">
-                            <p class="mb-0 col-6 text-uppercase fw-bold" style="font-size: 12px">{{ $article->model->libelle ?? "" }}</p>
+                            {{-- <p class="mb-0 col-6 text-uppercase fw-bold" style="font-size: 12px">{{ $article->model->libelle ?? "" }}</p> --}}
+                            <p class="mb-0 col-6 text-uppercase fw-bold" style="font-size: 12px">
+                                {{ $article->model_Materiel ?? "--" }}
+                            </p>
                             <p class="mb-0 fw-bold col-6 text-uppercase" style="font-size: 12px">{{ $article->marque->libelle ?? "" }}</p>
                         </div>
                     </div>
@@ -181,7 +184,7 @@
                                                 <div class="border border-3 p-4 rounded">
 
                                                     <div class="col-sm-12 col-md-12 mb-3">
-                                                        <label for="famille_uuid" class="form-label">Famille d'article</label>
+                                                        <label for="famille_uuid" class="form-label">Designation de l' article</label>
                                                         <select name="famille_uuid" class="form-select"
                                                             id="famille_uuid" autocomplete="off">
                                                             @foreach ($articleFamilys as $articleFamily)
@@ -192,7 +195,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                                                    {{-- <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
                                                         <label for="model_uuid" class="form-label">Model d'article</label>
                                                         <select name="model_uuid" class="form-select"
                                                             id="model_uuid" autocomplete="off">
@@ -201,6 +204,17 @@
                                                                 {{ $articleModel->libelle }}</option>
                                                             @endforeach
                                                         </select>
+                                                    </div> --}}
+
+                                                    <div class="row col-12 d-flex wrap mx-auto">
+                                                        <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
+                                                            <label for="model_uuid" class="form-label">Model d'article</label>
+                                                            <input type="text" class="form-control" id="model_Materiel" name="model_Materiel" autocomplete="off">
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
+                                                            <label for="num_billOfLading" class="form-label">N° Bill Of Lading</label>
+                                                            <input type="text" class="form-control" id="num_billOfLading" name="num_billOfLading" autocomplete="off">
+                                                        </div>
                                                     </div>
 
                                                     <div class="row col-12 d-flex wrap mx-auto px-0">
@@ -216,6 +230,29 @@
                                                             <input type="text" class="form-control" id="inputProductTitle"
                                                                 placeholder="Numéro de bomn de commande" name="numero_bon_commande"
                                                                 autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row col-12 d-flex wrap mx-auto px-0 mt-2">
+
+                                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                                            <label for="familyGroup" class="form-label">Family Group</label>
+                                                            <select class="form-select" name="familyGroup" id="familyGroup">
+                                                                <option value="JALO">JALO</option>
+                                                                <option value="NEEMBA CI">NEEMBA CI</option>
+                                                                <option value="NEEMBA INTERNATIONAL">NEEMBA INTERNATIONAL</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                                            <label for="source_uuid" class="form-label">Ship
+                                                                Source</label>
+                                                            <select name="source_uuid" class="form-select"
+                                                                id="source_uuid" autocomplete="off">
+                                                                @foreach ($sources as $source)
+                                                                <option value="{{ $source->uuid }}">
+                                                                    {{ $source->libelle }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
 
@@ -283,6 +320,7 @@
                                                             <input type="number" class="form-control" id="largeur"
                                                                 placeholder="00.00" name="largeur" autocomplete="off">
                                                         </div>
+
                                                         <div class="col-sm-12 col-md-12">
                                                             <label for="price_unitaire" class="form-label">Prix (FCFA)</label>
                                                             <input type="number" class="form-control" id="price_unitaire"
@@ -299,17 +337,7 @@
                                                                 placeholder="00.00" name="price_euro" autocomplete="off">
                                                         </div>
 
-                                                        <div class="col-sm-12 col-md-12">
-                                                            <label for="source_uuid" class="form-label">Ship
-                                                                Source</label>
-                                                            <select name="source_uuid" class="form-select"
-                                                                id="source_uuid" autocomplete="off">
-                                                                @foreach ($sources as $source)
-                                                                <option value="{{ $source->uuid }}">
-                                                                    {{ $source->libelle }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+
 
                                                         <div class="col-12">
                                                             <label for="inputProductMarque"

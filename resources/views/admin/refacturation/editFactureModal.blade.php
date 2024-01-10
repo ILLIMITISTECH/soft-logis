@@ -275,22 +275,13 @@
                                                 <button type="button" id="add-btn" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
 
                                                 <hr>
-                                               <!-- <div class="col-12 mt-4">
-                                                    <div class="d-flex align-items-center gap-3">
-                                                        <button class="btn btn-outline-secondary px-4"
-                                                            onclick="event.preventDefault(); stepper11.previous()"><i
-                                                                class='bx bx-left-arrow-alt me-2'></i>Retour</button>
-                                                        <button class="btn btn-primary px-4"
-                                                            onclick="event.preventDefault(); stepper11.next()">Suivant<i
-                                                                class='bx bx-right-arrow-alt ms-2'></i></button>
-                                                    </div>
-                                                </div>-->
                                             </div>
                                             <!---end row-->
 
                                         </div>
                                         <hr>
-                                             <br>
+                                        <br>
+
                                         <div id="test-l-44" role="tabpanel1" class="bs-stepper-pane2"
                                             aria-labelledby="stepper11trigger44">
                                             <div class="">

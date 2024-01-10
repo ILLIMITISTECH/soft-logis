@@ -24,13 +24,20 @@ return new class extends Migration
             $table->string('marque_uuid')->nullable();
             $table->string('categorie_uuid')->nullable();
             $table->string('model_uuid')->nullable();
+            $table->string('model_Materiel')->nullable();
             $table->string('famille_uuid')->nullable();
             $table->string('source_uuid')->nullable();
             $table->string('entrepot_uuid')->nullable();
             $table->enum('status', ['enFabrication', 'sortiUsine', 'enExpedition', 'arriverAuPod','received', 'stocked', 'expEnCours', 'delivered'])->default("enFabrication");
 
+            $table->enum('familyGroup', ['JALO', 'NEEMBA CI','NEEMBA INTERNATIONAL'])->nullable();
+            $table->string('num_billOfLading')->nullable();
+
+
+            $table->date('date_Eta')->nullable();
             $table->date('date_reception')->nullable();
             $table->date('date_stockage')->nullable();
+            $table->date('date_outStock')->nullable();
 
             $table->integer('poid_tonne')->nullable();
             $table->integer('hauteur')->nullable();

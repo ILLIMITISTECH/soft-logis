@@ -112,6 +112,7 @@ class SourcingController extends Controller
                 foreach ($productIds as $productId) {
                     $productAddSourcing = Article::where('uuid', $productId)->update([
                         'is_AddSourcing' => 'true',
+                        'date_Eta' => $request->date_arriver,
                     ]);
 
                     $product = Article::where('uuid', $productId)->first();
@@ -129,6 +130,7 @@ class SourcingController extends Controller
                                 'famille_uuid' => $product->famille_uuid,
                                 'uuid' => Str::uuid(),
                                 'etat' => 'actif',
+
                                 'product_uuid' => $product->uuid,
                                 'product_id' => $product->id,
                             ]);
@@ -221,12 +223,7 @@ class SourcingController extends Controller
                         'code'=>500,
                     ];
                }
-             }
-
-
-
-
-
+            }
 
         } catch (\Throwable $th) {
             DB::rollBack();

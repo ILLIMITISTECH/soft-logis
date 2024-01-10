@@ -64,7 +64,30 @@
                             </td>
                             <td>{{ $item->refClient ?? 'N/A' }}</td>
                             <td>
-                                <div class="badge rounded-pill text-success bg-light-success p-2 text-uppercase px-3"><i class='bx bxs-circle me-1'></i>{{ $item->statut ?? 'N/A'}}</div>
+                                @if ($item->statut == 'draft')
+                                            <div
+                                                class="badge rounded-pill text-light bg-primary p-2 text-uppercase px-3">
+                                                <i class='bx bxs-circle me-1'></i> Brouillon
+                                            </div>
+                                            @endif
+                                            @if ($item->statut == 'sendToClient')
+                                            <div
+                                                class="badge rounded-pill text-light bg-danger p-2 text-uppercase px-3">
+                                                <i class='bx bxs-circle me-1'></i>Envoyé
+                                            </div>
+                                            @endif
+                                            @if ($item->statut == 'payed')
+                                            <div
+                                                class="badge rounded-pill text-light bg-gradient-quepal p-2 text-uppercase px-3">
+                                                <i class='bx bxs-circle me-1'></i> Payé
+                                            </div>
+                                            @endif
+                                            @if ($item->statut == 'canceled')
+                                            <div
+                                                class="badge rounded-pill text-light bg-gradient-blooker p-2 text-uppercase px-3">
+                                                <i class='bx bxs-circle me-1'></i> Rejeter
+                                            </div>
+                                            @endif
                             </td>
                             <td>{{ $fac_pres ?? 'N/A'  }}   </td>
                             <td>{{ $euroAmount ?? 'N/A'  }}   </td>

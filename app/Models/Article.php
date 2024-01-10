@@ -25,9 +25,12 @@ class Article extends Model
     'categorie_uuid',
     'famille_uuid',
     'model_uuid',
+    'model_Materiel',
+    'num_billOfLading',
     'source_uuid',
     'entrepot_uuid',
     'status',
+    'familyGroup',
     'poid_tonne',
     'hauteur',
     'largeur',
@@ -39,8 +42,11 @@ class Article extends Model
     'etat',
     'is_AddSourcing',
     'is_destock',
+
     'date_reception',
-    'date_stockage'
+    'date_stockage',
+    'date_Eta',
+    'date_outStock'
    ];
 
    /**
@@ -49,7 +55,7 @@ class Article extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 
-     protected $dates = ['date_reception', 'date_stockage'];
+     protected $dates = ['date_reception', 'date_stockage', 'date_Eta', 'date_outStock'];
 
    public function category(): BelongsTo
    {

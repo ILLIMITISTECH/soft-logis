@@ -61,15 +61,16 @@
                             @endif
                             @endif
                         @elsecan('Faire Des Entrées De Stock')
-                        @if (in_array($sourcing->statut, ['received','odlivraison']))
-                            @if ($sourcing->products->where('is_received', true)->count() < $sourcing->products->count())
-                                <div class="">
-                                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
-                                </div>
+
+                            @if (in_array($sourcing->statut, ['received','odlivraison']))
+                                @if ($sourcing->products->where('is_received', true)->count() < $sourcing->products->count())
+                                    <div class="">
+                                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addReception">Reception de produit</button>
+                                    </div>
+
+                                @endif
 
                             @endif
-
-                        @endif
                         @endcan
 
                         @can(['Gerer le Stock'])

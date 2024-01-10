@@ -306,7 +306,12 @@ class OdreExpeditionController extends Controller
             'product_id' => $request->product_id
         ])->first();
 
+
+
         if ($expeditionProduct) {
+
+            Article::where('id', $request->product_id)->update(['is_destock' => 'false']);
+
             $expeditionProduct->delete();
 
             return response()->json([

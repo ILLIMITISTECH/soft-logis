@@ -281,6 +281,7 @@ class ExTransportController extends Controller
 
                 Article::where('id', $productId)->update([
                     'is_destock' => 'true',
+                    'date_outStock' => now(),
                 ]);
 
                 stockUpdate::create([

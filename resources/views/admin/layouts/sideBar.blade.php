@@ -73,7 +73,11 @@
                 <li><a href="{{ route('admin.marque') }}"><i class='bx bx-radio-circle'></i>Marque</a></li>
                 <li><a href="{{ route('admin.ship_source') }}"><i class='bx bx-radio-circle'></i>Pays D'origine</a></li>
                 <li><a href="{{ route('admin.article_model') }}"><i class='bx bx-radio-circle'></i>Model d'article</a></li>
-                <li><a href="{{ route('admin.article_family') }}"><i class='bx bx-radio-circle'></i>Famille de produit</a></li>
+                <li>
+                    <a href="{{ route('admin.article_family') }}">
+                        <i class='bx bx-radio-circle'></i>Designation
+                    </a>
+                </li>
             </ul>
         </li>
         @endcan

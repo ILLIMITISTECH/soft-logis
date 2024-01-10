@@ -316,6 +316,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
             Route::post('/marckToPayed/refacturation/{uuid}', [RefacturationController::class, 'marckToPayed'])->name('refacturation.marckToPayed');
 
+            Route::post('/send-invoice-email/{id}', [RefacturationController::class, 'sendInvoiceEmail'])->name('send.invoice.email');
+
         // Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');
         // Route::get('/send-facture', [RefacturationController::class, 'send_facture'])->name('refacturation.send_facture');
         Route::get('/downloadPDF/{id}', [RefacturationController::class, 'downloadPDF'])->name('refacturation.downloadPDF');

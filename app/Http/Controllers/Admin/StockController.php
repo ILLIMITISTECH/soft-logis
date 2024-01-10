@@ -294,7 +294,9 @@ class StockController extends Controller
 
             if ($productId) {
 
-            Article::where('id', $productId)->update(['entrepot_uuid' => $request->input('entrepot_uuid')]);
+            Article::where('id', $productId)->update([
+                'entrepot_uuid' => $request->input('entrepot_uuid'),
+            ]);
 
                 $dataResponse = [
                     'type' => 'success',

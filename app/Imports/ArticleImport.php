@@ -2,10 +2,11 @@
 
 namespace App\Imports;
 
+use Carbon\Carbon;
+use App\Models\Article;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use App\Models\Article;
 
 class ArticleImport implements ToModel
 {
@@ -24,7 +25,7 @@ class ArticleImport implements ToModel
         $article->image = $row[5];
         $article->marque_uuid = $row[6];
         $article->categorie_uuid = $row[7];
-        $article->model_uuid = $row[8];
+        $article->model_Materiel = $row[8];
         $article->famille_uuid = $row[9];
         $article->source_uuid = $row[10];
         $article->entrepot_uuid = $row[11];
@@ -36,6 +37,8 @@ class ArticleImport implements ToModel
         $article->longueur = $row[17];
         $article->price_unitaire = $row[18];
         $article->etat = $row[19];
+        $article->num_billOfLading = $row[20];
+        $article->familyGroup = $row[21];
 
         if($row[0] != null){
         $article->save();

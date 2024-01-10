@@ -130,11 +130,27 @@
 
                             <thead>
                                 <tr>
-                                    <th>Famille <i class='bx bx-up-arrow-alt ms-2'></i></th>
+                                    <th>Designation <i class='bx bx-up-arrow-alt ms-2'></i></th>
                                     <th>Marque</th>
                                     <th>Categorie</th>
                                     <th>N° Serie</th>
-                                    <th></th>
+                                    <th>N° Bon Cmd</th>
+                                    <th>Family Group</th>
+                                    <th>Model</th>
+                                    <th>Status</th>
+                                    <th>Valeur (FCFA)</th>
+                                    <th>Bill Of Lading</th>
+                                    <th>Entrepot</th>
+                                    <th>ETA</th>
+                                    <th>Date Reception</th>
+                                    <th>Date Stockage</th>
+                                    <th>Date destockage</th>
+                                    <th>Poids Tonne</th>
+                                    <th>Hauteur</th>
+                                    <th>Largeur</th>
+                                    <th>Volume</th>
+                                    <th>Longueur</th>
+                                    {{-- <th></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -144,7 +160,23 @@
                                         <td>{{ $item->marque->libelle ?? '--' }}</td>
                                         <td>{{ $item->category->libelle ?? '--' }}</td>
                                         <td>{{ $item->numero_serie ?? '--' }}</td>
-                                        <td><i class='bx bx-dots-horizontal-rounded font-24'></i></td>
+                                        <td>{{ $item->numero_bon_commande ?? '--' }}</td>
+                                        <td>{{ $item->familyGroup ?? '--' }}</td>
+                                        <td>{{ $item->model_Materiel ?? '--' }}</td>
+                                        <td>{{ $item->status ?? '--' }}</td>
+                                        <td>{{ $item->price_unitaire ?? '--' }}</td>
+                                        <td>{{ $item->num_billOfLading ?? '--' }}</td>
+                                        <td>{{ $item->entrepot->nom ?? '--' }}</td>
+                                        <td>{{ $item->date_Eta ?? '--' }}</td>
+                                        <td>{{ $item->date_reception ?? '--' }}</td>
+                                        <td>{{ $item->date_stockage ?? '--' }}</td>
+                                        <td>{{ $item->date_outStock ?? '--' }}</td>
+                                        <td>{{ $item->poid_tonne ?? '--' }}</td>
+                                        <td>{{ $item->hauteur ?? '--' }}</td>
+                                        <td>{{ $item->largeur ?? '--' }}</td>
+                                        <td>{{ $item->volume ?? '--' }}</td>
+                                        <td>{{ $item->longueur ?? '--' }}</td>
+                                        {{-- <td><i class='bx bx-dots-horizontal-rounded font-24'></i></td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

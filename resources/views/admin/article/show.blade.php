@@ -100,9 +100,15 @@
                     <hr class="my-3">
                     <div class="row gap-2 d-flex" style="min-height: 90px">
                         <div class="col">
-                            <dl class="row col-12">
+                            {{-- <dl class="row col-12">
                                 <dt class="col-sm-6">Model de vente</dt>
                                 <dd class="col-sm-6">{{ $article->model->libelle ?? "N/A" }}</dd>
+                            </dl> --}}
+
+
+                            <dl class="row col-12">
+                                <dt class="col-sm-6">N° Bill Of Lading</dt>
+                                <dd class="col-sm-6">{{ $article->num_billOfLading ?? "N/A" }}</dd>
                             </dl>
                             <dl class="row col-12 my-2">
                                 <dt class="col-sm-6">N* de bon de commande</dt>
@@ -115,16 +121,16 @@
                         </div>
                         <div class="col">
                             <dl class="row col-12">
+                                <dt class="col-sm-6">Model du Materiel</dt>
+                                <dd class="col-sm-6">{{ $article->model_Materiel ?? "N/A" }}</dd>
+                            </dl>
+                            <dl class="row col-12 my-2">
                                 <dt class="col-sm-6">Categorie</dt>
                                 <dd class="col-sm-6">{{ $article->category->libelle ?? "" }}</dd>
                             </dl>
-                            <dl class="row col-12 my-2">
+                            <dl class="row col-12 ">
                                 <dt class="col-sm-6">Marque</dt>
                                 <dd class="col-sm-6">{{ $article->marque->libelle ?? ""}}</dd>
-                            </dl>
-                            <dl class="row col-12">
-                                <dt class="col-sm-6">Pays d'Origine</dt>
-                                <dd class="col-sm-6">{{ $article->ship_source->libelle ?? "" }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -133,11 +139,15 @@
                         <div class="col">
                             <dl class="row col-12">
                                 <dt class="col-sm-6">Hauteur</dt>
-                                <dd class="col-sm-6">{{ $article->hauteur }} Mètre</dd>
+                                <dd class="col-sm-6">{{ $article->hauteur ?? '--' }} Mètre</dd>
+                            </dl>
+                            <dl class="row col-12 my-2">
+                                <dt class="col-sm-6">Largeur</dt>
+                                <dd class="col-sm-6">{{ $article->largeur ?? '--' }} Mètre</dd>
                             </dl>
                             <dl class="row col-12">
-                                <dt class="col-sm-6">Largeur</dt>
-                                <dd class="col-sm-6">{{ $article->largeur }} Mètre</dd>
+                                <dt class="col-sm-6">Pays d'Origine</dt>
+                                <dd class="col-sm-6">{{ $article->ship_source->libelle ?? "--" }}</dd>
                             </dl>
                         </div>
                         <div class="col">
@@ -155,6 +165,41 @@
                             </dl>
                         </div>
                     </div>
+                    <hr class="my-3">
+                    <div class="row gap-2 d-flex mb-3" style="min-height: 100px">
+                        <div class="col">
+                            <dl class="row col-12">
+                                <dt class="col-sm-6">ETA</dt>
+                                <dd class="col-sm-6">
+                                    {{ Carbon\Carbon::parse($article->date_Eta)->format('d/m/Y') ?? '--' }}
+                                    
+                                </dd>
+                            </dl>
+                            <dl class="row col-12 my-2">
+                                <dt class="col-sm-6">Date Reception</dt>
+                                <dd class="col-sm-6">
+                                    {{ Carbon\Carbon::parse($article->date_reception)->format('d/m/Y') ?? '--' }}
+                                </dd>
+                            </dl>
+
+                        </div>
+                        <div class="col">
+                            <dl class="row col-12">
+                                <dt class="col-sm-6">Date d'entrée en stock</dt>
+                                <dd class="col-sm-6">
+                                    {{ Carbon\Carbon::parse($article->date_stockage)->format('d/m/Y') ?? '--' }}
+                                </dd>
+                            </dl>
+                            <dl class="row col-12 my-2">
+                                <dt class="col-sm-6">Date de Sortie du Stock</dt>
+                                <dd class="col-sm-6">
+                                    {{ Carbon\Carbon::parse($article->date_outStock)->format('d/m/Y') ?? '--' }}
+                                </dd>
+                            </dl>
+
+                        </div>
+                    </div>
+
                     <div class="d-flex gap-3 mb-3" style="margin-top: 20px">
                         @can('Edit Articles')
                         <a class="ms-3 deleteConfirmation btn btn-primary text-light-primary" data-uuid="{{$article->uuid}}"
@@ -219,19 +264,19 @@
                                                 <div class="border border-3 p-4 rounded">
 
                                                     <div class="col-sm-12 col-md-12 mb-3">
-                                                        <label for="famille_uuid" class="form-label">Famille d'article</label>
+                                                        <label for="famille_uuid" class="form-label">Designation d'article</label>
                                                         <select name="famille_uuid" class="form-select"
                                                             id="famille_uuid" value="{{ $article->famille_uuid }}">
                                                             <option value="{{ $article->famille_uuid }}" selected>{{ $article->familly->libelle ?? "--" }}</option>
                                                             @foreach ($articleFamilys as $articleFamily)
                                                             <option value="{{ $articleFamily->uuid }}">
-                                                                {{ $articleFamily->libelle }}
+                                                                {{ $articleFamily->libelle ?? "--" }}
                                                             </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                                                    {{-- <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
                                                         <label for="model_uuid" class="form-label">Model d'article</label>
                                                         <select name="model_uuid" class="form-select"
                                                             id="model_uuid" value="{{ $article->model_uuid }}">
@@ -243,7 +288,18 @@
                                                                 {{ $articleModel->libelle }}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
+                                                    </div> --}}
+                                                   <div class="row col-12 d-flex wrap mx-auto mt-3">
+                                                        <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                                            <label for="model_Materiel" class="form-label">Model d'article</label>
+                                                            <input type="text" class="form-control" id="model_Materiel" name="model_Materiel" value="{{ $article->model_Materiel }}">
+                                                        </div>
+
+                                                        <div class="col-sm-12 col-md-6 col-lg-6 ">
+                                                            <label for="num_billOfLading" class="form-label">N° Bill Of Lading</label>
+                                                            <input type="text" class="form-control" id="num_billOfLading" name="num_billOfLading" value="{{ $article->num_billOfLading }}">
+                                                        </div>
+                                                   </div>
 
                                                     <div class="row col-12 d-flex wrap mx-auto">
                                                         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -317,13 +373,23 @@
                                                             <input type="number" class="form-control" id="largeur"
                                                                 placeholder="{{ $article->largeur }}" name="largeur" value="{{ $article->largeur }}">
                                                         </div>
+                                                        <div class="col-md-12">
+                                                            <label for="familyGroup" class="form-label">Family Group</label>
+
+                                                            <select class="form-select" name="familyGroup" id="familyGroup">
+                                                                <option value="{{ $article->familyGroup}}" selected>{{ $article->familyGroup ?? "--"}}</option>
+                                                                <option value="JALO">JALO</option>
+                                                                <option value="NEEMBA CI">NEEMBA CI</option>
+                                                                <option value="NEEMBA INTERNATIONAL">NEEMBA INTERNATIONAL</option>
+                                                            </select>
+                                                        </div>
                                                         <div class="col-6">
                                                             <label for="inputProductMarque" class="form-label">Marque</label>
                                                             <select class="form-select" id="inputProductMarque" name="marque_uuid" >
                                                                 <option value="{{ $article->marque->uuid ?? "" }}">{{ $article->marque->libelle ?? ""}}</option>
                                                                 @foreach ($marques as $marque)
                                                                     @if ($marque->uuid != $article->marque->uuid)
-                                                                    <option value="{{ $marque->uuid }}">{{ $marque->libelle }}</option>
+                                                                    <option value="{{ $marque->uuid }}">{{ $marque->libelle ?? "--" }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>
@@ -334,7 +400,7 @@
                                                                 <option value="{{ $article->category->uuid ?? "" }}">{{ $article->category->libelle ?? "" }}</option>
                                                                 @foreach ($categories as $categorie)
                                                                     @if ($categorie->uuid != $article->category->uuid )
-                                                                    <option value="{{ $categorie->uuid }}">{{ $categorie->libelle }}</option>
+                                                                    <option value="{{ $categorie->uuid }}">{{ $categorie->libelle ?? '--' }}</option>
                                                                     @endif
                                                                 @endforeach
                                                             </select>

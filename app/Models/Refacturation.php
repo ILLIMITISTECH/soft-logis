@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Support\Facades\View;
 use App\Models\User;
 use App\Models\FacturePrestation;
 use Illuminate\Database\Eloquent\Model;

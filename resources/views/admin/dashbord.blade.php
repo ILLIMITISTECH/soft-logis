@@ -1094,10 +1094,10 @@
                                                 @endif
                                                 <small class="mb-0">Date de la prochaine Expedition</small> <br>
 
-                                                @if ($firstLatestExpedition < Carbon\Carbon::now())
+                                                @if (Carbon\Carbon::parse($firstLatestExpedition) < Carbon\Carbon::now())
                                                     <span class="text-danger">
                                                         <i class="lni lni-alarm-clock me-1 size_12"></i>
-                                                        {{ $firstLatestExpedition->diffInDays() }}
+                                                        {{ Carbon\Carbon::parse($firstLatestExpedition)->diffInDays() }}
                                                         <span>jours de retard</span> <br>
 
                                                         {{-- affichage du status sous la date du prochain livraison --}}

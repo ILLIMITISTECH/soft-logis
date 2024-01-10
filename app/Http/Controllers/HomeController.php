@@ -386,7 +386,7 @@ class HomeController extends Controller
 
     if ($latestExpedition) {
         $date = Carbon::parse($latestExpedition->date_liv)->diffInDays();
-        $firstLatestExpedition = Carbon::parse($latestExpedition->date_liv);
+        $firstLatestExpedition = $latestExpedition->date_liv;
     } else {
         $date = 0;
         $firstLatestExpedition = 0;

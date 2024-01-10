@@ -1094,75 +1094,77 @@
                                                 @endif
                                                 <small class="mb-0">Date de la prochaine Expedition</small> <br>
 
-                                                @if (Carbon\Carbon::parse($firstLatestExpedition) < Carbon\Carbon::now())
-                                                    <span class="text-danger">
-                                                        <i class="lni lni-alarm-clock me-1 size_12"></i>
-                                                        {{ Carbon\Carbon::parse($firstLatestExpedition)->diffInDays() }}
-                                                        <span>jours de retard</span> <br>
+                                                @if ($latestExpedition != null)
+                                                    @if (Carbon\Carbon::parse($firstLatestExpedition) < Carbon\Carbon::now())
+                                                        <span class="text-danger">
+                                                            <i class="lni lni-alarm-clock me-1 size_12"></i>
+                                                            {{ Carbon\Carbon::parse($firstLatestExpedition)->diffInDays() }}
+                                                            <span>jours de retard</span> <br>
 
-                                                        {{-- affichage du status sous la date du prochain livraison --}}
+                                                            {{-- affichage du status sous la date du prochain livraison --}}
 
-                                                        @if ($latestExpedition->statut == 'draft')
-                                                            <span class="badge bg-secondary text-secondary-light">Brouillon</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'started')
-                                                            <span class="badge bg-warning text-warning-light">Demarrage</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'startedDoc')
-                                                            <span class="badge bg-primary text-primary-light">Demarrage Documennt</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'odTransit')
-                                                            <span class="badge bg-info text-info-light">Ordre de transit</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'odTransport')
-                                                            <span class="badge bg-danger text-danger-light">Ordre de transport</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'outStock')
-                                                            <span class="badge bg-info text-info-light">Destockage</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'wait_exp')
-                                                            <span class="badge bg-success text-success-light">En cours d'export</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'livered')
-                                                            <span class="badge bg-success text-success-light">Livré</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'facturer')
-                                                            <span class="badge bg-success text-success-light  ">Facturer</span>
-                                                        @endif
-                                                    </span>
-                                                @else
-                                                    <span class="text-success">
-                                                        <i class="lni lni-alarm-clock me-1 size_12"></i>
-                                                            {{ $resultDate }}
-                                                    </span> <br>
+                                                            @if ($latestExpedition->statut == 'draft')
+                                                                <span class="badge bg-secondary text-secondary-light">Brouillon</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'started')
+                                                                <span class="badge bg-warning text-warning-light">Demarrage</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'startedDoc')
+                                                                <span class="badge bg-primary text-primary-light">Demarrage Documennt</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'odTransit')
+                                                                <span class="badge bg-info text-info-light">Ordre de transit</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'odTransport')
+                                                                <span class="badge bg-danger text-danger-light">Ordre de transport</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'outStock')
+                                                                <span class="badge bg-info text-info-light">Destockage</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'wait_exp')
+                                                                <span class="badge bg-success text-success-light">En cours d'export</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'livered')
+                                                                <span class="badge bg-success text-success-light">Livré</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'facturer')
+                                                                <span class="badge bg-success text-success-light  ">Facturer</span>
+                                                            @endif
+                                                        </span>
+                                                    @else
+                                                        <span class="text-success">
+                                                            <i class="lni lni-alarm-clock me-1 size_12"></i>
+                                                                {{ $resultDate }}
+                                                        </span> <br>
 
-                                                        @if ($latestExpedition->statut == 'draft')
-                                                            <span class="badge bg-secondary text-secondary-light">Brouillon</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'started')
-                                                            <span class="badge bg-warning text-warning-light">Demarrage</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'startedDoc')
-                                                            <span class="badge bg-primary text-primary-light">Demarrage Documennt</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'odTransit')
-                                                            <span class="badge bg-info text-info-light">Ordre de transit</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'odTransport')
-                                                            <span class="badge bg-danger text-danger-light">Ordre de transport</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'outStock')
-                                                            <span class="badge bg-info text-info-light">Destockage</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'wait_exp')
-                                                            <span class="badge bg-success text-success-light">En cours d'export</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'livered')
-                                                            <span class="badge bg-success text-success-light">Livré</span>
-                                                        @endif
-                                                        @if ($latestExpedition->statut == 'facturer')
-                                                            <span class="badge bg-success text-success-light  ">Facturer</span>
-                                                        @endif
+                                                            @if ($latestExpedition->statut == 'draft')
+                                                                <span class="badge bg-secondary text-secondary-light">Brouillon</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'started')
+                                                                <span class="badge bg-warning text-warning-light">Demarrage</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'startedDoc')
+                                                                <span class="badge bg-primary text-primary-light">Demarrage Documennt</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'odTransit')
+                                                                <span class="badge bg-info text-info-light">Ordre de transit</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'odTransport')
+                                                                <span class="badge bg-danger text-danger-light">Ordre de transport</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'outStock')
+                                                                <span class="badge bg-info text-info-light">Destockage</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'wait_exp')
+                                                                <span class="badge bg-success text-success-light">En cours d'export</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'livered')
+                                                                <span class="badge bg-success text-success-light">Livré</span>
+                                                            @endif
+                                                            @if ($latestExpedition->statut == 'facturer')
+                                                                <span class="badge bg-success text-success-light  ">Facturer</span>
+                                                            @endif
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>

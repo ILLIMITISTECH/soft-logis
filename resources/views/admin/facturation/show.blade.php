@@ -133,12 +133,14 @@
                                 </div>
                                 <div class="col company-details">
                                     <div class="text-gray-light size_12 my-0 py-0">Enregistrer par:</div>
+                                    @if (!empty($facture->create_By))
                                     <h2 class="name">
                                         <a target="" href="javascript:;" class="size_16">
                                             {{ $facture->create_By->name.' '.$facture->create_By->lastname }}
                                         </a>
                                     </h2>
                                     <div>{{ $facture->create_By->email ?? 'N/A' }}</div>
+                                    @endif
                                     <div>{{ $facture->created_at->diffForHumans() }}</div>
 
                                 </div>

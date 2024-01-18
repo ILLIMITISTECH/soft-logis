@@ -996,4 +996,34 @@ function cloneBlockDoc() {
 }
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Votre code JavaScript ici
+    var statusData = {
+        labels: ["Livré", "Conforme", "Non conforme", /* ... autres statuts ... */],
+        datasets: [{
+            data: [50, 30, 20],
+            backgroundColor: ["#28a745", "#007bff", "#ffc107", /* ... autres couleurs ... */],
+        }],
+    };
+
+    // Configuration du graphique
+    var statusChartConfig = {
+        type: 'pie', // ou 'pie' pour un graphique en secteurs
+        data: statusData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'right',
+            },
+        },
+    };
+
+    // Récupérer le contexte du canvas et créer le graphique
+    var statusChartCanvas = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(statusChartCanvas, statusChartConfig);
+});
+
+
 

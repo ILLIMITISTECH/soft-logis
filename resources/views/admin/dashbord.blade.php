@@ -151,7 +151,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                    </div>
+                    <div class="col-12 row " style="min-height: 150px">
+                        <div class="col-4">
                             <div class="card radius-10 ">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center cursor-pointer"
@@ -170,8 +172,73 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="col-8 row gx-1">
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentageInFabrication }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageInFabrication }}%; width: 20px;">{{ $percentageInFabrication }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">Fabrication</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentageinUsineOut }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinUsineOut }}%; width: 20px;">{{ $percentageinUsineOut }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">Sortie Usine</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentageinWaitExpediteImport }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteImport }}%; width: 20px;">{{ $percentageinWaitExpediteImport }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">Cours d'import</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentagearrivagePod }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagearrivagePod }}%; width: 20px;">{{ $percentagearrivagePod }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">POD</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentagereceivStock }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagereceivStock }}%; width: 20px;">{{ $percentagereceivStock }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">Stocké</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentageinWaitExpediteExport }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteExport }}%; width: 20px;">{{ $percentageinWaitExpediteExport }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">cours d'export</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
+                                <div class="flex-grow-1">
+                                    <span class="">{{ $percentageliverExpedite }} %</span>
+                                    <div class="progress vertical-progress text-center">
+                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageliverExpedite }}%; width: 20px;">{{ $percentageliverExpedite }}</div>
+                                    </div>
+                                </div>
+                                <p class="size_9 mt-4">Livré</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-3 row-cols-xl-3 g-0 row-group text-center border-top">
@@ -2053,6 +2120,7 @@
     var nbrExpeditionWaitExpedite = {{ $nbrExpeditionWaitExpedite->count() }};
     var nbrExpeditionExpedier = {{ $nbrExpeditionExpedier->count() }};
     var nbrExpeditionLivraison = {{ $nbrExpeditionLivraison->count() }};
+    var inWaitExpediteExport = {{ $inWaitExpediteExport->count() }};
 
 
 
@@ -2088,5 +2156,8 @@
     }
 
 </script>
+
+
+
 {{-- </div> --}}
 @endsection

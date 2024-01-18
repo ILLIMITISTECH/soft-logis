@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use PDF;
+use App\Mail\Facture;
+use App\Mail\LogisticaMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Refacturation;
+use App\Models\FacturePrestation;
+// use Mail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\Facture;
-// use Mail;
-use PDF;
-use App\Mail\LogisticaMail;
 use Illuminate\Support\Facades\Mail;
 
 // use Barryvdh\DomPDF\Facade as PDF;
@@ -557,5 +558,21 @@ class RefacturationController extends Controller
             ];
         }
         return response()->json($dataResponse);
+    }
+
+
+    public function delettePrestationLine(Request $request, string $id)
+    {
+        $prestation = FacturePrestation::where(['facture_uuid'=> $request->facture_uuid])->firstOrFail();
+
+        if ($prestation) {
+            $prestation->delete();
+
+            return response()->json([
+                'type' => 'success',
+                'urlback' => 'back',
+                'message' => 'Ligne supprimé avec succes',
+            ]);
+        }
     }
 }

@@ -319,6 +319,10 @@
     font-size: 140px;
     letter-spacing: 4px;}
 
+.size_9 {
+    font-size: 9px;
+}
+
 .size_12 {
     font-size: 12px;
 }
@@ -447,4 +451,11 @@
         background-color: #f5f5f5;
     }
 
+
+    .vertical-progress {
+        display: flex;
+        flex-direction: column-reverse; /* Inverser la direction de la colonne */
+        height: 100%;
+        width: 20px;
+    }
 

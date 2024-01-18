@@ -37,10 +37,9 @@
                             <th>N°</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
-                            <th>Total (XOF)</th>
-                            <th>Total (€)</th>
+                            <th class="text-end">Total (XOF)</th>
+                            <th class="text-end">Total (€)</th>
                             <th>Date Echeance</th>
-
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -65,33 +64,33 @@
                             <td>{{ $item->refClient ?? 'N/A' }}</td>
                             <td>
                                 @if ($item->statut == 'draft')
-                                            <div
-                                                class="badge rounded-pill text-light bg-primary p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Brouillon
-                                            </div>
-                                            @endif
-                                            @if ($item->statut == 'sendToClient')
-                                            <div
-                                                class="badge rounded-pill text-light bg-danger p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i>Envoyé
-                                            </div>
-                                            @endif
-                                            @if ($item->statut == 'payed')
-                                            <div
-                                                class="badge rounded-pill text-light bg-gradient-quepal p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Payé
-                                            </div>
-                                            @endif
-                                            @if ($item->statut == 'canceled')
-                                            <div
-                                                class="badge rounded-pill text-light bg-gradient-blooker p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Rejeter
-                                            </div>
-                                            @endif
+                                <div
+                                    class="badge rounded-pill text-light bg-primary p-2 text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Brouillon
+                                </div>
+                                @endif
+                                @if ($item->statut == 'sendToClient')
+                                <div
+                                    class="badge rounded-pill text-light bg-danger p-2 text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i>Envoyé
+                                </div>
+                                @endif
+                                @if ($item->statut == 'payed')
+                                <div
+                                    class="badge rounded-pill text-light bg-gradient-quepal p-2 text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Payé
+                                </div>
+                                @endif
+                                @if ($item->statut == 'canceled')
+                                <div
+                                    class="badge rounded-pill text-light bg-gradient-blooker p-2 text-uppercase px-3">
+                                    <i class='bx bxs-circle me-1'></i> Rejeter
+                                </div>
+                                @endif
                             </td>
-                            <td>{{ $fac_pres ?? 'N/A'  }}   </td>
-                            <td>{{ $euroAmount ?? 'N/A'  }}   </td>
-                            <td>{{ $item->date_echeance ?? 'N/A' }}</td>
+                            <td class="text-end">{{ number_format($fac_pres, 2, ',', ' ') ?? 'N/A'  }}   XOF</td>
+                            <td class="text-end">{{ number_format($euroAmount, 2, ',', ' ') ?? 'N/A'  }}   €</td>
+                            <td>{{ Carbon\Carbon::parse($item->date_echeance)->format('d/m/Y') ?? 'N/A' }}</td>
                             <td>
                                 <div class="d-flex order-actions">
                                     <a href="{{ route('admin.refacturation.show', $item->uuid) }}"

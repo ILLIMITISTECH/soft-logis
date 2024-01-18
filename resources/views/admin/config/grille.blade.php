@@ -1,4 +1,5 @@
 @extends('admin.layouts.admin')
+
 @section('section')
 
 <div class="page-content">
@@ -23,16 +24,16 @@
                                     @foreach ($grilleTarifaires->groupBy('destination.libelle') as $libelle => $items)
 
                                         <tr>
-                                            <td>{{ $items[0]->transporteur->raison_sociale }}</td>
-                                            <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
-                                            <td>{{ $items[0]->porteChar->libelle }}</td>
-                                            <td>{{ $items[0]->cout }}</td>
+                                            <td>{{ $items[0]->transporteur->raison_sociale ?? 'N/A' }}</td>
+                                            <td rowspan="{{ count($items) }}">{{ $libelle ?? 'N/A' }}</td>
+                                            <td>{{ $items[0]->porteChar->libelle ?? 'N/A' }}</td>
+                                            <td>{{ $items[0]->cout ?? 'N/A'}}</td>
                                         </tr>
                                         @for ($i = 1; $i < count($items); $i++)
                                             <tr>
-                                                <td>{{ $items[$i]->transporteur->raison_sociale }}</td>
-                                                <td>{{ $items[$i]->porteChar->libelle }}</td>
-                                                <td>{{ $items[$i]->cout }}</td>
+                                                <td>{{ $items[$i]->transporteur->raison_sociale ?? 'N/A' }}</td>
+                                                <td>{{ $items[$i]->porteChar->libelle ?? 'N/A' }}</td>
+                                                <td>{{ $items[$i]->cout ?? 'N/A' }}</td>
                                             </tr>
                                         @endfor
                                     @endforeach
@@ -68,7 +69,7 @@
                                     @foreach ($grilleTariftransits->groupBy('transitaire.raison_sociale') as $libelle => $items)
 
                                         <tr>
-                                            <td rowspan="{{ count($items) }}">{{ $libelle }}</td>
+                                            <td rowspan="{{ count($items) }}">{{ $libelle ?? '--' }}</td>
                                             <td>{{ $items[0]->had->libelle ?? '--' }}</td>
                                             <td>{{ $items[0]->cout ?? '--' }}</td>
                                         </tr>

@@ -211,31 +211,28 @@
                                                                 <div class="col my-3 row flex-row">
 
                                                                     <div class="col-3">
-                                                                        <select name="type_prestation[]" class="form-control">
-                                                                        <option value="{{ $prestation->type_prestation ?? 'N/A'  }}">{{ $prestation->type_prestation ?? 'N/A'  }}</option>
-                                                                        <option value="prestation">PRESTATION</option>
-                                                                        <option value="debours">DEBOURS</option>
-                                                                        </select>
+                                                                        <input type="text" class="form-control" placeholder="{{ $prestation->type_prestation ?? 'N/A'  }}" disabled>
                                                                     </div>
                                                                     <div class="col-1">
-                                                                        <input type="number" name="qty[]" value="{{ $prestation->qty ?? 'N/A'  }}" class="form-control"
-                                                                            placeholder="0">
+                                                                        <input placeholder="{{ $prestation->qty ?? 'N/A'  }}" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="col-3">
-                                                                        <input type="text" name="description[]" value="{{ $prestation->description ?? 'N/A'  }}" class="form-control"
-                                                                            placeholder="Description">
+                                                                        <input placeholder="{{ $prestation->description ?? 'N/A'  }}" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="col-2">
-                                                                        <input type="number" name="prixunitaire[]" value="{{ $prestation->prixunitaire ?? 'N/A'  }}"
-                                                                            class="form-control" placeholder="Prix unitaire">
+                                                                        <input placeholder="{{ $prestation->prixunitaire ?? 'N/A'  }}" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="col-2">
-                                                                        <input type="number" name="total[]" value="{{ $prestation->total ?? 'N/A'  }}" class="form-control"
-                                                                            placeholder="Total" readonly>
+                                                                        <input placeholder="{{ $prestation->total ?? 'N/A'  }}" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="col-auto">
 
-                                                                        <button type="button" class="btn btn-danger remove-btnb px-2 text-center"><i class='bx bxs-trash remove-btnb'></i></button>
+                                                                        <form action="{{ route('admin.delete.prestationLine', $prestation->uuid) }}" method="post" class="submitForm">
+                                                                            @csrf
+
+                                                                            <input type="hidden" name="facture_uuid" value="{{ $item->uuid }}">
+                                                                            <button type="submit" class="btn btn-danger px-2 text-center"><i class='bx bxs-trash'></i></button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
 
@@ -246,10 +243,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="prestations">
-                                                    <div class="prestation mb-2">
-                                                        <div class="form-row row">
 
+                                                <div id="prestationsEdit">
+                                                    <div class="prestationsEdit mb-2">
+                                                        <div class="form-row row">
                                                             <div class="col-3">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="">Sélect le type</option>
@@ -275,14 +272,12 @@
                                                             </div>
                                                             <div class="col-auto">
 
-                                                                <button type="button" class="btn btn-danger remove-btn px-2 text-center"><i class='bx bxs-trash remove-btn'></i></button>
+                                                                <button type="button" class="btn btn-danger remove-btnb px-2 text-center"><i class='bx bxs-trash remove-btnb'></i></button>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" id="add-btnEdit" class="btn btn-primary col-3"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
-
+                                                <button class="btn btn-primary col-3" onclick="cloneBlockEditPrestation()"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
                                                 <hr>
                                             </div>
                                             <!---end row-->
@@ -353,32 +348,16 @@
             </div>
         </div>
     </div>
+
 </div>
+
+
 <script>
-    function clonePrestation() {
-      const prestation = document.querySelector('.prestation');
-      // Clone le bloc de prestation
-      const newPrestation = prestation.cloneNode(true);
-      // Réinitialise les valeurs des champs de saisie
-      newPrestation.querySelectorAll('input').forEach(input => input.value = '');
-      document.querySelector('#prestations').appendChild(newPrestation);
+
+function cloneBlockEditPrestation() {
+    const block = document.querySelector(".prestationsEdit");
+    // Clone le bloc de prestation
+    const clone = block.cloneNode(true);
+    document.querySelector('#prestationsEdit').appendChild(clone);
     }
-    document.querySelector('#add-btnEdit').addEventListener('click', clonePrestation);
-
-
-    document.addEventListener('click', event => {
-      if (event.target && event.target.classList.contains('remove-btn')) {
-        event.target.closest('.prestation').remove();
-      }
-    });
-
-    document.addEventListener('input', event => {
-      if (event.target && event.target.name === 'qty[]' || event.target.name === 'prixunitaire[]') {
-        const prestation = event.target.closest('.prestation');
-        const qty = prestation.querySelector('[name="qty[]"]').value;
-        const prixunitaire = prestation.querySelector('[name="prixunitaire[]"]').value;
-        const total = prestation.querySelector('[name="total[]"]');
-        total.value = qty * prixunitaire;
-      }
-    });
-  </script>
+</script>

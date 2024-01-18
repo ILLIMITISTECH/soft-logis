@@ -72,6 +72,15 @@ class HomeController extends Controller
         $inWaitExpediteExport = Article::where(['etat' => 'actif', 'status' => 'expEnCours'])->get();
         $liverExpedite = Article::where(['etat' => 'actif', 'status' => 'delivered'])->get();
 
+        // Calcul du pourcentage par statut
+        $percentageInFabrication = round(($inFabrication->count() / $stockGlobals->count()) * 100);
+        $percentageinUsineOut = round(($inUsineOut->count() / $stockGlobals->count()) * 100);
+        $percentageinWaitExpediteImport = round(($inWaitExpediteImport->count() / $stockGlobals->count()) * 100);
+        $percentagearrivagePod = round(($arrivagePod->count() / $stockGlobals->count()) * 100);
+        $percentagereceivStock = round(($receivStock->count() / $stockGlobals->count()) * 100);
+        $percentageinWaitExpediteExport = round(($inWaitExpediteExport->count() / $stockGlobals->count()) * 100);
+        $percentageliverExpedite = round(($liverExpedite->count() / $stockGlobals->count()) * 100);
+
         // qty stock previsionnel
 
         $stockPreview = $inFabrication->count() + $inUsineOut->count() + $inWaitExpediteImport->count() + $arrivagePod->count();
@@ -551,6 +560,7 @@ class HomeController extends Controller
         compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage',
         'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
         'InStock', 'conformInStockPerMonth', 'noConformInStockPerMonth','nbrTotalInPerMonth', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
+        'percentageInFabrication','percentageinUsineOut','percentageinWaitExpediteImport', 'percentagearrivagePod', 'percentagereceivStock', 'percentageinWaitExpediteExport', 'percentageliverExpedite',
          'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount' ,    'valeurallFactByPrestationActif', 'totalallFactByPrestationActifCount' , 'valeur_bon_a_payer', 'facture_bon_a_payer_count', 'facture_payer_count', 'valeur_payer', 'facture_canceled_count', 'valeur_canceled', 'firstLatestExpedition'));
         // return view('adminHome');
     }

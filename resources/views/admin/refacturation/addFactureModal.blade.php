@@ -184,10 +184,6 @@
                                                 <div id="prestationsb">
                                                     <div class="prestationb mb-2">
                                                         <div class="form-row row">
-                                                            <!--<div class="col-2">
-                                                                <input type="text" name="prestation[]" class="form-control"
-                                                                    placeholder="Prestation">
-                                                            </div>-->
                                                             <div class="col-3">
                                                                 <select name="type_prestation[]" class="form-control">
                                                                 <option value="">Sélect le type</option>
@@ -317,4 +313,4 @@
         total.value = qty * prixunitaire;
       }
     });
-  </script>
+</script>

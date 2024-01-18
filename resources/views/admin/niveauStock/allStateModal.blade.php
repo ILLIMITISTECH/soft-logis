@@ -164,7 +164,7 @@
                                         <td>{{ $item->familyGroup ?? '--' }}</td>
                                         <td>{{ $item->model_Materiel ?? '--' }}</td>
                                         <td>{{ $item->status ?? '--' }}</td>
-                                        <td>{{ $item->price_unitaire ?? '--' }}</td>
+                                        <td>{{ number_format($item->price_unitaire, 0, ',', '.') ?? '--' }} FCFA</td>
                                         <td>{{ $item->num_billOfLading ?? '--' }}</td>
                                         <td>{{ $item->entrepot->nom ?? '--' }}</td>
                                         <td>{{ $item->date_Eta ?? '--' }}</td>

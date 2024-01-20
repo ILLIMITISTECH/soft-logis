@@ -126,7 +126,6 @@
                                                 <img src="{{ asset('files/' . $facture->transporteur->logo) }}" width="80" alt="" />
                                             @else
                                                 <img src="{{ asset('assets/images/logo.png') }}" width="80" alt="" />
-
                                             @endif
                                         @endif
                                     </a>

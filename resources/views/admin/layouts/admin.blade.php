@@ -16,6 +16,11 @@
 	<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet"/>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
+
+
+
     <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
 	{{-- <!-- loader-->
 	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet"/>
@@ -41,7 +46,6 @@
 </head>
 
 <body>
-
 
 	<!--wrapper-->
 	<div class="wrapper">
@@ -73,15 +77,18 @@
 	<!-- Bootstrap JS -->
 
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
-    {{-- <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
-	<!--plugins-->
 
- 
+	{{-- <script src="{{ asset('assets/js/jquery.min.js') }}"></script> --}}
 
-	<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+
 	<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
@@ -91,7 +98,11 @@
 	<script src="{{ asset('assets/js/index.js') }}" ></script>
 	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}" ></script>
 	<script src="{{ asset('assets/js/index2.js') }}" ></script>
-	<script src="{{ asset('assets/js/index3.js') }}" ></script>
+
+
+	<script src="{{ asset('assets/plugins/chartjs/js/Chart.extension.js') }}"></script>
+	<script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/js/index3.js') }}" ></script>
 
 	<script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/bs-stepper/js/main.js') }}"></script>
@@ -103,6 +114,7 @@
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js"></script>
+
 	<script>
 		$(document).ready(function() {
 			var table = $('#example2').DataTable( {
@@ -119,9 +131,11 @@
 	</script>
 
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.2/viewer.min.js"></script>
 	<script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
+
+    <script src="{{ asset('js/scripts.js') }}" defer></script>
 	<script>
         new PerfectScrollbar(".app-container")
         new PerfectScrollbar('.email-navigation');

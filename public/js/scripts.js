@@ -920,24 +920,51 @@ function removeProductRow(button) {
 function tggleFilterBlock(view) {
     if (view === 'blockCategory') {
         document.getElementById('blockCategory').style.display = 'block';
+        document.querySelector('.container-slider').style.display = 'block';
+        document.querySelector('.container-blockMarque').style.display = 'none';
+        document.querySelector('.container-blockFamille').style.display = 'none';
+        document.querySelector('.container-blockStatus').style.display = 'none';
         document.getElementById('blockmarque').style.display = 'none';
         document.getElementById('blockFamille').style.display = 'none';
+        document.getElementById('blockStatus').style.display = 'none';
     }
 }
 
 function toggleFilterBoc(view) {
     if (view === 'blockMarque') {
         document.getElementById('blockmarque').style.display = 'block';
+        document.querySelector('.container-blockMarque').style.display = 'block';
+        document.querySelector('.container-slider').style.display = 'none';
+        document.querySelector('.container-blockFamille').style.display = 'none';
+        document.querySelector('.container-blockStatus').style.display = 'none';
         document.getElementById('blockCategory').style.display = 'none';
         document.getElementById('blockFamille').style.display = 'none';
+        document.getElementById('blockStatus').style.display = 'none';
     }
 }
 
 function toggleFilteBloc(view) {
     if (view === 'blockFamille') {
         document.getElementById('blockFamille').style.display = 'block';
+        document.querySelector('.container-blockFamille').style.display = 'block';
+        document.querySelector('.container-slider').style.display = 'none';
+        document.querySelector('.container-blockMarque').style.display = 'none';
+        document.querySelector('.container-blockStatus').style.display = 'none';
         document.getElementById('blockmarque').style.display = 'none';
         document.getElementById('blockCategory').style.display = 'none';
+        document.getElementById('blockStatus').style.display = 'none';
+    }
+}
+function toggleFilteBlocStatus(view) {
+    if (view === 'blockStatus') {
+        document.getElementById('blockStatus').style.display = 'block';
+        document.querySelector('.container-blockStatus').style.display = 'block';
+        document.querySelector('.container-slider').style.display = 'none';
+        document.querySelector('.container-blockMarque').style.display = 'none';
+        document.querySelector('.container-blockFamille').style.display = 'none';
+        document.getElementById('blockmarque').style.display = 'none';
+        document.getElementById('blockCategory').style.display = 'none';
+        document.getElementById('blockFamille').style.display = 'none';
     }
 }
 
@@ -1024,6 +1051,4 @@ document.addEventListener('DOMContentLoaded', function() {
     var statusChartCanvas = document.getElementById('statusChart').getContext('2d');
     var statusChart = new Chart(statusChartCanvas, statusChartConfig);
 });
-
-
 

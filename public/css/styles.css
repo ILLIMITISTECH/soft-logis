@@ -459,3 +459,9 @@
         width: 20px;
     }
 
+    .content_scrool {
+        width: 100%;
+        overflow-x: scroll;
+        flex-wrap: nowrap;
+    }
+

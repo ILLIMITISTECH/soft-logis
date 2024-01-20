@@ -17,4 +17,9 @@ class Marque extends Model
         'description',
         'etat'
     ]);
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'marque_uuid', 'uuid');
+    }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Marque;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ArticleFamily;
 use App\Http\Controllers\Controller;
 
 class Stock extends Controller
@@ -520,11 +522,31 @@ class Stock extends Controller
             });
         }
 
-        // Récupérez les articles en fabrication
+        $statuses = Article::select('status')->distinct()->get()->pluck('status', 'status');
+        $selectedStatus = $request->input('status');
+
+        if ($selectedStatus) {
+            // Filtrez par statut si un statut est sélectionné
+            $deliveredQuery->where('status', $selectedStatus);
+        }
+
+
         $delivered = $deliveredQuery->get();
 
+        $allCats = Category::where('etat', 'actif')->get();
+        $totalProducts = $allCats->flatMap->articles->count(); // Nombre total de produits dans toutes les catégories
 
-        return view('admin.niveauStock.allStateModal', compact('delivered', 'categories', 'selectedCategory','brands', 'selectedBrand', 'families', 'selectedFamily'));
+        // Marque
+        $allBrands = Marque::where('etat', 'actif')->get();
+        $totalProductsBybrand = $allBrands->flatMap->articles->count(); // Nombre total de produits dans toutes les marques
+
+        // Familie
+        $allFamilies = ArticleFamily::where('etat', 'actif')->get();
+        $totalProductsByfamily = $allFamilies->flatMap->articles->count(); // Nombre total de produits dans toutes les familles
+
+        $groupByStatuses = Article::distinct()->pluck('status');
+
+        return view('admin.niveauStock.allStateModal', compact('delivered', 'categories', 'selectedCategory','brands', 'selectedBrand', 'families', 'selectedFamily', 'statuses', 'selectedStatus', 'allCats', 'totalProducts', 'allBrands', 'totalProductsBybrand', 'allFamilies', 'totalProductsByfamily', 'groupByStatuses'));
     }
 
 

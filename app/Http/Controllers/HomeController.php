@@ -75,43 +75,43 @@ class HomeController extends Controller
         // Calcul du pourcentage par statut
 
         if ($inFabrication->count() > 0) {
-            $percentageInFabrication = $inFabrication->count() / $stockGlobals->count() * 100;
+            $percentageInFabrication = round(($inFabrication->count() / $stockGlobals->count()) * 100);
         } else {
             $percentageInFabrication = 0;
         }
 
         if ($inUsineOut->count() > 0) {
-            $percentageinUsineOut = $inUsineOut->count() / $stockGlobals->count() * 100;
+            $percentageinUsineOut = round(($inUsineOut->count() / $stockGlobals->count()) * 100);
         } else {
             $percentageinUsineOut = 0;
         }
 
         if ($inWaitExpediteImport->count() > 0) {
-            $percentageinWaitExpediteImport = $inWaitExpediteImport->count() / $stockGlobals->count() * 100;
+            $percentageinWaitExpediteImport = round(($inWaitExpediteImport->count() / $stockGlobals->count()) * 100);
         } else {
             $percentageinWaitExpediteImport = 0;
         }
 
         if ($arrivagePod->count() > 0) {
-            $percentagearrivagePod = $arrivagePod->count() / $stockGlobals->count() * 100;
+            $percentagearrivagePod = round(($arrivagePod->count() / $stockGlobals->count()) * 100);
         } else {
             $percentagearrivagePod = 0;
         }
 
         if ($receivStock->count() > 0) {
-            $percentagereceivStock = $receivStock->count() / $stockGlobals->count() * 100;
+            $percentagereceivStock = round(($receivStock->count() / $stockGlobals->count()) * 100);
         } else {
             $percentagereceivStock = 0;
         }
 
         if ($inWaitExpediteExport->count() > 0) {
-            $percentageinWaitExpediteExport = $inWaitExpediteExport->count() / $stockGlobals->count() * 100;
+            $percentageinWaitExpediteExport = round(($inWaitExpediteExport->count() / $stockGlobals->count()) * 100);
         } else {
             $percentageinWaitExpediteExport = 0;
         }
 
         if ($liverExpedite->count() > 0) {
-            $percentageliverExpedite = $liverExpedite->count() / $stockGlobals->count() * 100;
+            $percentageliverExpedite = round(($liverExpedite->count() / $stockGlobals->count()) * 100);
         } else {
             $percentageliverExpedite = 0;
         }

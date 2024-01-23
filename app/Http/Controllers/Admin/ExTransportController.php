@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Company;
 use App\Models\Entrepot;
 use App\Models\Expedition;
+use App\Mail\LogisticaMail;
 use App\Models\stockUpdate;
 use Illuminate\Support\Str;
 use App\Models\ExpTransport;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\ExTransportFile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ExTransportController extends Controller
 {

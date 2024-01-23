@@ -12,6 +12,7 @@ use App\Models\ExTransiteFile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ExpTransitController extends Controller
 {

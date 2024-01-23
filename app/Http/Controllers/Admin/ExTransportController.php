@@ -279,6 +279,8 @@ class ExTransportController extends Controller
                 if ($file !== null) {
                     $filename = 'InStock_' . date('YmdHis') . '_' . Str::uuid().'.'.$file->getClientOriginalExtension();
                     $file->move('documents/files', $filename);
+                }else {
+                    $filename = 'destockage.pdf';
                 }
 
                 Article::where('id', $productId)->update([
@@ -332,7 +334,7 @@ class ExTransportController extends Controller
 //     $productId = $request->input('product_id');
 
 //     if ($productId) {
-//         $userId = auth()->user()->id;
+//         $userId = auth()->user()->id;is_destock
 
 //         $expedition = Expedition::where('uuid', $request->input('expedition_uuid'))->firstOrFail();
 

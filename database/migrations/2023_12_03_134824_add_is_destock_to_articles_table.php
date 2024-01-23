@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('articles', function (Blueprint $table) {
             $table->string('is_destock')->default('false');
-            
         });
     }
 

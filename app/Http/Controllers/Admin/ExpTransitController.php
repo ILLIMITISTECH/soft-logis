@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Company;
 use App\Models\ExTransit;
 use App\Models\Expedition;
+use App\Mail\LogisticaMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ExTransiteFile;

@@ -133,12 +133,17 @@ class HomeController extends Controller
 
         $nextArrive = Sourcing::where('etat', 'actif')
         ->whereNotIn('statut', ['stocked'])
-        ->orderBy('date_arriver', 'desc')
+        ->orderBy('date_arriver', 'ASC')
         ->get();
 
-        $firstNextArrivage = Sourcing::where(['etat' => 'actif'])
+        $firstNextArrivage = Sourcing::where('etat', 'actif')
         ->whereNotIn('statut', ['stocked'])
-        ->orderBy('date_arriver', 'desc')->first();
+        ->orderByRaw('ABS(DATEDIFF(NOW(), date_arriver))')
+        ->first();
+
+        // $firstNextArrivage = Sourcing::where(['etat' => 'actif'])
+        // ->whereNotIn('statut', ['stocked'])
+        // ->orderBy('date_arriver', 'desc')->first();
 
         // dd($firstNextArrivage);
 
@@ -438,6 +443,7 @@ class HomeController extends Controller
         $percentageExpWaitExp = 0;
     }
     // To Expedition Ready
+    // dd($nbrExpeditionExpedier);
     $countExpDelivered = $nbrExpeditionExpedier->count();
     if ($nbrTotalExpeditionActif->count() > 0) {
         $percentageExpDelivered = ($nbrTotalExpActif !== 0) ? ($countExpDelivered / $nbrTotalExpActif) * 100 : 0;

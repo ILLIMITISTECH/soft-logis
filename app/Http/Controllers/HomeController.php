@@ -186,7 +186,10 @@ class HomeController extends Controller
 
          // Requête pour obtenir les produits en stock pour la semaine en cours
         $InStockWekly = stockUpdate::where(['mouvement' => 'In'])
-        ->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+        ->get();
+        // ->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
         // ->whereRaw('WEEK(created_at) = ?', [$currentWeek])
         // ->get();
 
@@ -335,7 +338,7 @@ class HomeController extends Controller
     // Ordre transite per Month
 
     $allTransitPerMonth = OdTransite::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
-    
+
     $allTransitPerWekly = OdTransite::where(['etat' => 'actif'])
     ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
     ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())

@@ -185,24 +185,27 @@ class HomeController extends Controller
         // hebdomadaire
 
          // Requête pour obtenir les produits en stock pour la semaine en cours
-        $InStockWekly = stockUpdate::where(['mouvement' => 'In'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])
-        ->get();
+        $InStockWekly = stockUpdate::where(['mouvement' => 'In'])
+        ->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        // ->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        // ->get();
 
         $conformInStock = stockUpdate::where([
             'mouvement' => 'In',
             'conformity' => 'on'
         ])->get();
 
-        $conformInStockWeekly = stockUpdate::where([
-            'mouvement' => 'In',
-            'conformity' => 'on'
-        ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])
+        $conformInStockWeekly = stockUpdate::where(['mouvement' => 'In','conformity' => 'on'])
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
         ->get();
 
         $noConformInStockWeekly = stockUpdate::where([
                 'mouvement' => 'In',
-                'conformity' => 'off'
-            ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+                'conformity' => 'off'])
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+        ->get();
 
 
         //out
@@ -228,9 +231,10 @@ class HomeController extends Controller
         });
 
 
-        $outStockWekly = stockUpdate::where([
-            'mouvement' => 'Out',
-        ])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+        $outStockWekly = stockUpdate::where(['mouvement' => 'Out'])
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+        ->get();
 
         $totalValueWeekly = $outStockWekly->sum(function($item) {
             return $item->product->price_unitaire;
@@ -250,18 +254,27 @@ class HomeController extends Controller
 
         $sourcingInValidatPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'validateDoc'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
         $sourcingReceive = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
-        $sourcingReceivePerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
-        $sourcingPerWekly = Sourcing::where(['etat' => 'actif'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+        $sourcingReceivePerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'stocked'])
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+        ->get();
 
+        // $sourcingPerWekly = Sourcing::where(['etat' => 'actif'])
+        // ->whereBetween('created_at', [$firstDayOfWeek, $lastDayOfWeek])->get();
+        // ->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
 
-        $countSourcingPerWeekly = Sourcing::where(['etat' => 'actif'])
-        ->whereRaw('WEEK(created_at) = ?', [$currentWeek])
-        ->count();
+        $sourcingPerWekly = Sourcing::where('etat', 'actif')
+        ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+        ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+        ->get();
+
+        $countSourcingPerWeekly = $sourcingPerWekly->count();
+
 
           // Récupérer le nombre total de sourcings
     $nbrTotalSourcings = $sourcings->count();
-    $nbrSourcingsPerWekly = $sourcingPerWekly->count();
+    // $nbrSourcingsPerWekly = $sourcingPerWekly->count();
     $percentageSourcingsPerWekly = ($nbrTotalSourcings !== 0) ? ($countSourcingPerWeekly / $nbrTotalSourcings) * 100 : 0;
     // recu par weekly
     $nbrSourcReceivPerWekly = $sourcingReceivePerWekly->count();
@@ -303,7 +316,10 @@ class HomeController extends Controller
 
     $sourcInWaitLivrPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
 
-    $sourcInWaitLivrPerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+    $sourcInWaitLivrPerWekly = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])
+    ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+    ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+    ->get();
 
     // Récupérer le nombre total de sourcings
     // $nbrTotalSourcings = $sourcings->count();
@@ -319,7 +335,11 @@ class HomeController extends Controller
     // Ordre transite per Month
 
     $allTransitPerMonth = OdTransite::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
-    $allTransitPerWekly = OdTransite::where(['etat' => 'actif'])->whereRaw('WEEK(created_at) = ?', [$currentWeek])->get();
+    
+    $allTransitPerWekly = OdTransite::where(['etat' => 'actif'])
+    ->whereDate('created_at', '>=', Carbon::now()->startOfWeek())
+    ->whereDate('created_at', '<=', Carbon::now()->endOfWeek())
+    ->get();
 
     $mostUsedTransitaire = OdTransite::where(['etat' => 'actif'])
     ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])

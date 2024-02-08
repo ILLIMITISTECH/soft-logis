@@ -28,4 +28,5 @@ class GrilleTransit extends Model
     {
         return $this->belongsTo(Company::class, 'transitaire_uuid', 'uuid');
     }
+
 }

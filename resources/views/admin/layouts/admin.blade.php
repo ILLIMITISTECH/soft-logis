@@ -131,7 +131,6 @@
 	</script>
 
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.2/viewer.min.js"></script>
 	<script src="{{ asset('assets/js/app.js') }}"></script>
 

@@ -338,7 +338,6 @@
                                                         </div>
 
 
-
                                                         <div class="col-12">
                                                             <label for="inputProductMarque"
                                                                 class="form-label">Marque</label>

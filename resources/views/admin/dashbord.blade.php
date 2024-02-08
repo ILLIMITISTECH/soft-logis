@@ -337,12 +337,12 @@
                                 <li
                                     class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
                                     Conforme <span
-                                        class="badge bg-success rounded-pill">{{ $conformInStock->count() }}</span>
+                                        class="badge bg-success rounded-pill">{{ $conformInStockPerMonth->count() }}</span>
                                 </li>
                                 <li
                                     class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
                                     Non-Conforme <span
-                                        class="badge bg-danger rounded-pill">{{ $noConformInStock->count() }}</span>
+                                        class="badge bg-danger rounded-pill">{{ $noConformInStockPerMonth->count() }}</span>
                                 </li>
                             </ul>
                         </div>

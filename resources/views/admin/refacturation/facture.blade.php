@@ -177,7 +177,7 @@
                                     </thead>
                                 </table>
                                 <hr style="width: 80% ; margin: 0;">
-                                <main style="margin-top: 0;">
+                                <main style="margin-top: 20px;">
                                     <div class="container" style="min-width: 100%">
                                         <table class="" style="width: 100%;">
                                             <thead class="uppercase size_12" style="background: #000; color: #fff;">
@@ -199,10 +199,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="content-prestation" style="margin-top: 29px;">
+                                    <div class="content-prestation" style="margin-top: 29px; margin-bottom: 10px;">
                                         <table class="able" style="width: 100%;">
                                             <thead class="uppercase size_12" style="background: #000; color: #fff;">
-                                                <tr>
+                                                <tr >
                                                     <th class="id">Nature Prestation</th>
                                                     <th class="poste" style="text-align: center; align-items: flex-center; justify-content: flex-center;">QTE</th>
                                                     <th class="condition-paiement" style="text-align: center; align-items: flex-center; justify-content: flex-center;">Description</th>
@@ -214,7 +214,7 @@
                                             @php $exchangeRate = 0.00152; @endphp
                                             <tbody style="margin-bottom: 15px">
                                                 @forelse ($prestations_debours as $prestations_debour)
-                                                <tr class="size_12" style="">
+                                                <tr class="size_12" style="margin-top: 10px; margin-bottom: 10px;">
                                                     <td class="id">{{ $prestations_debour->type_prestation ?? 'N/A'}}</td>
                                                     <td class="poste" style="text-align: center; align-items: flex-center; justify-content: flex-center;">{{ $prestations_debour->qty ?? 'N/A' }}</td>
                                                     <td class="condition-paiement" style="text-align: center; align-items: flex-center; justify-content: flex-center;">{{ $prestations_debour->description ?? 'N/A'  }}</td>
@@ -222,17 +222,19 @@
                                                     <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total ?? 'N/A' }}</td>
                                                     <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
                                                 </tr>
+                                                <hr style="margin-top: 10px; min-width: 100%;">
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
                                                 @endforelse
+                                                
                                             </tbody>
                                             <tfoot style="width: 100% ;">
                                                 <tr style="100%">
-                                                    <td style="background: #ccc; height: 20px;"><span
-                                                            style="font-size: 8px;">SOUS TOTAL DEBOURS</span>
+                                                    <td style="background: #ccc; height: 20px;">
                                                     </td>
                                                     <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
+                                                    <td style="background: #ccc; height: 20px;"><span
+                                                        style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; color:#000;font-weight: 900;">SOUS TOTAL DEBOURS</span></td>
                                                     <td style="background: #ccc; height: 20px;"></td>
                                                     <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;" >{{ number_format($prestations_totals_debours)}}</span>
@@ -241,20 +243,6 @@
                                                             style="font-size: 8px;">{{ number_format($prestations_totals_debours * $exchangeRate)}}</span>
                                                     </td>
                                                 </tr>
-                                                <hr style="margin-bottom: 15px">
-                                                @forelse ($prestations as $item )
-												<tr class="table">
-													<td class="unit" style="font-size: 8px;"><span style="font-size: 8px;"> {{ $item->type_prestation ?? 'N/A'}}</span></td>
-                                                    <td class="qty" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->qty ?? 'N/A' }}</span></td>
-													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
-													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->prixunitaire ?? 'N/A' }}</span></td>
-
-													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total ?? 'N/A' }}</span></td>
-													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total * $exchangeRate ?? 'N/A' }}</span></td>
-												</tr>
-                                                @empty
-                                                <tr>Aucune prestation enregistré</tr>
-                                            	@endforelse
                                                 <hr style="margin: 5 0 5 0">
                                                 <tr style="100% ; margin-bottom: 15px; margin-top: 10px; background: #000; font-size: 8px;">
                                                     <td style="background: #ccc; height: 20px;"><span
@@ -270,13 +258,29 @@
                                                             style="font-size: 8px;">{{ $comm_sous_debours * $exchangeRate ?? 'N/A' }}</span>
                                                     </td>
                                                 </tr>
+                                                
+                                                @forelse ($prestations as $item )
+												<tr class="table" >
+													<td class="unit" style="font-size: 8px;"><span style="font-size: 8px;"> {{ $item->type_prestation ?? 'N/A'}}</span></td>
+                                                    <td class="qty" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->qty ?? 'N/A' }}</span></td>
+													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
+													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->prixunitaire ?? 'N/A' }}</span></td>
+
+													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total ?? 'N/A' }}</span></td>
+													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total * $exchangeRate ?? 'N/A' }}</span></td>
+												</tr>
+                                                <hr style="margin-top: 5px">
+                                                @empty
+                                                <tr>Aucune prestation enregistré</tr>
+                                            	@endforelse
+                                                
                                                 <hr style="margin: 5 0 5 0">
                                                 <tr style="100% ;">
-                                                    <td style="background: #ccc; height: 20px;"><span
-                                                            style="font-size: 8px;">SOUS TOTAL DE PRESTATION</span>
+                                                    <td style="background: #ccc; height: 20px;">
                                                     </td>
                                                     <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
+                                                    <td style="background: #ccc; height: 20px;"><span
+                                                        style="font-size: 8px; text-align: center; align-items:center; justify-content:center;  color:#000;font-weight: 900;">SOUS TOTAL DE PRESTATION</span></td>
                                                     <td style="background: #ccc; height: 20px;"></td>
                                                     <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;">{{ number_format($prestations_totals), 0, ',', ' ' }}</span>
@@ -285,6 +289,150 @@
                                                             style="font-size: 8px;">{{ number_format($prestations_totals * $exchangeRate), 0, ',', ' ' }}</span>
                                                     </td>
                                                 </tr>
+                                                
+                                                @php
+                                                     $count_pres = count($prestations);
+                                                @endphp
+                                                @if ($count_pres < 5)
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: lightgray; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: lightgray; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: lightgray; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: lightgray; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background: lightgray; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: #ccc; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: #ccc; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: #ccc; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                
+                                                @elseif ($count_pres > 5 && $count_pres < 15)
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: #ccc; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: #ccc; height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background: #ccc; height: 20px;"></td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                                
                                                 <tr>
 													<td colspan="2"></td>
 													<td colspan="2"></td>

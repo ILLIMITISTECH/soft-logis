@@ -19,6 +19,7 @@ class Sourcing extends Model
         'packaging',
         'id_navire',
         'info_navire',
+        'num_bl',
         'date_arriver',
         'date_depart',
         'note',

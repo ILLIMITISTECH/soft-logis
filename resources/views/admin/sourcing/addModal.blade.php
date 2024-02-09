@@ -169,6 +169,19 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            <div class="my-3 col-12" style="font-size: 13px">
+                                                <label for="num_bl" class="form-label text-uppercase"> N° BL 
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="text" class="form-control @error('num_bl') is-invalid @enderror" id="num_bl" name="num_bl" autocomplete="off" required>
+                                                @error('num_bl')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
 
                                             <hr class="mb-4 mt-2">
 

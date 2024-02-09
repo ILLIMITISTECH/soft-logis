@@ -26,7 +26,7 @@
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
 
-                <div class="position-relative">
+                {{-- <div class="position-relative">
                     <div class="gap-3">
                         <div class="ms-2 col">
                             <select id="statusFilter" class="form-select">
@@ -41,7 +41,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="ms-auto">
                     @can('Create Sourcing')
@@ -51,26 +51,28 @@
                     @endcan
                 </div>
             </div>
-            <div class="table-responsive text-center">
-                <table id="sourcin_table" class="table table-striped table-bordered mb-0">
+            <div class="table-responsive">
+                <table  class="table table-striped table-bordered mb-0" id="example2">
                     <thead class="table-light text-uppercase">
                         <tr>
-                            <th>N* Sourcing</th>
+                            <th>N* Bl</th>
                             <th>Produits</th>
                             <th>Date estimative d'arrivée</th>
                             <th>ID du navire</th>
                             <th>Documents</th>
                             <th>Status</th>
+                            <th>Publier le</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody style="font-size: 12px !important">
-                        @php
+                        {{-- id="sourcin_table" --}}
+                        {{-- @php
                             $groupedSourcings = $sourcings->groupBy('statut');
-                        @endphp
-                        @foreach($groupedSourcings as $statut => $sourcingsGroup)
-                            @forelse($sourcingsGroup as $sourcing)
-                                <tr id="sourcin_tr" data-status="{{ strtolower($sourcing->statut) }}">
+                        @endphp --}}
+                        {{-- @foreach($groupedSourcings as $statut => $sourcingsGroup) --}}
+                            @forelse($sourcings as $sourcing)
+                                <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div>
@@ -78,7 +80,7 @@
                                                     aria-label="...">
                                             </div>
                                             <div class="ms-2">
-                                                <h6 class="mb-0 font-14">{{ $sourcing->code }}</h6>
+                                                <h6 class="mb-0 font-14">{{ $sourcing->num_bl ?? '--' }}</h6>
                                             </div>
                                         </div>
                                     </td>
@@ -132,19 +134,21 @@
                                         @endif
 
                                     </td>
+                                    <td>{{ $sourcing->created_at->diffForHumans() }}</td>
                                     <td style="max-width: 100px">
                                         <div class="d-flex order-actions text-end justify-content-between">
 
                                             <a href="{{ route('admin.sourcing.show', $sourcing->uuid) }}" class="bg-transparent col" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Voir"><i class="lni lni-eye"></i></a>
+                                                data-bs-placement="top" title="Voir"><i class="lni lni-eye"></i>
+                                            </a>
 
                                             @if ($sourcing->statut === "stocked")
-                                            <a type="button" class="border-0 text-success col mx-3 btn">
+                                            <a type="button" class="border-0 text-success col mx-2 btn">
                                                 <i class='bx bxs-package'></i>
                                             </a>
                                             @else
                                             @can('Edit Sourcing')
-                                            <a type="button" class="border-0 col mx-3 btn" data-bs-toggle="modal" data-bs-target="#EditSourcing{{ $sourcing->uuid }}">
+                                            <a type="button" class="border-0 col mx-2 btn" data-bs-toggle="modal" data-bs-target="#EditSourcing{{ $sourcing->uuid }}">
                                                 <i class='bx bxs-edit'></i>
                                             </a>
                                             @endcan
@@ -174,7 +178,7 @@
                                 <td colspan="8" class="text-center">Aucun sourcing</td>
                             </tr>
                             @endforelse
-                        @endforeach
+                        {{-- @endforeach --}}
 
                     </tbody>
                 </table>

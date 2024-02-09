@@ -296,6 +296,7 @@ class RefacturationController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        // dd($request);
 
         DB::beginTransaction();
 
@@ -342,29 +343,29 @@ class RefacturationController extends Controller
 
 
                 // $prestation = $request->input('prestation');
-                    $type_prestation = $request->input('type_prestation');
-                    $qty = $request->input('qty');
-                    $description = $request->input('description');
-                    $prixunitaire = $request->input('prixunitaire');
-                    $total = $request->input('total');
+                    // $type_prestation = $request->input('type_prestation');
+                    // $qty = $request->input('qty');
+                    // $description = $request->input('description');
+                    // $prixunitaire = $request->input('prixunitaire');
+                    // $total = $request->input('total');
 
-                    for($i=0; $i < count($type_prestation); $i++){
-                    $prestations = [
-                        'uuid' => Str::uuid(),
-                        'facture_uuid' => $refacturation_FAC->uuid,
-                        'etat' => "actif",
-                        //'prestation' => $prestation[$i],
-                        'type_prestation' => $type_prestation[$i],
-                        'qty' => $qty[$i],
-                        'description' => $description[$i],
-                        'prixunitaire' => $prixunitaire[$i],
-                        'total' => $total[$i],
-                         ];
-                     if($type_prestation[$i] !== null){
-                            DB::table('facture_prestations')->insert($prestations);
+                    // for($i=0; $i < count($type_prestation); $i++){
+                    // $prestations = [
+                    //     'uuid' => Str::uuid(),
+                    //     'facture_uuid' => $refacturation_FAC->uuid,
+                    //     'etat' => "actif",
+                    //     //'prestation' => $prestation[$i],
+                    //     'type_prestation' => $type_prestation[$i],
+                    //     'qty' => $qty[$i],
+                    //     'description' => $description[$i],
+                    //     'prixunitaire' => $prixunitaire[$i],
+                    //     'total' => $total[$i],
+                    //      ];
+                    //  if($type_prestation[$i] !== null){
+                    //         DB::table('facture_prestations')->insert($prestations);
 
-                        }
-                    }
+                    //     }
+                    // }
 
             if ($refacturation) {
 

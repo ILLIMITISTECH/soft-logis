@@ -191,35 +191,52 @@
                             </div>
 
                             <hr>
-                            <div class="card-body w-100">
+                            <div class="card-body w-100 row">
                                 <div class="col-12 row">
                                     <dl class="row col-6">
                                         <dt class="col-sm-6">N* de sourcing</dt>
                                         <dd class="col-sm-6">{{ ($sourcing->code) ? $sourcing->code : '--' }}</dd>
                                     </dl>
-                                    <dl class="row col-6 my-2">
-                                        <dt class="col-sm-6">Packaging</dt>
-                                        <dd class="col-sm-6">{{ $sourcing->packaging ?? '--' }}</dd>
+                                    <dl class="row col-6">
+                                        <dt class="col-sm-6">N° BL</dt>
+                                        <dd class="col-sm-6">{{ ($sourcing->num_bl) ?? '--' }}</dd>
                                     </dl>
 
                                 </div>
 
-                                <div class="col-12 row">
+                                <div class="col-12 row my-3">
                                     <dl class="row col-6">
                                         <dt class="col-sm-6">Date de départ</dt>
                                         <dd class="col-sm-6">{{ Carbon\Carbon::parse($sourcing->date_depart)->format('d/m/Y') ?? '--' }}</dd>
                                     </dl>
-                                    <dl class="row col-6 my-2">
+                                    <dl class="row col-6">
                                         <dt class="col-sm-6">Date d'arrivée</dt>
                                         <dd class="col-sm-6">{{ Carbon\Carbon::parse($sourcing->date_arriver)->format('d/m/Y') ?? '--' }}</dd>
                                     </dl>
                                 </div>
 
-                                <dl class="row col-6 my-2">
+                                <dl class="row col-6">
                                     <dt class="col-sm-6">Identifiant du Navire</dt>
                                     <dd class="col-sm-6">{{ ($sourcing->id_navire) ? $sourcing->id_navire : '--' }}</dd>
                                 </dl>
+                                
+                                <dl class="row col-6">
+                                    <dt class="col-sm-6">Packaging</dt>
+                                    <dd class="col-sm-6">{{ $sourcing->packaging ?? '--' }}</dd>
+                                </dl>
 
+                                <hr class="my-3">
+
+                                <div class="col-12 row mb-3">
+                                    <dl class="row col-6">
+                                        <dt class="col-sm-6">Date de publication</dt>
+                                        <dd class="col-sm-6">{{ Carbon\Carbon::parse($sourcing->created_at)->format('d/m/Y') ?? '--' }}</dd>
+                                    </dl>
+                                    <dl class="row col-6">
+                                        <dt class="col-sm-6">Publié par</dt>
+                                        <dd class="col-sm-6">{{ ($sourcing->created_by) ? $sourcing->created_by : '--' }}</dd>
+                                    </dl>
+                                </div>
                                 <div class=" my-3 col-12">
                                     <div class="col-md-4">
                                         <h6 class="mb-0">Information sur le navire</h6>

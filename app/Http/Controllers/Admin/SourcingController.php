@@ -36,7 +36,10 @@ class SourcingController extends Controller
                         ->whereNotIn('status', ['stocked', 'expEnCours', 'delivered'])
                         ->where('is_AddSourcing', 'false')
                         ->get();
-        $sourcings = Sourcing::where('etat', 'actif')->get();
+        $sourcings = Sourcing::where('etat', 'actif')
+            ->orderBy('created_at', 'desc')
+            ->get();
+   
         $families = ArticleFamily::where('etat', 'actif')->get();
 
         return view('admin.sourcing.index', compact('products', 'sourcings', 'families'));
@@ -76,6 +79,7 @@ class SourcingController extends Controller
                 'info_navire' => $request->info_navire,
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
+                'num_bl' => $request->num_bl,
                 'note' => $request->note,
                 'created_by' => Auth::user()->name . ' ' . Auth::user()->lastname,
 
@@ -283,6 +287,7 @@ class SourcingController extends Controller
                 'info_navire' => $request->info_navire,
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
+                'num_bl' => $request->num_bl,
                 'note' => $request->note,
             ]);
 

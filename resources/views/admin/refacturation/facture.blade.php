@@ -222,7 +222,7 @@
                                                     <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total ?? 'N/A' }}</td>
                                                     <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
                                                 </tr>
-                                                <hr style="margin-top: 10px; min-width: 100%;">
+                                                <hr style="margin-top: 5px; min-width: 100%;">
                                                 @empty
                                                 <tr>Aucune prestation enregistré</tr>
                                                 @endforelse

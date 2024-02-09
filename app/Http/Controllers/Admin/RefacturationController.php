@@ -336,13 +336,13 @@ class RefacturationController extends Controller
                 ]);
 
 
-                $refacturation_FAC = Refacturation::orderBy('updated_at', 'desc')->first();
+                // $refacturation_FAC = Refacturation::orderBy('updated_at', 'desc')->first();
 
 
-                DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation_FAC->uuid])->update(['etat'=>"inactif"]);
+                // DB::table('facture_prestations')->where(['facture_uuid'=>$refacturation_FAC->uuid])->update(['etat'=>"inactif"]);
 
 
-                // $prestation = $request->input('prestation');
+                    // $prestation = $request->input('prestation');
                     // $type_prestation = $request->input('type_prestation');
                     // $qty = $request->input('qty');
                     // $description = $request->input('description');
@@ -352,7 +352,7 @@ class RefacturationController extends Controller
                     // for($i=0; $i < count($type_prestation); $i++){
                     // $prestations = [
                     //     'uuid' => Str::uuid(),
-                    //     'facture_uuid' => $refacturation_FAC->uuid,
+                    //     'facture_uuid' => $id,
                     //     'etat' => "actif",
                     //     //'prestation' => $prestation[$i],
                     //     'type_prestation' => $type_prestation[$i],
@@ -360,7 +360,7 @@ class RefacturationController extends Controller
                     //     'description' => $description[$i],
                     //     'prixunitaire' => $prixunitaire[$i],
                     //     'total' => $total[$i],
-                    //      ];
+                    //     ];
                     //  if($type_prestation[$i] !== null){
                     //         DB::table('facture_prestations')->insert($prestations);
 

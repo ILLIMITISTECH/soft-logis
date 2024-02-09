@@ -9,10 +9,62 @@
                 <div class="bs-stepper">
                     <div class="card">
                         <div class="card-body">
+                            <div class="">
+                                <h5 class="mb-0 steper-title">Prestation</h5>
+                                <p class="mb-0 steper-sub-title">Ligne de prestation ajoutée</p>
+                            </div>
 
-                            <div class="bs-stepper-content">
+                            <div id="prestationss">
+                                <div class="prestationss mb-2">
+                                    <div class="">
+                                        @php
+                                            $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get();
+                                        @endphp
+                                        @forelse ($prestations as $prestation )
+                                            @if($prestation)
+
+                                            <div class="col my-3 row flex-row">
+
+                                                <div class="col-3">
+                                                    <div class="form-control">
+                                                        <span>{{ $prestation->type_prestation ?? 'N/A'  }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input placeholder="{{ $prestation->qty ?? 'N/A'  }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-3">
+                                                    <input placeholder="{{ $prestation->description ?? 'N/A'  }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input placeholder="{{ $prestation->prixunitaire ?? 'N/A'  }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-2">
+                                                    <input placeholder="{{ $prestation->total ?? 'N/A'  }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-auto">
+
+                                                    <form action="{{ route('admin.delete.prestationLine', $prestation->uuid) }}" method="post" class="submitForm">
+                                                        @csrf
+
+                                                        <input type="hidden" name="facture_uuid" value="{{ $item->uuid }}">
+                                                        <button type="submit" class="btn btn-danger px-2 text-center"><i class='bx bxs-trash'></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            @endif
+                                        @empty
+                                        <div>Aucune Facture enregistré</div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bs-stepper-coent">
                                 <form action="{{ route('admin.refacturation.update', $item->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data" >
                                     @csrf
+
                                     <div class="row g-3">
                                         <div class="col-12 col-lg-6">
                                             <label for="refClient" class="form-label">Ref Client</label>
@@ -109,97 +161,6 @@
                                         <!---end row-->
 
                                     </div>
-                                    
-                                    <div class="row g-3 d-none">
-                                        {{-- <div id="prestationss">
-                                            <div class="prestationss mb-2">
-                                                <div class="">
-                                                    @php
-                                                        $prestations = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['etat'=>"actif"])->get();
-                                                    @endphp
-                                                    @forelse ($prestations as $prestation )
-                                                        @if($prestation)
-
-                                                        <div class="col my-3 row flex-row">
-
-                                                            <div class="col-3">
-                                                                <div class="form-control">
-                                                                    <span>{{ $prestation->type_prestation ?? 'N/A'  }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-1">
-                                                                <input placeholder="{{ $prestation->qty ?? 'N/A'  }}" class="form-control" disabled>
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <input placeholder="{{ $prestation->description ?? 'N/A'  }}" class="form-control" disabled>
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <input placeholder="{{ $prestation->prixunitaire ?? 'N/A'  }}" class="form-control" disabled>
-                                                            </div>
-                                                            <div class="col-2">
-                                                                <input placeholder="{{ $prestation->total ?? 'N/A'  }}" class="form-control" disabled>
-                                                            </div>
-                                                            <div class="col-auto">
-
-                                                                <form action="{{ route('admin.delete.prestationLine', $prestation->uuid) }}" method="post" class="submitForm">
-                                                                    @csrf
-
-                                                                    <input type="hidden" name="facture_uuid" value="{{ $item->uuid }}">
-                                                                    <button type="submit" class="btn btn-danger px-2 text-center"><i class='bx bxs-trash'></i></button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-
-                                                        @endif
-                                                    @empty
-                                                    <div>Aucune Facture enregistré</div>
-                                                    @endforelse
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <div id="prestationsEdit">
-                                            <div class="prestationsEdit mb-2">
-                                                <div class="form-row row">
-                                                    <div class="col-3">
-                                                        <select name="type_prestation[]" class="form-control">
-                                                        <option value="">Sélect le type</option>
-                                                        <option value="prestation">PRESTATION</option>
-                                                        <option value="debours">DEBOURS</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-1">
-                                                        <input type="number" name="qty[]" class="form-control"
-                                                            placeholder="0">
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <input type="text" name="description[]" class="form-control"
-                                                            placeholder="Description">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <input type="number" name="prixunitaire[]"
-                                                            class="form-control" placeholder="Prix unitaire">
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <input type="number" name="total[]" class="form-control"
-                                                            placeholder="Total" readonly>
-                                                    </div>
-                                                    <div class="col-auto">
-
-                                                        <button type="button" class="btn btn-danger remove-btnb px-2 text-center"><i class='bx bxs-trash remove-btnb'></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-primary col-3"  type="button" onclick="cloneBlockEditPrestation()"><i class="bx bxs-plus-square"></i> Ajouter une prestation</button>
-                                        <hr> --}}
-                                    </div>
-                                    <!---end row-->
-
-                                    </div>
-                                    <hr>
-                                    <br>
-
                                     <div class="bs-stepper-pane2"
                                         aria-labelledby="stepper11trigger44">
                                         <div class="">
@@ -253,16 +214,4 @@
             </div>
         </div>
     </div>
-
 </div>
-
-
-<script>
-
-function cloneBlockEditPrestation() {
-    const block = document.querySelector(".prestationsEdit");
-    // Clone le bloc de prestation
-    const clone = block.cloneNode(true);
-    document.querySelector('#prestationsEdit').appendChild(clone);
-    }
-</script>

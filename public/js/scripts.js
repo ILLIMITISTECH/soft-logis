@@ -1052,3 +1052,5 @@ document.addEventListener('DOMContentLoaded', function() {
     var statusChart = new Chart(statusChartCanvas, statusChartConfig);
 });
 
+
+

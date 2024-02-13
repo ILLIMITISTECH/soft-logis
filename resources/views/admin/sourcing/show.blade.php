@@ -224,6 +224,10 @@
                                     <dt class="col-sm-6">Packaging</dt>
                                     <dd class="col-sm-6">{{ $sourcing->packaging ?? '--' }}</dd>
                                 </dl>
+                                <dl class="row col-6 mt-3">
+                                    <dt class="col-sm-6">Regime</dt>
+                                    <dd class="col-sm-6">{{ $sourcing->regime->regime ?? '--' }}</dd>
+                                </dl>
 
                                 <hr class="my-3">
 

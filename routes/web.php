@@ -36,7 +36,7 @@ use App\Http\Controllers\Admin\TransporteurController;
 use App\Http\Controllers\Admin\CollaborateurController;
 use App\Http\Controllers\Admin\RefacturationController;
 use App\Http\Controllers\Admin\OdreExpeditionController;
-
+use App\Http\Controllers\Admin\RegimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -355,10 +355,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/role-permission/{id}', [RoleController::class, 'rolePermissionSave'])->name('permission.save');
 
 
-
-
-
-
         Route::get('/index-grille', [ConfigController::class, 'indexGrille'])->name('grille.index');
         Route::post('/add-destinations', [GrilleTarifController::class, 'storeDestinations'])->name('storeDestinations');
         Route::post('/destroy-destinations/{uuid}', [GrilleTarifController::class, 'destroyDestinations'])->name('destroyDestinations');
@@ -372,7 +368,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // transit had
         Route::post('/transit-add-had', [GrilleTarifController::class, 'storeHad'])->name('transit_had.store');
         Route::post('/destroy-had/{uuid}', [GrilleTarifController::class, 'destroyHad'])->name('destroyHad');
-
+        // Config regime 
+        Route::get('/regime', [RegimeController::class, 'index'])->name('regime');
+        Route::post('/regime/store', [RegimeController::class, 'store'])->name('regime.store');
+        Route::post('/regime/destroy/{uuid}', [RegimeController::class, 'destroy'])->name('regime.destroy');
 
 
 

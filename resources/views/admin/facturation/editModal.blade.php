@@ -44,8 +44,8 @@
                                 </div>
 
                                 <div class="col-12 col-lg-6">
-                                    <label for="date_paiement" class="form-label">Date Limite de paiement</label>
-                                    <input type="date" value="{{ $facture->date_paiement ?? 'N/A' }}" class="form-control" id="date_paiement" name="date_paiement">
+                                    <label for="date_echeance" class="form-label">Date Limite de paiement</label>
+                                    <input type="date" value="{{ $facture->date_echeance ?? 'N/A' }}" class="form-control" id="date_echeance" name="date_echeance">
                                 </div>
 
                                 <div class="col-6 col-md-6 col-lg-6">

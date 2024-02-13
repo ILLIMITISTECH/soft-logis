@@ -168,7 +168,7 @@
                                 <div class="col invoice-details">
                                     <h1 class="invoice-id">{{ $facture->numFacture }}</h1>
                                     <div class="date">Date d'enregistrement: {{ $facture->created_at->format('d/m/Y') }}</div>
-                                    <div class="date">Date d'echeance: {{ $facture->date_paiement }}</div>
+                                    <div class="date">Date d'echeance: {{ Carbon\Carbon::parse($facture->date_echeance)->format('d/m/Y') ?? 'N/A' }}</div>
                                 </div>
                             </div>
 

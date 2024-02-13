@@ -27,7 +27,45 @@ class RefacturationController extends Controller
     public function index()
     {
         $refacturations = Refacturation::where('etat', 'actif')->get();
-        return view('admin.refacturation.index', compact('refacturations'));
+        $facture_count = $refacturations->count();
+        $valeur_global_facture = $refacturations->sum(function ($facture) {
+            return $facture->prestations->where('etat', 'actif')->sum('total');
+        });
+
+        $refacturationSend = Refacturation::where(['etat' => 'actif', 'statut' => 'sendToClient'])->get();
+        $totalFactSend = $refacturationSend->count();
+        $valeur_totalFactSend = $refacturationSend->sum(function ($facture) {
+            return $facture->prestations->where('etat', 'actif')->sum('total');
+        });
+
+        $refacturationPay = Refacturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
+        $totalFactPay= $refacturationPay->count();
+        $valeur_totalFactPay= $refacturationPay->sum(function ($facture) {
+            return $facture->prestations->where('etat', 'actif')->sum('total');
+        });
+        
+        // facture echue date echeance < now();
+        $factureEchu =  Refacturation::where('etat', 'actif')
+                        ->where('date_echeance', '<', now())->get();
+        $factureEchuCount = $factureEchu->count();
+        $valeur_factureEchu = $factureEchu->sum(function ($facture) {
+            return $facture->prestations->where('etat', 'actif')->sum('total');
+        });
+
+        // count& value all debou & prest 
+        $totalFactDebou = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'debours'])->count();
+        $valeurTotalDebou = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'debours'])->sum('total');
+
+        $totalFactPrestation = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'prestation'])->count();
+        $valeurTotalPrestation = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'prestation'])->sum('total');
+      
+        // dd($allprestation);
+        return view('admin.refacturation.index', 
+        compact('refacturations', 'facture_count', 'valeur_global_facture',
+                'totalFactSend','valeur_totalFactSend',
+            'totalFactPay','valeur_totalFactPay',
+            'factureEchuCount','valeur_factureEchu',
+            'totalFactDebou', 'valeurTotalDebou', 'totalFactPrestation', 'valeurTotalPrestation'));
     }
 
     /**
@@ -167,7 +205,8 @@ class RefacturationController extends Controller
         $total_ht = ($prestations_totals + $prestations_totals_debours);
         // $tva = "21175";
 
-        $tva = ($prestations_totalsS * $tvaPerCent) / 100;
+        // $tva = ($prestations_totalsS * $tvaPerCent) / 100;
+        $tva = ($prestations_totals * $tvaPerCent) / 100;
         $total_xof = ($total_ht + $tva);
 
 

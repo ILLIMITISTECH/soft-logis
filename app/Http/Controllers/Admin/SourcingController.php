@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\File;
+use App\Models\Regime;
 use App\Models\Article;
 use App\Models\Company;
 use App\Models\Document;
@@ -37,12 +38,14 @@ class SourcingController extends Controller
                         ->where('is_AddSourcing', 'false')
                         ->get();
         $sourcings = Sourcing::where('etat', 'actif')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'ASC')
             ->get();
    
         $families = ArticleFamily::where('etat', 'actif')->get();
 
-        return view('admin.sourcing.index', compact('products', 'sourcings', 'families'));
+        $regimes = Regime::where('etat', 'actif')->get();
+
+        return view('admin.sourcing.index', compact('products', 'sourcings', 'families', 'regimes'));
     }
 
 
@@ -80,6 +83,7 @@ class SourcingController extends Controller
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
                 'num_bl' => $request->num_bl,
+                'regime_uuid' => $request->regime_uuid,
                 'note' => $request->note,
                 'created_by' => Auth::user()->name . ' ' . Auth::user()->lastname,
 
@@ -288,6 +292,7 @@ class SourcingController extends Controller
                 'date_arriver' => $request->date_arriver,
                 'date_depart' => $request->date_depart,
                 'num_bl' => $request->num_bl,
+                'regime_uuid' => $request->regime_uuid,
                 'note' => $request->note,
             ]);
 

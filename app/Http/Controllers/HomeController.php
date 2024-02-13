@@ -28,6 +28,8 @@ class HomeController extends Controller
         $this->middleware('auth')->except('login');
     }
 
+
+
     public function login()
     {
         return view('auth.login');
@@ -252,7 +254,6 @@ class HomeController extends Controller
         // Import
         $sourcings = Sourcing::where(['etat' => 'actif'])->orderBy('created_at', 'desc')->get();
 
-        // dd($sourcings);
 
         $sourcingInValidation = Sourcing::where(['etat' => 'actif', 'statut' => 'validateDoc'])->get();
 
@@ -319,8 +320,6 @@ class HomeController extends Controller
     $nbrTotalSourcings = $sourcings->count();
     $nbrSourcingsPerMonth = $sourcingPerMonths->count();
     $percentageSourcingsPerMonth = ($nbrTotalSourcings !== 0) ? ($nbrSourcingsPerMonth / $nbrTotalSourcings) * 100 : 0;
-
-
 
     $sourcInWaitLivrPerMonth = Sourcing::where(['etat' => 'actif', 'statut' => 'odlivraison'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
 
@@ -546,6 +545,14 @@ class HomeController extends Controller
 
         $factures = Facturation::where('etat', 'actif')->get();
 
+        // facture prestataire echue date echeance < now();
+        $facturePrestataireEchu =  Facturation::where('etat', 'actif')->whereNotIn('statut', ['payed', 'cancel'])
+        ->where('date_echeance', '<', now())->get();
+        $facturePrestataireEchuCount = $facturePrestataireEchu->count();
+        $valeur_facturePrestataireEchu = $facturePrestataireEchu->sum(function ($facture) {
+        return $facture->prestationLines->where('etat', 'actif')->sum('totalLigne');
+        });
+
         // Bon a Payer
         $facture_bon_a_payer = Facturation::where(['etat' => 'actif', 'statut' => 'good_pay'])->get();
         $facture_bon_a_payer_count = $facture_bon_a_payer->count();
@@ -600,40 +607,158 @@ class HomeController extends Controller
     $lastFacts = Refacturation::where('etat', 'actif')->limit(10)->get();
 
     $lastFactsUUIDs = $allRefacturations->pluck('uuid')->toArray();
-    $factureByPres = FacturePrestation::whereIn('facture_uuid', $lastFactsUUIDs)->get();
+    $factureByPres = FacturePrestation::where('etat', 'actif')->whereIn('facture_uuid', $lastFactsUUIDs)->get();
     $valeurTotals = $factureByPres->sum('total');
     $totalRefacturcount = $allRefacturations->count();
 
     // Send to paye
     $refacturation_send = Refacturation::where(['etat' => 'actif', 'statut' => 'sendToClient'])->get();
     $lastSendFactsUUIDs = $refacturation_send->pluck('uuid')->toArray();
-    $factureByPresSend = FacturePrestation::whereIn('facture_uuid', $lastSendFactsUUIDs)->get();
+    $factureByPresSend = FacturePrestation::where('etat', 'actif')->whereIn('facture_uuid', $lastSendFactsUUIDs)->get();
     $valeurTotalsSending = $factureByPresSend->sum('total');
     $totalSendingCount = $refacturation_send->count();
 
     // facture payer
     $refacturation_payer = Refacturation::where(['etat' => 'actif', 'statut' => 'payed'])->get();
     $lastPayedFactsUUIDs = $refacturation_payer->pluck('uuid')->toArray();
-    $factureByPresPayed = FacturePrestation::whereIn('facture_uuid', $lastPayedFactsUUIDs)->get();
+    $factureByPresPayed = FacturePrestation::where('etat', 'actif')->whereIn('facture_uuid', $lastPayedFactsUUIDs)->get();
     $valeurTotalsPayed = $factureByPresPayed->sum('total');
     $totalPayedCount = $refacturation_payer->count();
     // facture rejeter
     $refacturation_rejeter = Refacturation::where(['etat' => 'actif', 'statut' => 'canceled'])->get();
     $lastRejetedFactsUUIDs = $refacturation_rejeter->pluck('uuid')->toArray();
-    $factureByPresRejeter = FacturePrestation::whereIn('facture_uuid', $lastRejetedFactsUUIDs)->get();
+    $factureByPresRejeter = FacturePrestation::where('etat', 'actif')->whereIn('facture_uuid', $lastRejetedFactsUUIDs)->get();
     $valeurTotalsRejeter = $factureByPresRejeter->sum('total');
     $totalRejetedCount = $refacturation_rejeter->count();
+
+    // facture echue date echeance < now();
+    $factureEchu =  Refacturation::where('etat', 'actif')->whereNotIn('statut', ['payed', 'cancel'])
+    ->where('date_echeance', '<', now())->get();
+    $factureEchuCount = $factureEchu->count();
+    $valeur_factureEchu = $factureEchu->sum(function ($facture) {
+    return $facture->prestations->where('etat', 'actif')->sum('total');
+    });
+
+    // count& value all debou & prest 
+    $totalFactDebou = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'debours'])->count();
+    $valeurTotalDebou = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'debours'])->sum('total');
+
+    $totalFactPrestation = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'prestation'])->count();
+    $valeurTotalPrestation = FacturePrestation::where(['etat'=> 'actif', 'type_prestation'=>'prestation'])->sum('total');
 
     $nbrTotalIn = $InStock->count();
     $nbrTotalInConform = $conformInStock->count();
     $nbrTotalInNoConfrom = $noConformInStock->count();
 
+    $facturesFournisseurActives = FacturePrestation::where('etat', 'actif')->get();
+    $facturesFournisseurDebours = FacturePrestation::where(['etat' => 'actif', 'type_prestation' => 'debours'])->get();
+    $facturesFournisseurPrestation = FacturePrestation::where(['etat' => 'actif', 'type_prestation' => 'prestation'])->get();
+
+    $currentYear = Carbon::now()->year;
+
+        //factures fournisseur pour l'année en cours
+        $facturesFournisseurActives = $facturesFournisseurActives->filter(function ($facture) use ($currentYear) {
+            return Carbon::parse($facture->created_at)->year == $currentYear;
+        });
+        $facturesFournisseurDebours = $facturesFournisseurDebours->filter(function ($facture) use ($currentYear) {
+            return Carbon::parse($facture->created_at)->year == $currentYear;
+        });
+        $facturesFournisseurPrestation = $facturesFournisseurPrestation->filter(function ($facture) use ($currentYear) {
+            return Carbon::parse($facture->created_at)->year == $currentYear;
+        });
+
+        // totaux des factures fournisseur pour chaque mois de l'année en cours
+        $totauxFournisseurParMois = $facturesFournisseurActives
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            })
+            ->map(function($month) {
+                return $month->sum('total');
+            });
+
+        // total debours per month
+        $totauxFournisseurDeboursParMois = $facturesFournisseurDebours
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            })
+            ->map(function($month) {
+                return $month->sum('total');
+            });
+
+        // total debours per month
+        $totauxFournisseurPrestationParMois = $facturesFournisseurPrestation
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            })
+            ->map(function($month) {
+                return $month->sum('total');
+            });
+
+        $facturesPrestataireActives = PrestationLine::where('etat', 'actif')->get();
+
+        $lignesDePrestationPayees = PrestationLine::where('etat', 'actif')->whereHas('facture', function ($query) {
+            $query->where('statut', 'payed')->where('etat', 'actif');
+        })->whereIn('uuid', $facturesPrestataireActives->pluck('uuid'))->get();
+
+
+        //factures prestataire pour l'année en cours
+        $facturesPrestataireActives = $facturesPrestataireActives->filter(function ($facture) use ($currentYear) {
+            return Carbon::parse($facture->created_at)->year == $currentYear;
+        });
+        $facturesPrestatairePayed = $lignesDePrestationPayees->filter(function ($facture) use ($currentYear) {
+            return Carbon::parse($facture->created_at)->year == $currentYear;
+        });
+
+        // totaux des factures prestataire pour chaque mois de l'année en cours
+        $totauxPrestataireParMois = $facturesPrestataireActives
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            })
+            ->map(function($month) {
+                return $month->sum('totalLigne');
+            });
+        $totauxPrestatairePayedParMois = $facturesPrestatairePayed
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('m');
+            })
+            ->map(function($month) {
+                return $month->sum('totalLigne');
+            });
+
+        // stocker les totaux pour chaque mois
+        $montantsFournisseurParMois = [];
+        $montantFournisseurDeboursParMois = [];
+        $montantFournisseurPrestationParMois = [];
+        $montantsPrestataireParMois = [];
+        $montantsPrestatairePayedParMois = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $mois = str_pad($i, 2, '0', STR_PAD_LEFT); // zéro initial si nécessaire pour le format de mois
+            $montantsFournisseurParMois[] = $totauxFournisseurParMois->get($mois, 0);
+            $montantFournisseurDeboursParMois[] = $totauxFournisseurDeboursParMois->get($mois, 0);
+            $montantFournisseurPrestationParMois[] = $totauxFournisseurPrestationParMois->get($mois, 0);
+            $montantsPrestataireParMois[] = $totauxPrestataireParMois->get($mois, 0);
+            $montantsPrestatairePayedParMois[] = $totauxPrestatairePayedParMois->get($mois, 0);
+        }
+
+        $totalProductsCount = Article::where('etat', 'actif')->count();
+        $familyNemba = Article::where('etat', 'actif')->where('familyGroup', 'NEEMBA CI')->get();
+        $familyNembaCount = $familyNemba->count();
+        $percenfamilyNembaCount = ($familyNembaCount / $totalProductsCount) * 100;
+
+        $familyNembaInter = Article::where(['etat'=> 'actif','familyGroup'=> 'NEEMBA INTERNATIONAL' ])->get();
+        $familyNembaInterCount = $familyNembaInter->count();
+        $percenfamilyNembaInter = ($familyNembaInterCount / $totalProductsCount) * 100;
+
+        // Interface central d'achat
+        $sourcingsForCentral = Sourcing::where(['etat' => 'actif'])->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])->get();
+       
         return view('admin.dashbord',
         compact('stockGlobals', 'inFabrication', 'inUsineOut', 'inWaitExpediteImport', 'arrivagePod', 'receivStock', 'inWaitExpediteExport', 'liverExpedite','stockPreview','stockPreviewValue', 'firstNextArrivage',
         'nbrTotalIn', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
         'InStock', 'conformInStockPerMonth', 'noConformInStockPerMonth','nbrTotalInPerMonth', 'nbrTotalInConform', 'nbrTotalInNoConfrom',
         'percentageInFabrication','percentageinUsineOut','percentageinWaitExpediteImport', 'percentagearrivagePod', 'percentagereceivStock', 'percentageinWaitExpediteExport', 'percentageliverExpedite',
-         'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount' ,    'valeurallFactByPrestationActif', 'totalallFactByPrestationActifCount' , 'valeur_bon_a_payer', 'facture_bon_a_payer_count', 'facture_payer_count', 'valeur_payer', 'facture_canceled_count', 'valeur_canceled', 'firstLatestExpedition'));
+         'conformInStock', 'noConformInStock', 'conformInStockWeekly', 'noConformInStockWeekly', 'InStockWekly', 'firstDayOfWeek', 'lastDayOfWeek', 'listInStock', 'outStockMonth', 'outStockWekly', 'totalValue', 'totalValueWeekly', 'nextArrive', 'nbrProdPerExpedition', 'sourcings', 'averageDelaySourcing', 'sourcingInValidation', 'sourcingInValidatPerMonth', 'sourcingPerMonths', 'sourcingReceive','percentageConform', 'percentageSourcingsPerMonth','percenSourcWaitLivrPerMonth','percenReceivMonth','nbrTotalOut','nbrTotalOutConform','nbrTotalOutNoConfrom','allTransitPerMonth','mostUsedTransitaire','allTransitPerWekly','nbrExpeditionLivraison', 'averageDelayTransit', 'averageDelayTransport', 'conformInStockGlobal', 'noConformInStockGlobal','sourcingPerWekly','percentageSourcingsPerWekly', 'percWaitSourPerWekly', 'percentagereceivPerWekly', 'sourcingReceivePerWekly', 'nbrExpeditionToDocValidate', 'nbrTotalExpedition', 'nbrExpeditionStarted', 'nbrExpeditionWaitExpedite', 'nbrExpeditionExpedier', 'nbrTotalExpeditionActif', 'percentageExpGlobal', 'percentageExpTransit','percentageExpWaitExp', 'percentageExpDelivered', 'averageDelayExpedite', 'latestExpedition', 'resultDate', 'recentExpedition', 'allExpWaitValidatePerMonth', 'percentageExpWaitDocMensuel', 'percentageExpDemarrerMensuel', 'countExpDemarrerPerMonth', 'countExpWaitingPerMonth', 'percentageExpWaitingMensuel','countExpReadyPerMonth', 'percentageExpReadyMensuel', 'total', 'total_count', 'total_bon_payer', 'total_bon_count', 'total_payed', 'total_payed_count', 'total_cancel', 'total_cancel_count', 'factures', 'countSourcingPerWeekly', 'lastFacts' ,'valeurTotals' , 'totalRefacturcount', 'valeurTotalsPayed','valeurTotalsSending', 'totalSendingCount', 'totalPayedCount', 'valeurTotalsRejeter', 'totalRejetedCount' ,    'valeurallFactByPrestationActif', 'totalallFactByPrestationActifCount' , 'valeur_bon_a_payer', 'facture_bon_a_payer_count', 'facture_payer_count', 'valeur_payer', 'facture_canceled_count', 'valeur_canceled', 'firstLatestExpedition', 'factureEchuCount', 'valeur_factureEchu', 'totalFactDebou', 'valeurTotalDebou', 'totalFactPrestation', 'valeurTotalPrestation', 'montantsFournisseurParMois','montantsPrestataireParMois','montantsPrestatairePayedParMois', 'montantFournisseurDeboursParMois', 'montantFournisseurPrestationParMois', 'facturesFournisseurActives', 'facturesFournisseurDebours', 'facturesFournisseurPrestation',
+        'facturePrestataireEchuCount', 'valeur_facturePrestataireEchu', 'facturesPrestataireActives', 'familyNemba', 'familyNembaInter', 'percenfamilyNembaCount', 'percenfamilyNembaInter', 'sourcingsForCentral'));
         // return view('adminHome');
     }
 

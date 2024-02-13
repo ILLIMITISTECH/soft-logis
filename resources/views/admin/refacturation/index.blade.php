@@ -22,6 +22,103 @@
     </div>
     <!--end breadcrumb-->
 
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Total factures</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeur_global_facture, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-success size_12"><i class="bx bxs-up-arrow align-middle"></i>{{ $facture_count }} Factures</p>
+                        </div>
+                        <div class="widgets-icons bg-light-success text-success ms-auto"><i class="bx bxs-wallet"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Envoyé au Beneficiaire</p>
+                            <h4 class="my-1 size_12">{{ number_format($totalFactSend, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-up-arrow align-middle'></i>{{ $valeur_totalFactSend }} Factures</p>
+                        </div>
+                        <div class="widgets-icons bg-light-info text-danger ms-auto"><i class='bx bxs-group'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Facture payé</p>
+                            <h4 class="my-1 size_12">{{ number_format($totalFactPay, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-success size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $valeur_totalFactPay }} factures</p>
+                        </div>
+                        <div class="widgets-icons bg-light-danger text-info ms-auto"><i class='bx bxs-binoculars'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary ">Factures échues non réglées</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeur_factureEchu, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-danger size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $factureEchuCount}} factures</p>
+                        </div>
+                        <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary ">Total Debours</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeurTotalDebou, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $totalFactDebou}} Debours</p>
+                            
+                        </div>
+                        <div class="widgets-icons bg-light-info text-info ms-auto"><i class='bx bx-line-chart-down'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary ">Total Prestations</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeurTotalPrestation, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $totalFactPrestation}} Prestation</p>
+                            
+                            
+                        </div>
+                        <div class="widgets-icons bg-light-info text-info ms-auto"><i class='bx bx-line-chart-down'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="card">
         <div class="card-body">
             <div class="d-lg-flex align-items-center mb-4 gap-3">
@@ -37,8 +134,9 @@
                             <th>N°</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
-                            <th class="text-end">Total (XOF)</th>
-                            <th class="text-end">Total (€)</th>
+                            <th>Tva</th>
+                            <th class="text-end">Total ht (XOF)</th>
+                            <th class="text-end">Total ht (€)</th>
                             <th>Date Echeance</th>
                             <th>Actions</th>
                         </tr>
@@ -46,9 +144,9 @@
                     <tbody>
                         @forelse ($refacturations as $item )
                         @php
-                             $fac_pres = DB::table('facture_prestations')->where('etat', 'actif')->where('facture_uuid', $item->uuid)->sum('total');
-                             $exchangeRate = 0.00152;
-                             $euroAmount = $fac_pres * $exchangeRate;
+                            $fac_pres = DB::table('facture_prestations')->where('etat', 'actif')->where('facture_uuid', $item->uuid)->sum('total');
+                            $exchangeRate = 0.00152;
+                            $euroAmount = $fac_pres * $exchangeRate;
                         @endphp
                         <tr>
                             <td>
@@ -88,9 +186,14 @@
                                 </div>
                                 @endif
                             </td>
+                            <td>{{ $item->tva }}%</td>
                             <td class="text-end">{{ number_format($fac_pres, 2, ',', ' ') ?? 'N/A'  }}   XOF</td>
                             <td class="text-end">{{ number_format($euroAmount, 2, ',', ' ') ?? 'N/A'  }}   €</td>
-                            <td>{{ Carbon\Carbon::parse($item->date_echeance)->format('d/m/Y') ?? 'N/A' }}</td>
+
+                            
+                            <td @if($item->statut !== 'payed' && Carbon\Carbon::parse($item->date_echeance)->isPast()) class="text-danger" @endif>
+                                {{ Carbon\Carbon::parse($item->date_echeance)->format('d/m/Y') ?? 'N/A' }}
+                            </td>
                             <td>
                                 <div class="d-flex order-actions">
                                     <a href="{{ route('admin.refacturation.show', $item->uuid) }}"
@@ -121,5 +224,6 @@
         </div>
     </div>
     @include('admin.refacturation.addFactureModal')
+
 </div>
 @endsection

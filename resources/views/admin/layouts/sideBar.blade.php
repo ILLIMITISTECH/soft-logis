@@ -204,6 +204,8 @@
                 </li>
                 <li> <a href="{{ route('admin.grille.index') }}"><i class='bx bx-radio-circle'></i>Grille Tarifaire</a>
                 </li>
+                <li> <a href="{{ route('admin.regime') }}"><i class='bx bx-radio-circle'></i>Regime</a>
+                </li>
             </ul>
         </li>
         @endcan

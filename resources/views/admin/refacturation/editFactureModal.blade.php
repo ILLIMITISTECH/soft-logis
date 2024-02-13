@@ -60,99 +60,105 @@
                                     </div>
                                 </div>
                             </div>
-
+                             <hr class="my-4">
                             <div class="bs-stepper-coent">
                                 <form action="{{ route('admin.refacturation.update', $item->uuid) }}" method="post" class="submitForm" enctype="multipart/form-data" >
                                     @csrf
 
-                                    <div class="row g-3">
-                                        <div class="col-12 col-lg-6">
+                                    <div class="">
+                                        <h5 class="mb-0 steper-title">Detail</h5>
+                                        <p class="mb-0 steper-sub-title">Information Complementaire</p>
+                                    </div>
+
+                                    <div class="row g-3 mt-3">
+                                        <div class="col-12 col-lg-4">
                                             <label for="refClient" class="form-label">Ref Client</label>
                                             <input type="text" class="form-control" value="{{ $item->refClient ?? 'N/A'  }}" id="refClient" name="refClient"
                                                 placeholder="Ref Client">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="num_cc" class="form-label">N° Client</label>
                                             <input type="text" class="form-control" id="num_cc" value="{{ $item->num_cc ?? 'N/A'  }}" name="num_cc"
                                                 placeholder="cc012ff879">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="adresseComplete" class="form-label">Adresse Complete</label>
                                             <input type="text" class="form-control" value="{{ $item->adresseComplete ?? 'N/A'  }}" id="adresseComplete"
                                                 name="adresseComplete" placeholder="Adresse Complete">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="email" class="form-label">E-mail Address</label>
                                             <input type="text" class="form-control" value="{{ $item->email ?? 'N/A'  }}" id="email" name="email"
                                                 placeholder="example@xyz.com">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="pol" class="form-label">Pol</label>
                                             <input type="text" id="pol" class="form-control" value="{{ $item->pol ?? 'N/A'  }}" name="pol">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="pod" class="form-label">PoD</label>
                                             <input type="text" id="pod" class="form-control" value="{{ $item->pod ?? 'N/A'  }}" name="pod">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="regime" class="form-label">Regime</label>
                                             <input type="text" id="regime" class="form-control" value="{{ $item->regime ?? 'N/A'  }}" name="regime">
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-4">
                                             <label for="doit" class="form-label">Doit</label>
                                             <input type="text" class="form-control" id="doit" value="{{ $item->doit ?? 'N/A'  }}" name="doit"
                                                 placeholder="Doit">
+                                        </div>
+                                        <div class="col-12 col-lg-4">
+                                            <label for="num_Dossier" class="form-label">N° Dossier</label>
+                                            <input type="text" class="form-control" id="num_Dossier" value="{{ $item->num_Dossier ?? 'N/A'  }}"
+                                                placeholder="N° Dossier" name="num_Dossier">
                                         </div>
                                     </div>
 
                                     <div  class="bs-stepper-pane2">
                                         <div class="row g-3">
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="designation" class="form-label">Designation</label>
                                                 <input type="text" class="form-control" id="designation" value="{{ $item->designation ?? 'N/A'  }}"
                                                     name="designation" placeholder="Groupe Electrogene">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="num_Commande" class="form-label">N° Commande</label></label>
                                                 <input type="text" class="form-control" id="num_Commande" value="{{ $item->num_Commande ?? 'N/A'  }}"
                                                     name="num_Commande" placeholder="cmd023564">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="num_Bl" class="form-label">N° Bon Livraison</label>
                                                 <input type="text" class="form-control" id="num_Bl" value="{{ $item->num_Bl ?? 'N/A'  }}" name="num_Bl"
                                                     placeholder="cmd023564">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="navire" class="form-label">Navire/Voyage</label>
                                                 <input type="text" class="form-control" id="navire" value="{{ $item->navire ?? 'N/A'  }}" name="navire"
                                                     placeholder="navire xxxx">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="destination" class="form-label">Destination</label>
                                                 <input type="text" class="form-control" id="destination" value="{{ $item->destination ?? 'N/A'  }}"
                                                     placeholder="destination" name="destination">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="amateur" class="form-label">Amateur</label>
                                                 <input type="text" class="form-control" id="amateur" value="{{ $item->amateur ?? 'N/A'  }}"
                                                     placeholder="amateur" name="amateur">
                                             </div>
-                                            <div class="col-12 col-lg-6">
-                                                <label for="num_Dossier" class="form-label">N° Dossier</label>
-                                                <input type="text" class="form-control" id="num_Dossier" value="{{ $item->num_Dossier ?? 'N/A'  }}"
-                                                    placeholder="N° Dossier" name="num_Dossier">
-                                            </div>
-                                            <div class="col-12 col-lg-6">
+                                            
+                                            <div class="col-12 col-lg-4">
                                                 <label for="num_Ot" class="form-label">N° OT</label>
                                                 <input type="text" class="form-control" id="num_Ot" placeholder="N° OT" value="{{ $item->num_Ot ?? 'N/A'  }}"
                                                     name="num_Ot">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="volume" class="form-label">Volume</label>
                                                 <input type="text" class="form-control" id="volume" placeholder="volume" value="{{ $item->volume ?? 'N/A'  }}"
                                                     name="volume">
                                             </div>
-                                            <div class="col-12 col-lg-6">
+                                            <div class="col-12 col-lg-4">
                                                 <label for="tva" class="form-label">tva (%)</label>
                                                 <input type="text" class="form-control" value="{{ $item->tva }}" id="tva" placeholder="% TVA"
                                                     name="tva">
@@ -161,14 +167,13 @@
                                         <!---end row-->
 
                                     </div>
+                                     <hr class="my-3">
                                     <div class="bs-stepper-pane2"
                                         aria-labelledby="stepper11trigger44">
-                                        <div class="">
-                                        <h5 class="mb-0 steper-title">ID Facturier</h5>
-                                        <p class="mb-0 steper-sub-title">Detail sur le responsable</p>
-                                            </div>
-                                            <hr>
-                                            <br>
+                                        <div class="my-3">
+                                            <h5 class="mb-0 steper-title">ID Facturier</h5>
+                                            <p class="mb-0 steper-sub-title">Detail sur le responsable</p>
+                                        </div>
                                         <div class="row g-3">
                                             <div class="col-12 col-lg-6">
                                                 <label for="facturier_uuid" class="form-label">Facturier</label>
@@ -200,7 +205,7 @@
                                         <!---end row-->
 
                                     </div>
-                                    <button type="submit" class="btn btn-success px-4"
+                                    <button type="submit" class="btn btn-outline-primary px-4 mt-3"
                                                 >Enregistrer</button>
                                 </form>
                             </div>

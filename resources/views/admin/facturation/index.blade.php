@@ -81,6 +81,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
     <div class="card">
@@ -103,7 +104,7 @@
                             <th>Statut</th>
                             <th>Total (XOF)</th>
                             <th>Total (Euro)</th>
-                            <th>Date de Facturation</th>
+                            <th>Date d'echeance</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -154,14 +155,18 @@
                                     </div>
                                 @endif
                             </td>
-                            <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }} </td>
+                            <td>
+                                {{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }}
+                            </td>
                             @php
                                 $valeurEnEuros = $facture->prestationLines->sum('totalLigne') /  655.900;
                                 $valeurEnEurosFormattee = number_format($valeurEnEuros, 0, ',', ' ');
                             @endphp
 
                             <td>{{ $valeurEnEurosFormattee }}</td>
-                            <td>{{ $facture->created_at->diffForHumans() }}</td>
+                            <td @if($facture->statut !== 'payed' && Carbon\Carbon::parse($facture->date_echeance)->isPast()) class="text-danger" @endif>
+                                {{ Carbon\Carbon::parse($facture->date_echeance)->format('d/m/Y') ?? 'N/A' }}
+                            </td>
 
                             <td>
                                 <div class="d-flex order-actions">

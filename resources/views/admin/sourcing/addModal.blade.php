@@ -171,16 +171,30 @@
                                                 </div>
                                             </div>
 
-                                            <div class="my-3 col-12" style="font-size: 13px">
-                                                <label for="num_bl" class="form-label text-uppercase"> N° BL 
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input type="text" class="form-control @error('num_bl') is-invalid @enderror" id="num_bl" name="num_bl" autocomplete="off" required>
-                                                @error('num_bl')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                                @enderror
+                                            <div class="row mt-4">
+                                                <div class="my-3 col-6" style="font-size: 13px">
+                                                    <label for="num_bl" class="form-label text-uppercase"> N° BL 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control @error('num_bl') is-invalid @enderror" id="num_bl" name="num_bl" autocomplete="off" required>
+                                                    @error('num_bl')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="my-3 col-6" style="font-size: 13px">
+                                                    <label for="regime_uuid" class="form-label text-uppercase"> Regime
+                                                    </label>
+                                                    <select name="regime_uuid" id="regime_uuid" class="form-select">
+                                                        <option value="" class="form-control">Selectionné un Regime ...</option>
+                                                        @foreach ($regimes as $item)
+                                                            <option class="form-control" value="{{ $item->uuid }}">
+                                                                {{ $item->regime }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
 
                                             <hr class="mb-4 mt-2">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Regime;
 use App\Models\OdLivraison;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class Sourcing extends Model
         'id_navire',
         'info_navire',
         'num_bl',
+        'regime_uuid',
         'date_arriver',
         'date_depart',
         'note',
@@ -51,6 +53,10 @@ class Sourcing extends Model
     public function startValidate_by()
     {
         return $this->belongsTo(User::class, 'startValidate_by', 'uuid');
+    }
+    public function regime()
+    {
+        return $this->belongsTo(Regime::class, 'regime_uuid', 'uuid');
     }
 
     public function products()

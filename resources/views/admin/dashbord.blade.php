@@ -4,6 +4,9 @@
 <!--start page wrapper -->
 
 <div class="page-content">
+
+    @include('admin.dashboard.centralAchat')
+
     <div class="row">
         <div class="col-12 col-lg-8 d-flex">
             <div class="card radius-10 w-100">
@@ -28,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body pb-0 ">
+                <div class="card-body pb-0 mb-0">
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
                         <div class="col">
                             <div class="card radius-10">
@@ -152,8 +155,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 row " style="min-height: 150px">
-                        <div class="col-4">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2" style="min-height: 150px">
+                        <div class="col">
                             <div class="card radius-10 ">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center cursor-pointer"
@@ -172,72 +175,90 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                <p class="mb-2 size_12">NEEMBA CI || <span class="text-primary">{{ $familyNemba->count() }}</span><span
+                                        class="float-end">{{ round($percenfamilyNembaCount) }}%</span></p>
+                                <div class="progress" style="height: 7px;">
+                                    <div class="progress-bar bg-primary progress-bar-striped"
+                                        role="progressbar" style="width: {{ $percenfamilyNembaCount }}%"></div>
+                                </div>
+                            </div>
 
-                        <div class="col-8 row gx-1">
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentageInFabrication }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageInFabrication }}%; width: 20px;">{{ $percentageInFabrication }}</div>
-                                    </div>
+                            <div class="mb-4">
+                                <p class="mb-2 size_12">NEEMBA INTERNATIONAL || <span class="text-danger">{{ $familyNembaInter->count() }}</span><span
+                                        class="float-end">{{ round($percenfamilyNembaInter) }}%</span></p>
+                                <div class="progress" style="height: 7px;">
+                                    <div class="progress-bar bg-danger progress-bar-striped"
+                                        role="progressbar" style="width: {{ $percenfamilyNembaInter}}%"></div>
                                 </div>
-                                <p class="size_9 mt-4">Fabrication</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentageinUsineOut }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinUsineOut }}%; width: 20px;">{{ $percentageinUsineOut }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">Sortie Usine</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentageinWaitExpediteImport }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteImport }}%; width: 20px;">{{ $percentageinWaitExpediteImport }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">Cours d'import</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentagearrivagePod }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagearrivagePod }}%; width: 20px;">{{ $percentagearrivagePod }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">POD</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentagereceivStock }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagereceivStock }}%; width: 20px;">{{ $percentagereceivStock }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">Stocké</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentageinWaitExpediteExport }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteExport }}%; width: 20px;">{{ $percentageinWaitExpediteExport }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">cours d'export</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-center col px-0" style="height: 80%">
-                                <div class="flex-grow-1">
-                                    <span class="">{{ $percentageliverExpedite }} %</span>
-                                    <div class="progress vertical-progress text-center">
-                                        <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageliverExpedite }}%; width: 20px;">{{ $percentageliverExpedite }}</div>
-                                    </div>
-                                </div>
-                                <p class="size_9 mt-4">Livré</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col row mt-0">
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentageInFabrication }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageInFabrication }}%; width: 20px;">{{ $percentageInFabrication }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">Fabrication</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentageinUsineOut }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinUsineOut }}%; width: 20px;">{{ $percentageinUsineOut }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">Sortie Usine</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentageinWaitExpediteImport }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteImport }}%; width: 20px;">{{ $percentageinWaitExpediteImport }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">Cours d'import</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentagearrivagePod }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagearrivagePod }}%; width: 20px;">{{ $percentagearrivagePod }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">POD</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentagereceivStock }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentagereceivStock }}%; width: 20px;">{{ $percentagereceivStock }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">Stocké</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentageinWaitExpediteExport }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteExport }}%; width: 20px;">{{ $percentageinWaitExpediteExport }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">cours d'export</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
+                        <div class="flex-grow-1">
+                            <span class="size_12">{{ $percentageliverExpedite }} %</span>
+                            <div class="progress vertical-progress text-center">
+                                <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageliverExpedite }}%; width: 20px;">{{ $percentageliverExpedite }}</div>
+                            </div>
+                        </div>
+                        <p class="size_9 mt-4">Livré</p>
                     </div>
                 </div>
 
@@ -247,7 +268,7 @@
                             <div class="col-12 row">
                                 <div class="col-4"></div>
                                 <div class="col-4">
-                                    <h5 class="mb-0">{{ $stockGlobals->count() }}</h5>
+                                    <h6 class="mb-0 size_14">{{ $stockGlobals->count() }}</h5>
                                 </div>
                                 <div class="col-4 text-end mt-0 m-0 px-0">
                                     <a href="{{ route('admin.allProduction') }}">
@@ -256,7 +277,7 @@
                                 </div>
                             </div>
 
-                            <small class="mb-0">Quantité sur chaine de production</small>
+                            <small class="mb-0 size_12">Quantité sur chaine de production</small>
                             <p>
                                 <i class="bx bx-up-arrow-alt align-middle"></i>
                                 {{ number_format($stockGlobals->sum('price_unitaire')) }} <span>Fcfa</span>
@@ -324,7 +345,11 @@
 
                         <div class="card-body h-75">
                             <div class="chart-container-2">
-                                <canvas id="chartInStock"></canvas>
+                                @if ( $InStock->count() != 0)
+                                    <canvas id="chartInStock"></canvas>
+                                @else
+                                <center>Aucune entrée pour le mois en cours</center>
+                                @endif
                             </div>
                         </div>
 
@@ -1665,17 +1690,17 @@
                         <strong class="text-uppercase">Facture Prestataire</strong>
                     </div>
                 </div>
-                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 mt-4">
                     <div class="col">
                         <div class="card radius-10 border-start border-0 border-4 border-info">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Total des Factures</p>
-                                        <h4 class="my-1 text-info">
+                                        <h4 class="my-1 text-info size_12">
                                             {{ number_format($valeurallFactByPrestationActif, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">
+                                        <p class="mb-0 font-13 size_12">
                                             {{ $totalallFactByPrestationActifCount }}
                                             @if ($totalallFactByPrestationActifCount > 0)
                                                 Factures
@@ -1697,10 +1722,10 @@
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Bon à Payer</p>
-                                        <h4 class="my-1 text-danger">
+                                        <h4 class="my-1 text-danger size_12">
                                             {{ number_format($valeur_bon_a_payer, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $facture_bon_a_payer_count }} Facture</p>
+                                        <p class="mb-0 font-13 size_12">{{ $facture_bon_a_payer_count }} Facture</p>
                                     </div>
                                     <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto">
                                         <i class='bx bxs-wallet'></i>
@@ -1716,10 +1741,10 @@
 
                                     <div>
                                         <p class="mb-0 text-secondary">Payée</p>
-                                        <h4 class="my-1 text-success">{{ number_format($valeur_payer, 0, ',', ' ') }}
+                                        <h4 class="my-1 text-success size_12">{{ number_format($valeur_payer, 0, ',', ' ') }}
                                             Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $facture_payer_count }} Facture</p>
+                                        <p class="mb-0 font-13 size_12">{{ $facture_payer_count }} Facture</p>
                                     </div>
                                     <div
                                         class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
@@ -1736,10 +1761,10 @@
                                     <div>
 
                                         <p class="mb-0 text-secondary">Rejeter</p>
-                                        <h4 class="my-1 text-warning">{{ number_format($valeur_canceled, 0, ',', ' ') }}
+                                        <h4 class="my-1 text-warning size_12">{{ number_format($valeur_canceled, 0, ',', ' ') }}
                                             Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $facture_canceled_count }} Facture
+                                        <p class="mb-0 font-13 size_12">{{ $facture_canceled_count }} Facture
                                             @if($facture_canceled_count > 0)s @endif
                                         </p>
                                     </div>
@@ -1750,8 +1775,47 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="card radius-10 border-start border-0 border-4 border-warning">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary">Factures Echues</p>
+                                        <h4 class="my-1 text-warning size_12">{{ number_format($valeur_facturePrestataireEchu, 0, ',', ' ') }}
+                                            Fcfa
+                                        </h4>
+                                        @if($facturePrestataireEchuCount > 1)
+                                            <p class="mb-0 font-13">{{ $facturePrestataireEchuCount }} Factures</p>
+                                        @else
+                                        <p class="mb-0 font-13">{{ $facturePrestataireEchuCount }} Facture</p>
+                                        @endif
+                                    </div>
+                                    <div class="widgets-icons-2 rounded-circle bg-danger text-white ms-auto">
+                                        <i class='bx bxs-time-five'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--fin de la ligne-->
+                <div class="row d-none">
+					<div class="col-12 col-lg-12 d-flex">
+						<div class="card radius-10 w-100">
+							<div class="card-body">
+								<div class="d-flex align-items-center ms-auto font-13 gap-2 mb-3">
+									<span class="border px-1 rounded cursor-pointer"><i class="bx bxs-circle me-1"
+											style="color: #14abef"></i>Prestataire</span>
+									<span class="border px-1 rounded cursor-pointer"><i class="bx bxs-circle me-1"
+											style="color: #07ff5e"></i>Payer</span>
+								</div>
+								<div class="chart-container-1">
+									<canvas id="chartPrestataire"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
                 <!--end row-->
                 <div class="card radius-10">
                     <div class="card-header">
@@ -1772,7 +1836,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>Code</th>
-                                        <th>Benefinciaire</th>
+                                        <th>Beneficiaire</th>
                                         <th>Statut</th>
                                         <th>Montant</th>
                                         <th>Date</th>
@@ -1780,56 +1844,63 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @forelse ($factures as $facture )
-                                    <tr>
-                                        <td>{{ $facture->code ?? 'N/A'}}</td>
-
-                                        <td>
-                                            @if ($facture->typeFacture == 'transitaire')
-                                            {{ $facture->transitaire->raison_sociale ?? 'N/A' }}
-                                            @elseif ($facture->typeFacture == 'transporteur')
-                                            {{ $facture->transporteur->raison_sociale ?? 'N/A' }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($facture->statut == 'reccording')
-                                            <div
-                                                class="badge rounded-pill text-light bg-primary p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Enregistrement
-                                            </div>
-                                            @endif
-                                            @if ($facture->statut == 'good_pay')
-                                            <div
-                                                class="badge rounded-pill text-light bg-danger p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Bon à Payé
-                                            </div>
-                                            @endif
-                                            @if ($facture->statut == 'payed')
-                                            <div
-                                                class="badge rounded-pill text-light bg-gradient-quepal p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Payé
-                                            </div>
-                                            @endif
-                                            @if ($facture->statut == 'cancel')
-                                            <div
-                                                class="badge rounded-pill text-light bg-gradient-blooker p-2 text-uppercase px-3">
-                                                <i class='bx bxs-circle me-1'></i> Rejeter
-                                            </div>
-                                            @endif
-                                        </td>
-
-                                        <td>{{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }}
-                                            Fcfa</td>
-                                        <td>{{ $facture->created_at->format('d/m/Y') }}</td>
-                                        <td>
-                                            @if (!empty($facture->create_by->name) &&
-                                            !empty($facture->create_by->lastname))
-                                            {{ $facture->create_by->name . ' ' . $facture->create_by->lastname }}
-                                            @else
-                                            N/A
-                                            @endif
-                                        </td>
-                                    </tr>
+                                        @if (!empty ($facture->prestationLines))
+                                            <tr>
+                                                <td>{{ $facture->code ?? 'N/A'}}</td>
+        
+                                                <td>
+                                                    @if ($facture->typeFacture == 'transitaire')
+                                                    {{ $facture->transitaire->raison_sociale ?? 'N/A' }}
+                                                    @elseif ($facture->typeFacture == 'transporteur')
+                                                    {{ $facture->transporteur->raison_sociale ?? 'N/A' }}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($facture->statut == 'reccording')
+                                                    <div
+                                                        class="badge rounded-pill text-light bg-primary p-2 text-uppercase px-3">
+                                                        <i class='bx bxs-circle me-1'></i> Enregistrement
+                                                    </div>
+                                                    @endif
+                                                    @if ($facture->statut == 'good_pay')
+                                                    <div
+                                                        class="badge rounded-pill text-light bg-danger p-2 text-uppercase px-3">
+                                                        <i class='bx bxs-circle me-1'></i> Bon à Payé
+                                                    </div>
+                                                    @endif
+                                                    @if ($facture->statut == 'payed')
+                                                    <div
+                                                        class="badge rounded-pill text-light bg-gradient-quepal p-2 text-uppercase px-3">
+                                                        <i class='bx bxs-circle me-1'></i> Payé
+                                                    </div>
+                                                    @endif
+                                                    @if ($facture->statut == 'cancel')
+                                                    <div
+                                                        class="badge rounded-pill text-light bg-gradient-blooker p-2 text-uppercase px-3">
+                                                        <i class='bx bxs-circle me-1'></i> Rejeter
+                                                    </div>
+                                                    @endif
+                                                </td>
+        
+                                                <td>
+                                                    {{ number_format($facture->prestationLines->sum('totalLigne'), 0, ',', ' ') }}Fcfa
+                                                </td>
+                                                <td>{{ $facture->created_at->format('d/m/Y') }}</td>
+                                                <td>
+                                                    @if (!empty($facture->create_by->name) &&
+                                                    !empty($facture->create_by->lastname))
+                                                    {{ $facture->create_by->name . ' ' . $facture->create_by->lastname }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @else
+                                            
+                                        @endif
+                                    
                                     @empty
 
 
@@ -1850,9 +1921,12 @@
     <div class="col-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="fm-search">
-                    <div class="mb-0">
+                <div class="fm-search row">
+                    <div class="mb-0 col-lg-10">
                         <strong class="text-uppercase">Facture Fournisseur</strong>
+                    </div>
+                    <div class="text-end col-lg-2">
+                        <a href="{{ route('admin.refacturation') }}" class="text-outline-primary">Voir plus <i class="bx bx-right-arrow-alt"></i></a>
                     </div>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
@@ -1862,10 +1936,10 @@
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Valeur Total des Factures</p>
-                                        <h4 class="my-1 text-info">
+                                        <h4 class="my-1 text-info size_12">
                                             {{ number_format($valeurTotals, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $totalRefacturcount }}
+                                        <p class="mb-0 font-13 size_12">{{ $totalRefacturcount }}
                                             @if ($totalRefacturcount > 1)
                                             Factures
                                             @else
@@ -1886,10 +1960,10 @@
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Envoyé au Client</p>
-                                        <h4 class="my-1 text-info">
+                                        <h4 class="my-1 text-info size_12">
                                             {{ number_format($valeurTotalsSending, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $totalSendingCount }} Facture</p>
+                                        <p class="mb-0 font-13 size_12">{{ $totalSendingCount }} Facture</p>
                                     </div>
                                     <div
                                         class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
@@ -1905,10 +1979,10 @@
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Payé</p>
-                                        <h4 class="my-1 text-success">
+                                        <h4 class="my-1 text-success size_12">
                                             {{ number_format($valeurTotalsPayed, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $totalPayedCount }} Facture</p>
+                                        <p class="mb-0 font-13 size_12">{{ $totalPayedCount }} Facture</p>
                                     </div>
                                     <div
                                         class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
@@ -1918,17 +1992,16 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="card radius-10 border-start border-0 border-4 border-warning">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <p class="mb-0 text-secondary">Rejeter</p>
-                                        <h4 class="my-1 text-warning">
+                                        <h4 class="my-1 text-warning size_12">
                                             {{ number_format($valeurTotalsRejeter, 0, ',', ' ') }} Fcfa
                                         </h4>
-                                        <p class="mb-0 font-13">{{ $totalRejetedCount }} Facture @if ($totalRejetedCount
+                                        <p class="mb-0 font-13 size_12">{{ $totalRejetedCount }} Facture @if ($totalRejetedCount
                                             >
                                             1)s
                                             @endif</p>
@@ -1940,8 +2013,99 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="card radius-10">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary ">Factures échues non réglées</p>
+                                        <h4 class="my-1 size_12">{{ number_format($valeur_factureEchu, 0, ',', ' ') }} Fcfa</h4>
+                                        <p class="mb-0 font-13 text-danger size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $factureEchuCount}} factures</p>
+                                    </div>
+                                    <div class="widgets-icons bg-light-warning text-warning ms-auto"><i class='bx bx-line-chart-down'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card radius-10">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary ">Total Debours</p>
+                                        <h4 class="my-1 size_12">{{ number_format($valeurTotalDebou, 0, ',', ' ') }} Fcfa</h4>
+                                        <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $totalFactDebou}} Debours</p>
+                                        
+                                    </div>
+                                    <div class="widgets-icons bg-light-info text-info ms-auto"><i class='bx bx-line-chart-down'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card radius-10">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="mb-0 text-secondary ">Total Prestations</p>
+                                        <h4 class="my-1 size_12">{{ number_format($valeurTotalPrestation, 0, ',', ' ') }} Fcfa</h4>
+                                        <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $totalFactPrestation}} Prestation</p>
+                                        
+                                        
+                                    </div>
+                                    <div class="widgets-icons bg-light-info text-info ms-auto"><i class='bx bx-line-chart-down'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--fin de la ligne-->
+
+                <div class="row d-none">
+					<div class="col-12 col-lg-12 d-flex">
+						<div class="card radius-10 w-100">
+							<div class="card-body">
+								<div class="d-flex align-items-center ms-auto font-13 gap-2 mb-3">
+									<span class="border px-1 rounded cursor-pointer"><i class="bx bxs-circle me-1"
+											style="color: #14abef"></i>Fournisseurs</span>
+									<span class="border px-1 rounded cursor-pointer"><i class="bx bxs-circle me-1"
+											style="color: #ffc107"></i>Debours</span>
+									<span class="border px-1 rounded cursor-pointer"><i class="bx bxs-circle me-1"
+											style="color: #ff4507"></i>Prestation</span>
+								</div>
+								<div class="chart-container-1">
+									<canvas id="chart5"></canvas>
+								</div>
+							</div>
+							<div
+								class="row row-cols-1 row-cols-md-3 row-cols-xl-3 g-0 row-group text-center border-top">
+								<div class="col">
+									<div class="p-3">
+										<h5 class="mb-0" style="color: #14abef">{{ number_format($facturesFournisseurActives->sum('total'), '0', ',', ' ')}} XOF</h5>
+										<small class="mb-0">Année en cours <span> <i
+													class="bx bx-up-arrow-alt align-middle"></i> {{ $facturesFournisseurActives->count()}}</span></small>
+									</div>
+								</div>
+								<div class="col">
+									<div class="p-3">
+										<h5 class="mb-0" style="color: #ffc107">{{ number_format($facturesFournisseurDebours->sum('total'), '0', ',', ' ')}} XOF</h5>
+										<small class="mb-0">Année en cours <span> <i
+													class="bx bx-up-arrow-alt align-middle"></i> {{ $facturesFournisseurDebours->count()}} </span></small>
+									</div>
+								</div>
+								<div class="col">
+									<div class="p-3">
+										<h5 class="mb-0" style="color: #ff4507"> {{ number_format($facturesFournisseurPrestation->sum('total'), '0', ',', ' ')}} XOF</h5>
+										<small class="mb-0">Année en cours <span> <i
+                                            class="bx bx-up-arrow-alt align-middle"></i> {{ $facturesFournisseurPrestation->count()}} </span></small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
                 <!--end row-->
                 <div class="card radius-10">
                     <div class="card-header">
@@ -1976,7 +2140,7 @@
                                         <td>{{ $item->num_facture ?? 'N/A'}}</td>
 
                                         <td>
-                                            {{ $item->refClient ?? 'N/A' }}
+                                            {{ $item->doit ?? 'N/A' }}
                                         </td>
                                         <td>
                                             @if ($item->statut == 'draft')
@@ -2004,10 +2168,12 @@
                                             </div>
                                             @endif
                                         </td>
-                                        <td>{{ number_format($item->prestations->sum('total') ?? 0, 0, ',', ' ') }} Fcfa
+                                        <td>{{ number_format($item->prestations->where('etat', 'actif')->sum('total') ?? 0, 0, ',', ' ') }} Fcfa
                                         </td>
 
-                                        <td>{{ $item->date_echeance ?? 'N/A' }}</td>
+                                        <td @if(Carbon\Carbon::parse($item->date_echeance)->isPast()) class="text-danger" @endif>
+                                            {{ Carbon\Carbon::parse($item->date_echeance)->format('d/m/Y') ?? 'N/A' }}
+                                        </td>
 
                                         @if (!empty($item->facturier_uuid))
                                         <td>{{ $item->facturier->name ?? 'N/A' }}
@@ -2030,7 +2196,7 @@
             </div>
         </div>
     </div>
-
+    {{-- @dd($totauxPrestataireParMois); --}}
     <div class="modal fade" id="nextArrivageModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -2107,9 +2273,13 @@
 
 <script>
 
-    var nbrTotalInStock = {{ $nbrTotalIn }};
-    var nbrConformInStock = {{ $nbrTotalInConform }};
-    var nbrNoConformInStock = {{ $nbrTotalInNoConfrom }};
+    // var nbrTotalInStock = {{ $nbrTotalIn }};
+    // var nbrConformInStock = {{ $nbrTotalInConform }};
+    // var nbrNoConformInStock = {{ $nbrTotalInNoConfrom }};
+
+    var nbrTotalInStock = {{ $InStock->count() }};
+    var nbrConformInStock = {{ $conformInStockPerMonth->count() }};
+    var nbrNoConformInStock = {{ $noConformInStockPerMonth->count() }};
 
     var nbrTotalInStockWekly = {{ $nbrTotalOut }};
     var nbrConformInStockWeekly = {{ $nbrTotalOutConform }};
@@ -2123,6 +2293,20 @@
     var inWaitExpediteExport = {{ $inWaitExpediteExport->count() }};
 
 
+    // ... (Votre code existant pour créer les gradients et définir le graphique)
+
+    var totauxFournisseurParMois = <?php echo json_encode($montantsFournisseurParMois); ?>;
+    var totauxFournisseurDeboursParMois = <?php echo json_encode($montantFournisseurDeboursParMois); ?>;
+    var totauxFournisseurPrestationParMois = <?php echo json_encode($montantFournisseurPrestationParMois); ?>;
+    // facture prestataire graph
+    var totauxPrestataireParMois = <?php echo json_encode($montantsPrestataireParMois); ?>;
+    var totauxPrestatairePayedParMois = <?php echo json_encode($montantsPrestatairePayedParMois); ?>;
+    // Donut interface central d'achat
+    var sourcingstarted = {{ $sourcings->where('statut', 'started')->count() }};
+    var sourcingWaitDoc = {{ $sourcings->where('statut', 'validateDoc')->count() }};
+    var sourcingInTransit = {{ $sourcings->where('statut', 'odTransit')->count() }};
+    var sourcingInLivraison = {{ $sourcings->where('statut', 'odlivraison')->count() }};
+    var sourcingStocked = {{ $sourcings->whereIn('statut', ['stocked', 'received'])->count() }};
 
 </script>
 
@@ -2159,5 +2343,4 @@
 
 
 
-{{-- </div> --}}
 @endsection

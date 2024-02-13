@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\PrestationLine;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class FacturationController extends Controller
@@ -23,6 +24,7 @@ class FacturationController extends Controller
         $prestatairesTransits = Company::where(['etat' => 'actif', 'type' =>'transitaire'])->get();
 
         $factures = Facturation::where('etat', 'actif')->get();
+        // dd($factures);
         $facturesCount = $factures->count();
         $prestationLines = PrestationLine::where('etat', 'actif')->get();
         $totalGlobalLine = $prestationLines->sum('totalLigne');
@@ -47,8 +49,6 @@ class FacturationController extends Controller
         $valeur_canceled = $facture_cancel->sum(function ($facture) {
             return $facture->prestationLines->sum('totalLigne');
         });
-
-
 
 
         $factureTransport = $factures->sum('montantTotalTtcTransport');
@@ -117,7 +117,7 @@ class FacturationController extends Controller
 
                     // 'facture_original' => $image,
                     'note' => $request->note,
-                    'date_paiement' => $request->date_paiement,
+                    // 'date_paiement' => $request->date_paiement,
                     'user_create' => Auth::id(),
 
                     'etat' => 'actif',
@@ -428,7 +428,11 @@ class FacturationController extends Controller
             DB::beginTransaction();
             try {
 
-                $saving= Facturation::where(['uuid'=>$id])->update(['statut'=>"payed"]);
+                $saving= Facturation::where(['uuid'=>$id])->update([
+                    'statut'=>"payed",
+                    'date_paiement'=> now(),
+                    'user_payed'=> auth::user()->id,
+                ]);
 
                 if ($saving) {
 

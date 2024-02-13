@@ -97,9 +97,9 @@
 
 	<script src="{{ asset('assets/js/index.js') }}" ></script>
 	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}" ></script>
-	<script src="{{ asset('assets/js/index2.js') }}" ></script>
-
-
+	
+	
+	
 	<script src="{{ asset('assets/plugins/chartjs/js/Chart.extension.js') }}"></script>
 	<script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('assets/js/index3.js') }}" ></script>
@@ -113,6 +113,9 @@
 	<!--app JS-->
     <script src="{{ asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+	<script src="{{ asset('assets/plugins/raphael/raphael-min.js')}}"></script>
+	<script src="{{ asset('assets/plugins/morris/js/morris.js')}}"></script>
+	<script src="{{ asset('assets/js/index2.js') }}" ></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js"></script>
 
 	<script>

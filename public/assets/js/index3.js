@@ -3,15 +3,14 @@ $(function() {
 	
 	// chart 1
 	$('#chart1').sparkline([5,8,7,10,9,10,8,6,4,6,8,7,6,8], {
-            type: 'bar',
-            height: '35',
-            barWidth: '3',
-            resize: true,
-            barSpacing: '3',
-            barColor: '#fff'
-        });
+        type: 'bar',
+        height: '35',
+        barWidth: '3',
+        resize: true,
+        barSpacing: '3',
+        barColor: '#fff'
+    });
 
-     
     // chart 2
     $("#chart2").sparkline([0,5,3,7,5,10,3,6,5,10], {
             type: 'line',
@@ -35,6 +34,27 @@ $(function() {
      });
 	 
 	 
+    Morris.Donut({
+        element: 'chartDonut',
+        data: [{
+          label: "Demarrer",
+          value: sourcingstarted,
+        }, {
+          label: "Documentation",
+          value: sourcingWaitDoc,
+        }, {
+          label: "En Transit",
+          value: sourcingInTransit,
+        }, {
+          label: "En Livraison",
+          value: sourcingInLivraison,
+        }, {
+          label: "Reçu/Stocké",
+          value: sourcingStocked,
+        }],
+        resize: true,
+        colors:['#999999', '#00FFFF', '#f4b905','#f80808', '#099420']
+    });
 
 	// chart 4	
 	$("#chart4").sparkline([5,6,7,9,9,5,3,2,2,4,6,7], {
@@ -48,86 +68,134 @@ $(function() {
 	});
 	
 
+  var ctx = document.getElementById('chartPrestataire').getContext('2d');
+
+  // Créez les gradients ici
+  var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300); // total facture
+  gradientStroke1.addColorStop(0, '#6078ea');  
+  gradientStroke1.addColorStop(1, '#17c5ea'); 
   
-// chart 5
- var ctx = document.getElementById('chart5').getContext('2d');
-
-      var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-      gradientStroke1.addColorStop(0, '#17ead9');
-      gradientStroke1.addColorStop(1, '#6078ea');
-
-      var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-      gradientStroke2.addColorStop(0, '#f80759');
-      gradientStroke2.addColorStop(1, '#bc4e9c');
-
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: [1, 2, 3, 4, 5, 6, 7, 8],
-          datasets: [{
-            label: 'Downloads',
-            data: [0, 30, 60, 25, 60, 25, 50, 0],
-            pointBorderWidth: 2,
-            pointBackgroundColor: 'transparent',
-			 pointHoverBackgroundColor: gradientStroke1,
-            borderColor: gradientStroke1,
-            fill: {
-              target: 'origin',
-              above: gradientStroke1,   // Area will be red above the origin
-              //below: 'rgb(21 202 32 / 100%)'   // And blue below the origin
-              }, 
-            tension: 0.4,
-            borderWidth: 2
-          }, {
-            label: 'Earnings',
-            data: [0, 60, 25, 80, 35, 75, 30, 0],
-            pointBorderWidth: 2,
-            pointBackgroundColor: 'transparent',
-			pointHoverBackgroundColor: gradientStroke2,
-            borderColor: gradientStroke2,
-            fill: {
-              target: 'origin',
-              above: gradientStroke2,   // Area will be red above the origin
-              //below: 'rgb(21 202 32 / 100%)'   // And blue below the origin
-              }, 
-            tension: 0.4,
-            borderWidth: 2
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          plugins: {
+  var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+  gradientStroke2.addColorStop(0, '#00cc00');
+  gradientStroke2.addColorStop(1, '#ff99cc');
+  
+  
+  // ... (code pour définir le graphique avec les données calculées)
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+              label: 'Total facture',
+              data: totauxPrestataireParMois, // Utilisez les totaux des factures Fournisseur pour chaque mois
+              borderColor: gradientStroke1,
+              backgroundColor: gradientStroke1,
+              hoverBackgroundColor: gradientStroke1,
+              pointRadius: 0,
+              fill: false,
+              borderRadius: 20,
+              borderWidth: 0
+          },{
+              label: 'Payer',
+              data: totauxPrestatairePayedParMois,
+              borderColor: gradientStroke2,
+              backgroundColor: gradientStroke2,
+              hoverBackgroundColor: gradientStroke2,
+              pointRadius: 0,
+              fill: false,
+              borderRadius: 20,
+              borderWidth: 0
+          }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        barPercentage: 0.5,
+        categoryPercentage: 0.8,
+        plugins: {
             legend: {
-              display: false,
+                display: false,
             }
-          },
-          tooltips: {
-            enabled: false
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontColor: '#585757'
-              },
-              gridLines: {
-                display: true,
-                color: "rgba(0, 0, 0, 0.07)"
-              },
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontColor: '#585757'
-              },
-              gridLines: {
-                display: true,
-                color: "rgba(0, 0, 0, 0.07)"
-              },
-            }]
-          }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
         }
-      });
+      }
+  });
+
+  
+
+var ctx = document.getElementById('chart5').getContext('2d');
+
+// Créez les gradients ici
+var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300); // total facture
+gradientStroke1.addColorStop(0, '#6078ea');  
+gradientStroke1.addColorStop(1, '#17c5ea'); 
+
+var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+gradientStroke2.addColorStop(0, '#ff8359');
+gradientStroke2.addColorStop(1, '#ffdf40');
+
+var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+gradientStroke3.addColorStop(0, '#833ab4');
+gradientStroke3.addColorStop(1, '#fd1d1d');
+
+
+// ... (code pour définir le graphique avec les données calculées)
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+            label: 'Fournisseur',
+            data: totauxFournisseurParMois, // Utilisez les totaux des factures Fournisseur pour chaque mois
+            borderColor: gradientStroke1,
+            backgroundColor: gradientStroke1,
+            hoverBackgroundColor: gradientStroke1,
+            pointRadius: 0,
+            fill: false,
+            borderRadius: 20,
+            borderWidth: 0
+        },{
+            label: 'Debours',
+            data: totauxFournisseurDeboursParMois,
+            borderColor: gradientStroke2,
+            backgroundColor: gradientStroke2,
+            hoverBackgroundColor: gradientStroke2,
+            pointRadius: 0,
+            fill: false,
+            borderRadius: 20,
+            borderWidth: 0
+        },{
+              label: 'Prestations',
+              data: totauxFournisseurPrestationParMois,
+              borderColor: gradientStroke3,
+              backgroundColor: gradientStroke3,
+              hoverBackgroundColor: gradientStroke3,
+              pointRadius: 0,
+              fill: false,
+              borderRadius: 20,
+              borderWidth: 0
+          }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      barPercentage: 0.5,
+      categoryPercentage: 0.8,
+      plugins: {
+          legend: {
+              display: false,
+          }
+      },
+      scales: {
+          y: {
+              beginAtZero: true
+          }
+      }
+    }
+});
+
 
 
    // chart 6
@@ -521,6 +589,9 @@ var ctx = document.getElementById("chart18").getContext('2d');
 	  
 	  
 });
+
+
+
 
 
  // Index Notification

@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $item->refClient ?? 'N/A' }}</td>
+                            <td>{{ $item->doit ?? 'N/A' }}</td>
                             <td>
                                 @if ($item->statut == 'draft')
                                 <div

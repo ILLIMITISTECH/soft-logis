@@ -145,8 +145,22 @@
                         @forelse ($refacturations as $item )
                         @php
                             $fac_pres = DB::table('facture_prestations')->where('etat', 'actif')->where('facture_uuid', $item->uuid)->sum('total');
+
                             $exchangeRate = 0.00152;
-                            $euroAmount = $fac_pres * $exchangeRate;
+                            
+
+                            $prestations_totalsS = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['type_prestation'=>'prestation'])->where(['etat'=>"actif"])->sum('total');
+                            $prestations_totals_debours = DB::table('facture_prestations')->where(['facture_uuid'=>$item->uuid])->where(['type_prestation'=>'debours'])->where(['etat'=>"actif"])->sum('total');
+                            $com = 1.95;
+                            $comm_debours = $prestations_totals_debours * $com;
+                            $comm_sous_debours = ($comm_debours / 100);
+
+                            $tvaPerCent = $item->tva;
+                            $prestations_totals = $prestations_totalsS + $comm_sous_debours;
+                            $tva = ($prestations_totals * $tvaPerCent) / 100;
+                            $total_ht = ($prestations_totals + $prestations_totals_debours);
+                            $total_xof = ($total_ht + $tva);
+                            $euroAmount = $total_xof * $exchangeRate;
                         @endphp
                         <tr>
                             <td>
@@ -186,11 +200,11 @@
                                 </div>
                                 @endif
                             </td>
-                            <td>{{ $item->tva }}%</td>
-                            <td class="text-end">{{ number_format($fac_pres, 2, ',', ' ') ?? 'N/A'  }}   XOF</td>
+
+                            <td>{{ $item->tva ?? '--'}}%</td>
+                            <td class="text-end">{{ number_format($total_xof, 2, ',', ' ') ?? 'N/A'  }}   XOF</td>
                             <td class="text-end">{{ number_format($euroAmount, 2, ',', ' ') ?? 'N/A'  }}   €</td>
 
-                            
                             <td @if($item->statut !== 'payed' && Carbon\Carbon::parse($item->date_echeance)->isPast()) class="text-danger" @endif>
                                 {{ Carbon\Carbon::parse($item->date_echeance)->format('d/m/Y') ?? 'N/A' }}
                             </td>

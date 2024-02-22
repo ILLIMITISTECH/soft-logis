@@ -164,7 +164,10 @@
                                         <dt class="col-sm-8 text-end">RÉGIME:</dt>
                                         <dd class="col-sm-4 text-start">{{ $refacturation->regime ?? 'N/A' }}</dd>
                                     </dl>
-
+                                    <dl class="row col-12">
+                                        <dt class="col-sm-8 text-end">NOMBRE DE MARCHANDISES:</dt>
+                                        <dd class="col-sm-4 text-start">{{ $refacturation->nbr_product ?? 'N/A' }}</dd>
+                                    </dl>
                                 </div>
                             </div>
                             <br>

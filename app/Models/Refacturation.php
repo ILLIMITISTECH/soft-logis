@@ -49,6 +49,7 @@ class Refacturation extends Model
 
         //
         'tva',
+        'nbr_product',
 
         //log
         'date_sendToClient',

@@ -107,6 +107,7 @@ class RefacturationController extends Controller
                 'num_Ot' => $request->num_Ot,
                 'volume' => $request->volume,
                 'tva' => $request->tva,
+                'nbr_product' => $request->nbr_product,
 
                 // info facturier
                 'facturier_uuid' => Auth::user()->uuid,
@@ -362,6 +363,7 @@ class RefacturationController extends Controller
                 'num_Ot' => $request->num_Ot,
                 'volume' => $request->volume,
                 'tva' => $request->tva,
+                'nbr_product' => $request->nbr_product,
 
                 // info facturier
                 'facturier_uuid' => Auth::user()->uuid,

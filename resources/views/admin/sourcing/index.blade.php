@@ -88,8 +88,8 @@
                                         <span>{{ $sourcing->products->count() }}</span>
                                     </td>
 
-                                    <td>{{ $sourcing->date_arriver }}</td>
-                                    <td>{{ $sourcing->id_navire }}</td>
+                                    <td>{{ $sourcing->date_arriver ?? '--'}}</td>
+                                    <td>{{ $sourcing->id_navire ?? '--'}}</td>
                                     <td class="h-100">
                                         <span>{{ $sourcing->files->count() }}</span>
                                     </td>

@@ -163,6 +163,11 @@
                                                 <input type="text" class="form-control" value="{{ $item->tva }}" id="tva" placeholder="% TVA"
                                                     name="tva">
                                             </div>
+                                            <div class="col-12 col-lg-4">
+                                                <label for="nbr_product" class="form-label">Nombre de Marchandises</label>
+                                                <input type="text" class="form-control" value="{{ $item->nbr_product }}" id="nbr_product" placeholder="0"
+                                                    name="nbr_product">
+                                            </div>
                                         </div>
                                         <!---end row-->
 

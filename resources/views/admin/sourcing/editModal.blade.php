@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body delete-product-form">
-                <form action="{{ route('admin.sourcing.update', $sourcing->uuid) }}" method="POST" enctype="multipart/form-data" class="submitForm" id="updateForm">
+                <form action="{{ route('admin.sourcing.update', $sourcing->uuid) }}" method="POST" enctype="multipart/form-data" class="submitForm">
                     @csrf
                     <hr class="mb-4">
                     <!-- Date de départ et Date d'arrivée -->
@@ -80,7 +80,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 
-                        <button type="submit" class="btn btn-primary" form="updateForm">Modifier</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
                     </div>
                 </form>
             </div>

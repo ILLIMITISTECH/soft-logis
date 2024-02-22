@@ -15,6 +15,8 @@
             box-sizing: border-box;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11px;
+            text-decoration: uppercase;
+            text-transform: uppercase;
             /* border: 1px solid red; */
         }
 
@@ -64,10 +66,10 @@
         }
 
         tbody td {
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid lightgray;
         }
         .table td {
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid lightgray;
         }
          th > div{
             margin-bottom: 3px;
@@ -214,13 +216,17 @@
                                             @php $exchangeRate = 0.00152; @endphp
                                             <tbody style="margin-bottom: 15px">
                                                 @forelse ($prestations_debours as $prestations_debour)
-                                                <tr class="size_12" style="margin-top: 10px; margin-bottom: 10px;">
-                                                    <td class="id">{{ $prestations_debour->type_prestation ?? 'N/A'}}</td>
-                                                    <td class="poste" style="text-align: center; align-items: flex-center; justify-content: flex-center;">{{ $prestations_debour->qty ?? 'N/A' }}</td>
-                                                    <td class="condition-paiement" style="text-align: center; align-items: flex-center; justify-content: flex-center;">{{ $prestations_debour->description ?? 'N/A'  }}</td>
-                                                    <td class="date-echeance" style="text-align: center; align-items: flex-center; justify-content: flex-center;">{{ $prestations_debour->prixunitaire ?? 'N/A' }}</td>
-                                                    <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total ?? 'N/A' }}</td>
-                                                    <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end;">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
+                                                <tr class="size_12" style="margin-top: 10px; margin-bottom: 10px">
+                                                    <td class="id" style="font-size: 8px; background: rgba(211, 211, 211, 0.321); height: 20px;" ><span style="font-size: 8px; text-decoration: uppercase; text-transform: uppercase;">{{ $prestations_debour->type_prestation ?? 'N/A'}}</td>
+                                                    <td class="poste" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->qty ?? 'N/A' }}</td>
+                                                    <td class="condition-paiement" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->description ?? 'N/A'  }}</td>
+                                                    <td class="date-echeance" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">
+                                                        {{ number_format($prestations_debour->prixunitaire), 0, ',', ' ' }}
+                                                    </td>
+                                                    <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end; background: rgba(211, 211, 211, 0.321); height: 20px;">
+                                                        {{ number_format($prestations_debour->total), 0, ',', ' ' }}
+                                                        {{-- {{ $prestations_debour->total ?? 'N/A' }}</td> --}}
+                                                    <td class="date-echeance" style="text-align: right; align-items: flex-end; justify-content: flex-end; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->total * $exchangeRate ?? 'N/A' }}</td>
                                                 </tr>
                                                 <hr style="margin-top: 5px; min-width: 100%;">
                                                 @empty
@@ -230,27 +236,29 @@
                                             </tbody>
                                             <tfoot style="width: 100% ;">
                                                 <tr style="100%">
-                                                    <td style="background: #ccc; height: 20px;">
+                                                    <td style="background:#d8ea0b; height: 20px;">
                                                     </td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background: #ccc; height: 20px;"><span
+                                                    <td style="background:#d8ea0b; height: 20px;"></td>
+                                                    <td style="background: #d8ea0b; height: 20px;"><span
                                                         style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; color:#000;font-weight: 900;">SOUS TOTAL DEBOURS</span></td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                            style="font-size: 8px;" >{{ number_format($prestations_totals_debours)}}</span>
+                                                    <td style="background:#d8ea0b; height: 20px;"></td>
+                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
+                                                        <span style="font-size: 8px;" >
+                                                            {{ number_format($prestations_totals_debours), 0, ',', ' ' }}
+                                                        </span>
                                                     </td>
-                                                    <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;">{{ number_format($prestations_totals_debours * $exchangeRate)}}</span>
                                                     </td>
                                                 </tr>
                                                 <hr style="margin: 5 0 5 0">
                                                 <tr style="100% ; margin-bottom: 15px; margin-top: 10px; background: #000; font-size: 8px;">
-                                                    <td style="background: #ccc; height: 20px;"><span
+                                                    <td style="background: lightgray; height: 20px"><span
                                                             style="font-size: 8px;">COMMISSION SUR DEBOURS</span>
                                                     </td>
-                                                    <td style="background: #ccc; height: 20px; text-align: center; align-items: flex-center; justify-content: flex-center;">1</td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background: #ccc; height: 20px; text-align: center; align-items: flex-center; justify-content: flex-center;">1,95%</td>
+                                                    <td style="background:lightgray; height: 20px; text-align: center; align-items: flex-center; justify-content: flex-center;">1</td>
+                                                    <td style="background:lightgray; height: 20px;"></td>
+                                                    <td style="background:lightgray; height: 20px; text-align: center; align-items: flex-center; justify-content: flex-center;">1,95%</td>
                                                     <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;" ><span
                                                             style="font-size: 8px;">{{ $comm_sous_debours ?? 'N/A' }}</span>
                                                     </td>
@@ -261,13 +269,24 @@
                                                 
                                                 @forelse ($prestations as $item )
 												<tr class="table" >
-													<td class="unit" style="font-size: 8px;"><span style="font-size: 8px;"> {{ $item->type_prestation ?? 'N/A'}}</span></td>
-                                                    <td class="qty" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->qty ?? 'N/A' }}</span></td>
-													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
-													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center;"><span style="font-size: 8px;">{{ $item->prixunitaire ?? 'N/A' }}</span></td>
+													{{-- <td class="unit" style="font-size: 8px;"><span style="font-size: 8px; text-decoration: uppercase;"> {{ $item->type_prestation ?? 'N/A'}}</span></td> --}}
 
-													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total ?? 'N/A' }}</span></td>
-													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span style="font-size: 8px;">{{ $item->total * $exchangeRate ?? 'N/A' }}</span></td>
+                                                    <td class="unit" style="font-size: 8px; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px; text-decoration: uppercase; text-transform: uppercase;"> {{ $item->type_prestation ?? 'N/A'}}</span></td>
+
+                                                    <td class="qty" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->qty ?? 'N/A' }}</span></td>
+													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
+													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">
+                                                        <span style="font-size: 8px;">
+                                                            {{ number_format($item->prixunitaire), 0, ',', ' ' }}
+                                                        {{-- {{ $item->prixunitaire ?? 'N/A' }} --}}
+                                                        </span>
+                                                    </td>
+
+													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">
+                                                        {{ number_format($item->total), 0, ',', ' ' }}
+                                                        {{-- {{ $item->total ?? 'N/A' }} --}}
+                                                    </span></td>
+													<td class="total" style="font-size: 8px; text-align: right; align-items: flex-end; justify-content: flex-end; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->total * $exchangeRate ?? 'N/A' }}</span></td>
 												</tr>
                                                 <hr style="margin-top: 5px">
                                                 @empty
@@ -276,17 +295,17 @@
                                                 
                                                 <hr style="margin: 5 0 5 0">
                                                 <tr style="100% ;">
-                                                    <td style="background: #ccc; height: 20px;">
+                                                    <td style="background: #d8ea0b; height: 20px;">
                                                     </td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background: #ccc; height: 20px;"><span
+                                                    <td style="background: #d8ea0b; height: 20px;"></td>
+                                                    <td style="background: #d8ea0b; height: 20px;"><span
                                                         style="font-size: 8px; text-align: center; align-items:center; justify-content:center;  color:#000;font-weight: 900;">SOUS TOTAL DE PRESTATION</span></td>
-                                                    <td style="background: #ccc; height: 20px;"></td>
-                                                    <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                    <td style="background: #d8ea0b; height: 20px;"></td>
+                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;">{{ number_format($prestations_totals), 0, ',', ' ' }}</span>
                                                     </td>
-                                                    <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                            style="font-size: 8px;">{{ number_format($prestations_totals * $exchangeRate), 0, ',', ' ' }}</span>
+                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
+                                                        <span style="font-size: 8px;">{{ number_format($prestations_totals * $exchangeRate), 0, ',', ' ' }}</span>
                                                     </td>
                                                 </tr>
                                                 
@@ -296,106 +315,106 @@
                                                 @if ($count_pres < 5)
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: lightgray; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <hr style="margin: 3 0 2 0">
-                                                    <tr style="100% ;">
-                                                        <td style="background: lightgray; height: 20px;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: lightgray; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <hr style="margin: 3 0 2 0">
-                                                    <tr style="100% ;">
-                                                        <td style="background: lightgray; height: 20px;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background: lightgray; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: #ccc; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <hr style="margin: 3 0 2 0">
-                                                    <tr style="100% ;">
-                                                        <td style="background: #ccc; height: 20px;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: #ccc; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <hr style="margin: 3 0 2 0">
+                                                    <tr style="100% ;">
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                                style="font-size: 8px;"></span>
+                                                        </td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
@@ -403,31 +422,31 @@
                                                 @elseif ($count_pres > 5 && $count_pres < 15)
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: #ccc; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
-                                                        <td style="background: #ccc; height: 20px;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background: #ccc; height: 20px;"></td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
-                                                        <td style="background:lightgray; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
@@ -481,7 +500,7 @@
 
                 <div class="card-footer" style="min-height: 8vh; height: 8vh;">
                     <div class="conta" style="width: 100%;">
-                        <div class="footer size_12" style="background-color: rgba(0, 0, 0, 0.773);" >
+                        <div class="footer size_12" style="background-color: rgba(0, 0, 0, 0.773);">
                             <div class="size_12" style="padding: 0 10px; display: flex; justify-content: center; align-items: center; align-self: center; text-align: center;">
                                 01BP 8169 ABIDJAN 01, COCODY Deux Plateaux Rue des Jardins, Cote d'ivoire. SAS au capital de 200 000 000 CFA
                                 Régime d'imposition : Réel Normal Direction des Grandes Entreprises. (DGE), RCCM N° CI-ABJ-03-2023-B16-00087

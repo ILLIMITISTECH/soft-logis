@@ -33,13 +33,9 @@ class SourcingController extends Controller
     public function index(Request $request)
     {
 
-        $products = Article::where('etat', 'actif')
-                        ->whereNotIn('status', ['stocked', 'expEnCours', 'delivered'])
-                        ->where('is_AddSourcing', 'false')
-                        ->get();
-        $sourcings = Sourcing::where('etat', 'actif')
-            ->orderBy('created_at', 'ASC')
-            ->get();
+        $products = Article::where('etat', 'actif')->whereNotIn('status', ['stocked', 'expEnCours', 'delivered'])->where('is_AddSourcing', 'false')->get();
+
+        $sourcings = Sourcing::where('etat', 'actif')->orderBy('created_at', 'desc')->get();
    
         $families = ArticleFamily::where('etat', 'actif')->get();
 
@@ -283,9 +279,11 @@ class SourcingController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        
+
         DB::beginTransaction();
         try {
-            $sourcing = Sourcing::where('uuid', $request->sourcing_id)->update([
+            $sourcing = Sourcing::where('uuid', $id)->update([
                 'id_navire' => $request->id_navire,
                 'packaging' => $request->packaging,
                 'info_navire' => $request->info_navire,
@@ -295,7 +293,6 @@ class SourcingController extends Controller
                 'regime_uuid' => $request->regime_uuid,
                 'note' => $request->note,
             ]);
-
             if ($sourcing) {
 
                 $dataResponse =[

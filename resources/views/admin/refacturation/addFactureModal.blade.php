@@ -69,7 +69,7 @@
                                                         placeholder="Ref Client">
                                                 </div>
                                                 <div class="col-12 col-lg-6">
-                                                    <label for="num_cc" class="form-label">N° Client</label>
+                                                    <label for="num_cc" class="form-label">N° Compte Contribuable</label>
                                                     <input type="text" class="form-control" id="num_cc" name="num_cc"
                                                         placeholder="cc012ff879">
                                                 </div>
@@ -123,7 +123,7 @@
                                                         name="num_Commande" placeholder="cmd023564">
                                                 </div>
                                                 <div class="col-12 col-lg-6">
-                                                    <label for="num_Bl" class="form-label">N° Bon Livraison</label>
+                                                    <label for="num_Bl" class="form-label">N° BL</label>
                                                     <input type="text" class="form-control" id="num_Bl" name="num_Bl"
                                                         placeholder="cmd023564">
                                                 </div>
@@ -157,10 +157,15 @@
                                                     <input type="text" class="form-control" id="volume" placeholder="volume"
                                                         name="volume">
                                                 </div>
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12 col-lg-3">
                                                     <label for="tva" class="form-label">tva (%)</label>
                                                     <input type="text" class="form-control" id="tva" placeholder="% TVA"
                                                         name="tva">
+                                                </div>
+                                                <div class="col-12 col-lg-3">
+                                                    <label for="tva" class="form-label">Nombre de marchandises</label>
+                                                    <input type="text" class="form-control" id="tva" placeholder="0"
+                                                        name="nbr_product">
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="d-flex align-items-center gap-3">

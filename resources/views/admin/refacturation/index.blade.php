@@ -134,6 +134,7 @@
                             <th>N°</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
+                            <th>Nbr de Marchandises</th>
                             <th>Tva</th>
                             <th class="text-end">Total ht (XOF)</th>
                             <th class="text-end">Total ht (€)</th>
@@ -200,7 +201,7 @@
                                 </div>
                                 @endif
                             </td>
-
+                            <td>{{ $item->nbr_product ?? '--' }}</td>
                             <td>{{ $item->tva ?? '--'}}%</td>
                             <td class="text-end">{{ number_format($total_xof, 2, ',', ' ') ?? 'N/A'  }}   XOF</td>
                             <td class="text-end">{{ number_format($euroAmount, 2, ',', ' ') ?? 'N/A'  }}   €</td>

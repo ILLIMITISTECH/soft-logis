@@ -44,8 +44,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Envoyé au Beneficiaire</p>
-                            <h4 class="my-1 size_12">{{ number_format($totalFactSend, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-up-arrow align-middle'></i>{{ $valeur_totalFactSend }} Factures</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeur_totalFactSend, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-info size_12"><i class='bx bxs-up-arrow align-middle'></i>{{ $totalFactSend }} Factures</p>
                         </div>
                         <div class="widgets-icons bg-light-info text-danger ms-auto"><i class='bx bxs-group'></i>
                         </div>
@@ -59,8 +59,8 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="mb-0 text-secondary">Facture payé</p>
-                            <h4 class="my-1 size_12">{{ number_format($totalFactPay, 0, ',', ' ') }} Fcfa</h4>
-                            <p class="mb-0 font-13 text-success size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $valeur_totalFactPay }} factures</p>
+                            <h4 class="my-1 size_12">{{ number_format($valeur_totalFactPay, 0, ',', ' ') }} Fcfa</h4>
+                            <p class="mb-0 font-13 text-success size_12"><i class='bx bxs-down-arrow align-middle'></i>{{ $totalFactPay }} factures</p>
                         </div>
                         <div class="widgets-icons bg-light-danger text-info ms-auto"><i class='bx bxs-binoculars'></i>
                         </div>
@@ -127,11 +127,13 @@
                 <button class="btn btn-primary radius-30"><i class="bx bxs-plus-square"></i>Nouvelle facture</button>
               </div>
             </div>
+
             <div class="table-responsive">
                 <table id="example2" class="table table-striped table-bordered">
                     <thead class="table-light">
                         <tr>
                             <th>N°</th>
+                            <th>N° Bl</th>
                             <th>Beneficiaire</th>
                             <th>Statut</th>
                             <th>Nbr de Marchandises</th>
@@ -144,6 +146,7 @@
                     </thead>
                     <tbody>
                         @forelse ($refacturations as $item )
+
                         @php
                             $fac_pres = DB::table('facture_prestations')->where('etat', 'actif')->where('facture_uuid', $item->uuid)->sum('total');
 
@@ -174,6 +177,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td>{{ $item->num_Bl ?? 'N/A' }}</td>
                             <td>{{ $item->doit ?? 'N/A' }}</td>
                             <td>
                                 @if ($item->statut == 'draft')

@@ -299,8 +299,10 @@
                             </thead>
                             <tbody>
                                 @foreach ($delivered as $item)
+                                
                                     <tr class="articleByCat" data-category_uuid="{{ strtolower($item->category_uuid) }}">
-                                        <td>{{ $item->familly->libelle ?? '--' }}</td>
+                                        <td><a href="{{ route('admin.article.show', ['uuid' => $item->uuid]) }}" style="text-decoration: none; text-transform: uppercase;">
+                                            {{ $item->familly->libelle ?? '--' }}</td></a>
                                         <td>{{ $item->marque->libelle ?? '--' }}</td>
                                         <td>{{ $item->category->libelle ?? '--' }}</td>
                                         <td>{{ $item->numero_serie ?? '--' }}</td>
@@ -322,6 +324,7 @@
                                         <td>{{ $item->longueur ?? '--' }}</td>
                                         {{-- <td><i class='bx bx-dots-horizontal-rounded font-24'></i></td> --}}
                                     </tr>
+                                
                                 @endforeach
                             </tbody>
                         </table>

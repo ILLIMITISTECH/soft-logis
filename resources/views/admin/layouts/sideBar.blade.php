@@ -167,7 +167,7 @@
             <a href="{{ route('admin.refacturation') }}">
                 <div class="parent-icon"><i class="lni lni-amazon-pay fs-6"></i>
                 </div>
-                <div class="menu-title">Facture fournisseur</div>
+                <div class="menu-title">Facture client</div>
             </a>
         </li>
         <li>

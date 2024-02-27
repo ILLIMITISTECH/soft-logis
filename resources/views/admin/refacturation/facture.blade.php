@@ -219,7 +219,7 @@
                                                 <tr class="size_12" style="margin-top: 10px; margin-bottom: 10px">
                                                     <td class="id" style="font-size: 8px; background: rgba(211, 211, 211, 0.321); height: 20px;" ><span style="font-size: 8px; text-decoration: uppercase; text-transform: uppercase;">{{ $prestations_debour->type_prestation ?? 'N/A'}}</td>
                                                     <td class="poste" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->qty ?? 'N/A' }}</td>
-                                                    <td class="condition-paiement" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->description ?? 'N/A'  }}</td>
+                                                    <td class="condition-paiement" style="text-align: start; align-items: flex-start; justify-content: flex-start; background: rgba(211, 211, 211, 0.321); height: 20px;">{{ $prestations_debour->description ?? 'N/A'  }}</td>
                                                     <td class="date-echeance" style="text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">
                                                         {{ number_format($prestations_debour->prixunitaire), 0, ',', ' ' }}
                                                     </td>
@@ -236,18 +236,18 @@
                                             </tbody>
                                             <tfoot style="width: 100% ;">
                                                 <tr style="100%">
-                                                    <td style="background:#d8ea0b; height: 20px;">
+                                                    <td style="background:#cdc306; height: 20px;">
                                                     </td>
-                                                    <td style="background:#d8ea0b; height: 20px;"></td>
-                                                    <td style="background: #d8ea0b; height: 20px;"><span
+                                                    <td style="background:#cdc306; height: 20px;"></td>
+                                                    <td style="background: #cdc306; height: 20px;"><span
                                                         style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; color:#000;font-weight: 900;">SOUS TOTAL DEBOURS</span></td>
-                                                    <td style="background:#d8ea0b; height: 20px;"></td>
-                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
+                                                    <td style="background:#cdc306; height: 20px;"></td>
+                                                    <td style="background:#cdc306; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
                                                         <span style="font-size: 8px;" >
                                                             {{ number_format($prestations_totals_debours), 0, ',', ' ' }}
                                                         </span>
                                                     </td>
-                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                    <td style="background:#cdc306; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;">{{ number_format($prestations_totals_debours * $exchangeRate)}}</span>
                                                     </td>
                                                 </tr>
@@ -274,7 +274,7 @@
                                                     <td class="unit" style="font-size: 8px; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px; text-decoration: uppercase; text-transform: uppercase;"> {{ $item->type_prestation ?? 'N/A'}}</span></td>
 
                                                     <td class="qty" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->qty ?? 'N/A' }}</span></td>
-													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
+													<td class="unit" style="font-size: 8px; text-align: start; align-items: flex-start; justify-content: flex-start; background: rgba(211, 211, 211, 0.321); height: 20px;"><span style="font-size: 8px;">{{ $item->description ?? 'N/A'  }}</span></td>
 													<td class="unit" style="font-size: 8px; text-align: center; align-items: flex-center; justify-content: flex-center; background: rgba(211, 211, 211, 0.321); height: 20px;">
                                                         <span style="font-size: 8px;">
                                                             {{ number_format($item->prixunitaire), 0, ',', ' ' }}
@@ -295,16 +295,16 @@
                                                 
                                                 <hr style="margin: 5 0 5 0">
                                                 <tr style="100% ;">
-                                                    <td style="background: #d8ea0b; height: 20px;">
+                                                    <td style="background: #cdc306; height: 20px;">
                                                     </td>
-                                                    <td style="background: #d8ea0b; height: 20px;"></td>
-                                                    <td style="background: #d8ea0b; height: 20px;"><span
+                                                    <td style="background: #cdc306; height: 20px;"></td>
+                                                    <td style="background: #cdc306; height: 20px;"><span
                                                         style="font-size: 8px; text-align: center; align-items:center; justify-content:center;  color:#000;font-weight: 900;">SOUS TOTAL DE PRESTATION</span></td>
-                                                    <td style="background: #d8ea0b; height: 20px;"></td>
-                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
+                                                    <td style="background: #cdc306; height: 20px;"></td>
+                                                    <td style="background:#cdc306; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
                                                             style="font-size: 8px;">{{ number_format($prestations_totals), 0, ',', ' ' }}</span>
                                                     </td>
-                                                    <td style="background:#d8ea0b; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
+                                                    <td style="background:#cdc306; height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;">
                                                         <span style="font-size: 8px;">{{ number_format($prestations_totals * $exchangeRate), 0, ',', ' ' }}</span>
                                                     </td>
                                                 </tr>

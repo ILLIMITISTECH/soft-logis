@@ -403,23 +403,8 @@
                                                                 style="font-size: 8px;"></span>
                                                         </td>
                                                     </tr>
-                                                    <hr style="margin: 3 0 2 0">
-                                                    <tr style="100% ;">
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"></td>
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                        <td style="background: rgba(211, 211, 211, 0.321); height: 20px; text-align: right; align-items: flex-end; justify-content: flex-end;"><span
-                                                                style="font-size: 8px;"></span>
-                                                        </td>
-                                                    </tr>
                                                 
-                                                @elseif ($count_pres > 5 && $count_pres < 15)
+                                                @else()
                                                     <hr style="margin: 3 0 2 0">
                                                     <tr style="100% ;">
                                                         <td style="background: rgba(211, 211, 211, 0.321); height: 20px;"><span

@@ -308,6 +308,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/store/refacturation', [RefacturationController::class, 'store'])->name('refacturation.store');
         Route::get('/show/refacturation/{uuid}', [RefacturationController::class, 'show'])->name('refacturation.show');
         Route::post('/destroy/refacturation/{uuid}', [RefacturationController::class, 'destroy'])->name('refacturation.destroy');
+        Route::get('/edit/refacturation/{uuid}', [RefacturationController::class, 'edit'])->name('refacturation.edit');
         Route::post('/update/refacturation/{uuid}', [RefacturationController::class, 'update'])->name('refacturation.update');
             // change state refacturation
             Route::post('/marckToSend/refacturation/{uuid}', [RefacturationController::class, 'marckToSend'])->name('refacturation.marckToSend');

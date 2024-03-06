@@ -181,7 +181,12 @@ $(".wrapper").on('submit', '.submitForm', function (e) {
     });
 });
 
-
+$(document).ready(function(){
+    $(".edit_new_box_factu").on("click", function () {
+        var $clone = $('.add_new_factu_box:last').clone();
+        $clone.insertAfter('.add_new_factu_box:last');
+    });
+});
 
 
 // window.dataLayer = window.dataLayer || [];

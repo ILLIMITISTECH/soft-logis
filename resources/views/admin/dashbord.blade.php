@@ -249,7 +249,7 @@
                                 <div class="progress-bar bg-info d-flex text-primary bold text-center justify-content-center align-items-center align-self-center" role="progressbar" style="height: {{ $percentageinWaitExpediteExport }}%; width: 20px;">{{ $percentageinWaitExpediteExport }}</div>
                             </div>
                         </div>
-                        <p class="size_9 mt-4">cours d'export</p>
+                        <p class="size_9 mt-4">Cours d'export</p>
                     </div>
                     <div class="d-flex flex-column align-items-center col px-0" style="height: 100%">
                         <div class="flex-grow-1">

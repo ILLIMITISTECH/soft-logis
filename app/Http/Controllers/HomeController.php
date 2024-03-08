@@ -70,7 +70,12 @@ class HomeController extends Controller
         $inUsineOut = Article::where(['etat' => 'actif', 'status' => 'sortiUsine'])->get();
         $inWaitExpediteImport = Article::where(['etat' => 'actif', 'status' => 'enExpedition'])->get();
         $arrivagePod = Article::where(['etat' => 'actif', 'status' => 'arriverAuPod'])->get();
-        $receivStock = Article::where(['etat' => 'actif', 'status' => 'stocked'])->get();
+
+        $recuEnStock = Article::where(['etat' => 'actif', 'status' => 'received'])->get();
+        $stockedStock = Article::where(['etat' => 'actif', 'status' => 'stocked'])->get();
+        
+        $receivStock = Article::where(['etat' => 'actif'])->whereIn('status', ['received', 'stocked'])->get();
+
         $inWaitExpediteExport = Article::where(['etat' => 'actif', 'status' => 'expEnCours'])->get();
         $liverExpedite = Article::where(['etat' => 'actif', 'status' => 'delivered'])->get();
 

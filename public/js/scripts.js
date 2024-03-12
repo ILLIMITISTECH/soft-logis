@@ -846,7 +846,7 @@ function addnewBlockProduct() {
     documentTemplate.innerHTML = `
             <div class="col-12 d-flex justify-content-between py-auto align-items-center self-align-center">
             <div class="col-5" style="position: relative;">
-            <label for="bon_commande_input_${uniqueId}" class="form-label">Bon de commande</label>
+            <label for="bon_commande_input_${uniqueId}" class="form-label">N°Matériel</label>
             <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="bon_commande_input_${uniqueId}" oninput="searchProductsByBonCommand(${uniqueId})">
             <div id="search_resultsByBon_${uniqueId}"
                 style="
@@ -862,7 +862,7 @@ function addnewBlockProduct() {
         </div>
 
         <div class="col-6" style="position: relative;">
-            <label for="numero_serie_input_${uniqueId}" class="form-label">N° serie</label>
+            <label for="numero_serie_input_${uniqueId}" class="form-label">N° Serie</label>
             <input type="text" class="form-control col-3 products_select" name="product_uuid[]" id="numero_serie_input_${uniqueId}" oninput="searchProductsByNumeroSerie(${uniqueId})">
             <div id="search_results_${uniqueId}"
                 style="

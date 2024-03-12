@@ -1845,7 +1845,7 @@
                                 </thead>
                                 <tbody>
 
-                                    @forelse ($factures as $facture )
+                                    @forelse ($facturesRecent as $facture )
                                         @if (!empty ($facture->prestationLines))
                                             <tr>
                                                 <td>{{ $facture->code ?? 'N/A'}}</td>

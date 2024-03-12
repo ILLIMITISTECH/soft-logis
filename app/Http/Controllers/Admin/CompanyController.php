@@ -53,7 +53,7 @@ class CompanyController extends Controller
              // add profil img
              $logo= $request->logo ?? "";
              if($logo == null) {
-              $logo = 'default_logo.jpg';
+              $logo = 'defauld_logo.png';
              }else{
                  $file = $request->file('logo');
               //    dd($logo);

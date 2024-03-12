@@ -52,8 +52,13 @@
                         @forelse ($companies as $company)
                         <tr>
                             <td>
+                                @if ($company->logo !== null)
                                 <img src='{{ asset('files/' . $company->logo) }}' class="product-img-2"
-                                    alt="logo company">
+                                alt="logo company">
+                                @else
+                                <img src='{{ asset('assets/images/defauld_logo.png') }}' class="product-img-2"
+                                alt="logo company">
+                                @endif
                             </td>
                             <td>{{ $company->code }}</td>
                             <td>

@@ -41,7 +41,8 @@
                                     <form action="{{ route('admin.delete.prestationLine', $prestation->uuid) }}" method="post" class="submitForm">
                                         @csrf
 
-                                        <input type="hidden" name="facture_uuid" value="{{ $item->uuid }}">
+                                        <input type="hidden" name="prestation_uuid" value="{{ $prestation->uuid }}">
+
                                         <button type="submit" class="btn btn-danger px-2 text-center"><i class='bx bxs-trash'></i></button>
                                     </form>
                                 </div>

@@ -610,7 +610,8 @@ class RefacturationController extends Controller
 
     public function delettePrestationLine(Request $request, string $id)
     {
-        $prestation = FacturePrestation::where(['facture_uuid'=> $request->facture_uuid])->firstOrFail();
+        // $prestation = FacturePrestation::where(['facture_uuid'=> $request->facture_uuid])->firstOrFail();
+        $prestation = FacturePrestation::where(['uuid'=> $request->prestation_uuid])->firstOrFail();
 
         if ($prestation) {
             $prestation->delete();
